@@ -1,0 +1,17 @@
+"use client";
+
+import AdminNav from "@components/AdminComponents/AdminNav";
+import React, { use } from "react";
+import { Box } from "@mui/material";
+
+export default function Layout({ children }: React.PropsWithChildren) {
+
+  return (
+      <>
+        <AdminNav />
+        <Box >
+          { children }
+        </Box>
+      </>
+  );
+}
