@@ -343,7 +343,7 @@ const FuelPage = () => {
               <Grid item xs={12} md={6}>
                 <Box sx={{ p: 2 }}>
                   <Typography variant="body2" color="text.secondary" paragraph>
-                    We're available 24/7 for your fueling needs. Reach out for:
+                    We&apos;re available 24/7 for your fueling needs. Reach out for:
                   </Typography>
                   <ul style={{ paddingLeft: 20, margin: 0 }}>
                     <li><Typography variant="body2">Emergency support</Typography></li>
