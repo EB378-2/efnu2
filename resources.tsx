@@ -180,6 +180,36 @@ const resources = [
       hide: true,
       parent: "admin"
     }
+  },
+  {
+    name: "fuelings",                          
+    list: "/admin/fuel",
+    meta: {
+      label: "fuel",
+      icon: <ListAlt />,
+      hide: true,
+      parent: "admin"
+    }
+  },
+  {
+    name: "incidents",                          
+    list: "/admin/incidents",
+    meta: {
+      label: "incidents",
+      icon: <ListAlt />,
+      hide: true,
+      parent: "admin"
+    }
+  },
+  {
+    name: "flights",                          
+    list: "/admin/flights",
+    meta: {
+      label: "Users",
+      icon: <ListAlt />,
+      hide: true,
+      parent: "admin"
+    }
   }
 ];
 

@@ -25,24 +25,12 @@ export interface FuelOption {
   price?: number;
   value: string;
   color: "primary" | "secondary" | "success" | "error" | "warning" | "info";
+  lastFueling?: Date;
   remarks?: string;
   updated_at: string;
   created_at: string;
+  last_fuel_tank_refueling?: string;
 }
-
-export type FuelOptionType = {
-  label: string;
-  capacity?: number;
-  remaining?: number;
-  price?: number;
-  value: string;
-  icon: JSX.Element;
-  color: "primary" | "secondary" | "success" | "error" | "warning" | "info";
-  remarks?: string;
-  updated_at: string;
-  created_at: string;
-}
-
 
 // Fuelings
 

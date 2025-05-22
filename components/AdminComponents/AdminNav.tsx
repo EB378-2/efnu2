@@ -2,7 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import { AppBar, Toolbar, Button, styled, Box, IconButton, Avatar, Badge, Menu, MenuItem, Typography, Divider, keyframes } from '@mui/material';
-import { Notifications, Settings, Logout, Dashboard, People, ListAlt, Flight, Menu as MenuIcon, ChevronLeft } from '@mui/icons-material';
+import { Notifications, Settings, Logout, Dashboard, People, ListAlt, Flight, Menu as MenuIcon, ChevronLeft, LocalGasStation } from '@mui/icons-material';
 import { useState } from 'react';
 import { ProfileAvatar } from '@components/functions/FetchFunctions';
 import { useGetIdentity } from '@refinedev/core';
@@ -95,6 +95,7 @@ export default function AdminNav() {
     { label: 'Users', href: '/admin/users', icon: <People />, active: pathname.startsWith('/admin/users') },
     { label: 'Incidents', href: '/admin/incidents', icon: <ListAlt />, active: pathname.startsWith('/admin/incidents') },
     { label: 'Flights', href: '/admin/flights', icon: <Flight />, active: pathname.startsWith('/admin/flights') },
+    { label: 'Fuel', href: '/admin/fuel', icon: <LocalGasStation />, active: pathname.startsWith('/admin/fuel') },
   ];
 
   const notifications = [

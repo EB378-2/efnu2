@@ -2,12 +2,12 @@
 'use client';
 
 import { 
-  Grid, Paper, Typography, Chip, Stack, LinearProgress, Box, 
+  Grid, Paper, Typography, Chip, Stack, Box, 
   Button, keyframes, styled 
 } from '@mui/material';
 import {
-  People, LocalGasStation, Assignment, Flight, 
-  Article, Circle, Add, Notifications,
+  People, Assignment, Flight, 
+  Article, Circle, Notifications,
   FlightTakeoff
 } from '@mui/icons-material';
 import PNStatusDashboard from '@components/AdminComponents/PNStatusDashboard';
@@ -15,7 +15,7 @@ import { useProfileStats, usePnApprovalsToCome, usePNStatsToday } from '@hooks/g
 import { useRouter } from "next/navigation";
 import CreateUserModalWithButton from '@components/AdminComponents/CreateUserModalWithButton';
 import { Warning, ListAlt } from '@mui/icons-material'; // Add these imports
-import { delay } from '@node_modules/framer-motion/dist/types';
+import AddFuelToStation from '@components/AdminComponents/AddFuelToStation';
 
 
 const pulse = keyframes`
@@ -245,6 +245,7 @@ export default function AdminDashboard() {
                 >
                   Flight Alerts
                 </Button>
+                <AddFuelToStation />
               </Box>
             </Box>
           </StyledPaper>

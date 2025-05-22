@@ -45,6 +45,11 @@ p, member, lights, (list)|(show)
 
 
 p, admin, users/*, (edit)|(delete)
+p, admin, users, (list)|(show)|(create)
+p, admin, fuelings/*, (edit)|(delete)
+p, admin, fuelings, (list)|(show)|(create)
+p, admin, flights/*, (edit)|(delete)
+p, admin, flights, (list)|(show)|(create)
 p, admin, blog, (list)|(show)|(create)
 p, admin, sms, (list)|(show)|(create)
 p, admin, contact, (list)|(show)

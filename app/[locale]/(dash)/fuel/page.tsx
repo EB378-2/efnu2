@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react";
 import { useGetIdentity, useNotification } from "@refinedev/core";
 import { 
   Container,
@@ -45,9 +45,6 @@ import { useForm, useList } from "@refinedev/core";
 import { useTranslations } from "next-intl";
 import {
   LocalGasStation,
-  Flight,
-  AirplanemodeActive,
-  Recycling,
   EventAvailable,
   Close,
   Email,
@@ -57,7 +54,7 @@ import {
 } from "@mui/icons-material";
 import { SaveButton } from "@refinedev/mui";
 import { motion } from "framer-motion";
-import { FuelOptionType, FuelOption, FuelingValues, FuelItem } from '@/types/index';
+import { FuelOption, FuelingValues, FuelItem } from '@/types/index';
 import { FuelName } from "@/components/functions/FetchFunctions";
 
 // Styled components
@@ -98,208 +95,141 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
 }));
 
 const FuelPage = () => {
-    const { data: identityData } = useGetIdentity<{ id: string }>();
-    const theme = useTheme();
-    const [selectedFuel, setSelectedFuel ] = useState<string>("");
-    const [createModalOpen, setCreateModalOpen ] = useState(false);
-    const [ myRefulingsModalOpen, setMyRefulingsModalOpen ] = useState(false);
-    const [contactModalOpen, setContactModalOpen ] = useState(false);
-    const [tankStatusModalOpen, setTankStatusModalOpen] = useState(false);
+  const { data: identityData } = useGetIdentity<{ id: string }>();
+  const theme = useTheme();
+  const [selectedFuel, setSelectedFuel] = useState<string>("");
+  const [createModalOpen, setCreateModalOpen] = useState(false);
+  const [myRefuelingsModalOpen, setMyRefuelingsModalOpen] = useState(false);
+  const [contactModalOpen, setContactModalOpen] = useState(false);
+  const [tankStatusModalOpen, setTankStatusModalOpen] = useState(false);
 
-    const { data: fuels } = useList<FuelOption>({
-        resource: "fuels",
-      });
-  
-    const { 
-      formLoading,
-      onFinish,
-    } = useForm<FuelingValues>({
-      resource: 'fuelings',
-      action: "create",
-      redirect: false,
-      onMutationSuccess: () => {
-        setCreateModalOpen(false);
-      }
-    });
-  
-    const { data: MyRefulingsData } = useList<FuelItem>({
-      resource: "fuelings",
-      filters: [
-        {
-          field: "uid",
-          operator: "eq",
-          value: identityData?.id || "",
-        },
-      ],
-      sorters: [
-        {
-          field: "created_at",
-          order: "desc",
-        },
-      ],
-      queryOptions: {
-        enabled: !!identityData?.id,
-      },
-    });
-  
-    console.log(MyRefulingsData);
-  
-    const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      const formData = new FormData(e.currentTarget);
-      
-      onFinish({
-        aircraft: formData.get("aircraft") as string,
-        amount: Number(formData.get("amount")),
-        fuel: selectedFuel,
-        uid: identityData?.id || ""
-      });
-    };
-  
- const fuelOptions: FuelOptionType[] = [
-      { 
-        label: "Avgas", 
-        capacity: 3000,
-        remaining: 783.50,
-        price: 3.50,
-        value: "avgas", 
-        icon: <LocalGasStation fontSize="large" />, 
-        color: "warning",
-        remarks: "Aviation gasoline, commonly used in piston-engine aircraft.",
-        updated_at: "2023-10-01T12:00:00Z",
-        created_at: "2023-10-01T12:00:00Z"
-      },
-      { 
-        label: "E98", 
-        capacity: 3000,
-        remaining: 783.50,
-        price: 1.80,
-        value: "e95", 
-        icon: <Recycling fontSize="large" />, 
-        color: "success",
-        remarks: "Ethanol-blended gasoline, suitable for various engines.",
-        updated_at: "2023-10-01T12:00:00Z",
-        created_at: "2023-10-01T12:00:00Z"
-      },
-      { 
-        label: "Jet Fuel", 
-        capacity: 3000,
-        remaining: 783.50,
-        price: 2.00,
-        value: "jet-fuel", 
-        icon: <Flight fontSize="large" />, 
-        color: "primary",
-        remarks: "Jet fuel, ideal for turbine-engine aircraft.",
-        updated_at: "2023-10-01T12:00:00Z",
-        created_at: "2023-10-01T12:00:00Z"
-      },
-      { 
-        label: "Be95SE", 
-        capacity: 3000,
-        remaining: 783.50,
-        price: 1.60,
-        value: "small-aircraft", 
-        icon: <AirplanemodeActive fontSize="large" />, 
-        color: "secondary",
-        remarks: "Specialized petrol for small aircraft engines.",
-        updated_at: "2023-10-01T12:00:00Z",
-        created_at: "2023-10-01T12:00:00Z"
-      }
-    ];
+  const { data: fuels } = useList<FuelOption>({
+    resource: "fuels",
+  });
 
+  const { 
+    formLoading,
+    onFinish,
+  } = useForm<FuelingValues>({
+    resource: 'fuelings',
+    action: "create",
+    redirect: false,
+    onMutationSuccess: () => {
+      setCreateModalOpen(false);
+    }
+  });
+
+  const { data: myRefuelingsData } = useList<FuelItem>({
+    resource: "fuelings",
+    filters: [
+      {
+        field: "uid",
+        operator: "eq",
+        value: identityData?.id || "",
+      },
+    ],
+    sorters: [
+      {
+        field: "created_at",
+        order: "desc",
+      },
+    ],
+    queryOptions: {
+      enabled: !!identityData?.id,
+    },
+  });
+
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
     
+    onFinish({
+      aircraft: formData.get("aircraft") as string,
+      amount: Number(formData.get("amount")),
+      fuel: selectedFuel,
+    });
+  };
+
   return (
     <Box sx={{ minHeight: "100vh", py: 4 }}>
-
       {/* Create New Refueling Modal */}
-      <Modal
-        open={createModalOpen}
-        onClose={() => setCreateModalOpen(false)}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{ timeout: 500 }}
-      >
-        <Fade in={createModalOpen}>
-          <Box sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: 400,
-            maxWidth: "100vw",
-            bgcolor: 'background.paper',
-            boxShadow: 24,
-            borderRadius: 4,
-            p: 3,
-            border: `2px solid ${theme.palette.primary.main}`
-          }}>
-            <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-              <Typography variant="h5" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <LocalGasStation color="primary" />
-                Fueling Details
-              </Typography>
-              <IconButton onClick={() => setCreateModalOpen(false)}>
-                <Close />
-              </IconButton>
-            </Box>
-            <Divider sx={{ mb: 3 }} />
-            <form onSubmit={handleFormSubmit}>
-              <Box sx={{ mb: 2 }}>
-                <StyledTextField
+      <Modal open={createModalOpen} onClose={() => setCreateModalOpen(false)}>
+        <Box sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 400,
+          maxWidth: "95vw",
+          bgcolor: 'background.paper',
+          boxShadow: 24,
+          borderRadius: 4,
+          p: 3,
+        }}>
+          <Typography variant="h5" gutterBottom>
+            <LocalGasStation /> Record Fuel Addition
+          </Typography>
+
+          <form onSubmit={handleFormSubmit}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Typography variant="subtitle2" gutterBottom>
+                  Adding to: {fuels?.data?.find(f => f.id === selectedFuel)?.label}
+                </Typography>
+              </Grid>
+              
+              <Grid item xs={12}>
+                <TextField
                   fullWidth
                   required
                   name="amount"
-                  label="Amount (Liters)"
+                  label="Amount Added (Liters)"
                   type="number"
-                  inputProps={{ min: 1 }}
-                  variant="outlined"
-                  InputLabelProps={{ shrink: true }}
+                  inputProps={{ min: 0.1, step: 0.1 }}
                 />
-              </Box>
+              </Grid>
               
-              <Box sx={{ mb: 3 }}>
-                <StyledTextField
+              <Grid item xs={12}>
+                <TextField
                   fullWidth
                   required
                   name="aircraft"
-                  label="Aircraft Information"
-                  variant="outlined"
-                  placeholder="e.g., Boeing 737-800"
-                  InputLabelProps={{ shrink: true }}
+                  label="Aircraft/Vehicle"
+                  placeholder="Optional identifier"
                 />
-              </Box>
-              <SaveButton
+              </Grid>
+              
+            </Grid>
+
+            <Box mt={3}>
+              <Button 
+                type="submit" 
+                variant="contained" 
                 fullWidth
-                loading={formLoading}
-                type="submit"
-                sx={{ 
-                  height: 45, 
-                  borderRadius: 14,
-                  textTransform: 'none',
-                  fontSize: 16
-                }}
-              />
-            </form>
-          </Box>
-        </Fade>
+              >
+                Record Fuel Addition
+              </Button>
+            </Box>
+          </form>
+        </Box>
       </Modal>
 
       {/* My Refuelings Modal */}
       <Modal
-        open={myRefulingsModalOpen}
-        onClose={() => setMyRefulingsModalOpen(false)}
+        open={myRefuelingsModalOpen}
+        onClose={() => setMyRefuelingsModalOpen(false)}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{ timeout: 500 }}
       >
-        <Fade in={myRefulingsModalOpen}>
+        <Fade in={myRefuelingsModalOpen}>
           <Box sx={{
             position: 'absolute',
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
             width: 500,
-            maxWidth: "100vw",
+            maxWidth: "95vw",
             bgcolor: 'background.paper',
             boxShadow: 24,
             borderRadius: 4,
@@ -310,13 +240,13 @@ const FuelPage = () => {
                 <EventAvailable color="primary" />
                 Fueling History
               </Typography>
-              <IconButton onClick={() => setMyRefulingsModalOpen(false)}>
+              <IconButton onClick={() => setMyRefuelingsModalOpen(false)}>
                 <Close />
               </IconButton>
             </Box>
             <Divider sx={{ mb: 2 }} />
             <Box sx={{ maxHeight: 400, overflow: 'auto', pr: 1 }}>
-              {MyRefulingsData?.data?.map((item: FuelItem) => (
+              {myRefuelingsData?.data?.map((item: FuelItem) => (
                 <Card 
                   key={item.id} 
                   sx={{ 
@@ -380,7 +310,7 @@ const FuelPage = () => {
             borderTopLeftRadius: 16,
             borderTopRightRadius: 16,
             p: 3,
-            maxWidth: "100vw",
+            maxWidth: "95vw",
             margin: '0 auto'
           }}>
             <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
@@ -413,7 +343,7 @@ const FuelPage = () => {
               <Grid item xs={12} md={6}>
                 <Box sx={{ p: 2 }}>
                   <Typography variant="body2" color="text.secondary" paragraph>
-                    We&apos;re available 24/7 for your fueling needs. Reach out for:
+                    We're available 24/7 for your fueling needs. Reach out for:
                   </Typography>
                   <ul style={{ paddingLeft: 20, margin: 0 }}>
                     <li><Typography variant="body2">Emergency support</Typography></li>
@@ -428,108 +358,84 @@ const FuelPage = () => {
       </Modal>
 
       {/* Fueling Status Modal */}
-      <Modal
-        open={tankStatusModalOpen}
-        onClose={() => setTankStatusModalOpen(false)}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{ timeout: 500 }}
-      >
-        <Fade in={tankStatusModalOpen}>
-          <Box sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: 600,
-            maxWidth: "100vw",
-            bgcolor: 'background.paper',
-            boxShadow: 24,
-            borderRadius: 4,
-            p: 3
-          }}>
-            <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-              <Typography variant="h5" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <LocalGasStation color="primary" />
-                Tank Status
-              </Typography>
-              <IconButton onClick={() => setTankStatusModalOpen(false)}>
-                <Close />
-              </IconButton>
-            </Box>
-            <Divider sx={{ mb: 3 }} />
+      <Modal open={tankStatusModalOpen} onClose={() => setTankStatusModalOpen(false)}>
+        <Box sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 600,
+          maxWidth: "95vw",
+          bgcolor: 'background.paper',
+          boxShadow: 24,
+          borderRadius: 4,
+          p: 3,
+        }}>
+          <Typography variant="h5" gutterBottom>
+            <LocalGasStation /> Fuel Tank Estimates
+          </Typography>
+          
+          <Typography variant="body2" color="text.secondary" paragraph>
+            Based on recorded fuelings. Actual levels may vary.
+          </Typography>
 
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={8}>
-                <Box sx={{ 
-                  overflowX: 'auto',
-                  border: `1px solid ${theme.palette.divider}`,
-                  borderRadius: 2
-                }}>
-                  <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                    <thead>
-                      <tr style={{ 
-                        backgroundColor: theme.palette.primary.main,
-                        color: theme.palette.common.white
-                      }}>
-                        <th style={{ padding: '12px', textAlign: 'left', minWidth: 120 }}>Quality</th>
-                        <th style={{ padding: '12px', textAlign: 'right', minWidth: 100 }}>Capacity (L)</th>
-                        <th style={{ padding: '12px', textAlign: 'right', minWidth: 100 }}>Remaining (L)</th>
-                        <th style={{ padding: '12px', textAlign: 'right', minWidth: 100 }}>€/L</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                        {fuels?.data?.map((fuel: FuelOption, index: number) => (
-                        <tr 
-                          key={fuel.label}
-                          style={{ 
-                          backgroundColor: index % 2 === 0 
-                            ? theme.palette.action.hover 
-                            : 'transparent',
-                          borderBottom: `1px solid ${theme.palette.divider}`
-                          }}
-                        >
-                          <td style={{ padding: '12px', fontWeight: 600 }}>{fuel.label}</td>
-                          <td style={{ padding: '12px', textAlign: 'right' }}>{fuel?.capacity?.toLocaleString() || 'N/A'}</td>
-                          <td style={{ padding: '12px', textAlign: 'right' }}>{fuel?.remaining?.toLocaleString(undefined, { maximumFractionDigits: 2 })}</td>
-                          <td style={{ padding: '12px', textAlign: 'right' }}>€{fuel?.price?.toFixed(2)}</td>
-                        </tr>
-                        ))}
-                    </tbody>
-                  </table>
-                </Box>
-              </Grid>
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Fuel Type</TableCell>
+                  <TableCell align="right">Capacity</TableCell>
+                  <TableCell align="right">Estimated</TableCell>
+                  <TableCell align="right">% Full</TableCell>
+                  <TableCell align="right">Last Added</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {fuels?.data?.map((fuel: FuelOption) => {
+                  const percent = (fuel?.remaining ?? 0) / (fuel?.capacity ?? 1) * 100;
+                  console.log(percent);
+                  console.log(fuel.remaining);
+                  console.log(fuel.capacity);
+                  console.log(fuel);
+                  const lastAdded = fuel.lastFueling?.toLocaleDateString() || 'Never';
+                  
+                  return (
+                    <TableRow key={fuel.id}>
+                      <TableCell>
+                        <Chip 
+                          label={fuel.label} 
+                          sx={{ backgroundColor: fuel.color, color: 'white' }} 
+                        />
+                      </TableCell>
+                      <TableCell align="right">{fuel.capacity}L</TableCell>
+                      <TableCell align="right">
+                        ~{fuel?.remaining?.toFixed(1)}L
+                      </TableCell>
+                      <TableCell align="right">
+                        <Box display="flex" alignItems="center" gap={1}>
+                          <LinearProgress 
+                            variant="determinate" 
+                            value={percent} 
+                            sx={{ width: 60, height: 8 }}
+                          />
+                          {percent.toFixed(0)}%
+                        </Box>
+                      </TableCell>
+                      <TableCell align="right">{lastAdded}</TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
 
-              <Grid item xs={12} md={4}>
-                <Typography variant="subtitle1" gutterBottom sx={{ fontWeight: 600 }}>
-                  Remarks
-                </Typography>
-                <Box sx={{ 
-                  p: 2, 
-                  borderRadius: 2,
-                  bgcolor: theme.palette.mode === 'dark' 
-                    ? 'rgba(255, 255, 255, 0.05)' 
-                    : 'rgba(0, 0, 0, 0.03)'
-                }}>
-                  {fuels?.data?.map((item: FuelOption) => (
-                    <Box key={item.value} sx={{ mb: 1.5 }}>
-                      <Typography variant="caption" sx={{ 
-                        display: 'block', 
-                        color: 'text.secondary',
-                        fontWeight: 500 
-                      }}>
-                        {item.label}
-                      </Typography>
-                      <Typography variant="body2">{item?.remarks}</Typography>
-                    </Box>
-                  ))}
-                </Box>
-              </Grid>
-            </Grid>
+          <Box mt={2}>
+            <Typography variant="caption" color="text.secondary">
+              Note: Estimates assume no fuel consumption between recordings.
+            </Typography>
           </Box>
-        </Fade>
+        </Box>
       </Modal>
-
 
       <Container maxWidth="lg">
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
@@ -539,8 +445,8 @@ const FuelPage = () => {
         </Box>
 
         <Grid container spacing={3}>
-          {/*Fueling options */}
-          <Grid item xs={12} md={6} >
+          {/* Fueling options */}
+          <Grid item xs={12} md={6}>
             <Card elevation={2} sx={{ 
               borderRadius: '12px',
               boxShadow: '0 0 40px -10px rgba(34, 211, 238, 0.5)',
@@ -610,13 +516,13 @@ const FuelPage = () => {
               />
               <CardContent>
                 <Stack spacing={2} sx={{ mt: 3 }}>
-                    <motion.div whileHover={{ scale: 1.02 }}>
+                  <motion.div whileHover={{ scale: 1.02 }}>
                     <HoverButton
-                        variant="outlined"
-                        color="secondary"
-                        onClick={() => setMyRefulingsModalOpen(true)}
-                        startIcon={<EventAvailable sx={{ fontSize: 32 }} />}
-                        sx={{
+                      variant="outlined"
+                      color="secondary"
+                      onClick={() => setMyRefuelingsModalOpen(true)}
+                      startIcon={<EventAvailable sx={{ fontSize: 32 }} />}
+                      sx={{
                         height: 80,
                         width: '100%',
                         maxWidth: "100vw",
@@ -625,22 +531,22 @@ const FuelPage = () => {
                         justifyContent: 'flex-start',
                         px: 3,
                         textTransform: 'none'
-                        }}
+                      }}
                     >
-                        <Box>
+                      <Box>
                         <Typography variant="h6" fontWeight={600}>Refueling History</Typography>
                         <Typography variant="caption">View past transactions</Typography>
-                        </Box>
+                      </Box>
                     </HoverButton>
-                    </motion.div>
+                  </motion.div>
 
-                    <motion.div whileHover={{ scale: 1.02 }}>
+                  <motion.div whileHover={{ scale: 1.02 }}>
                     <HoverButton
-                        variant="outlined"
-                        color="info"
-                        onClick={() => setTankStatusModalOpen(true)}
-                        startIcon={<Info sx={{ fontSize: 32 }} />}
-                        sx={{
+                      variant="outlined"
+                      color="info"
+                      onClick={() => setTankStatusModalOpen(true)}
+                      startIcon={<Info sx={{ fontSize: 32 }} />}
+                      sx={{
                         height: 80,
                         width: '100%',
                         maxWidth: "100vw",
@@ -649,22 +555,22 @@ const FuelPage = () => {
                         justifyContent: 'flex-start',
                         px: 3,
                         textTransform: 'none'
-                        }}
+                      }}
                     >
-                        <Box>
+                      <Box>
                         <Typography variant="h6" fontWeight={600}>Fuel Availability</Typography>
-                        <Typography variant="caption">STATIC! NOT FOR USE!</Typography>
-                        </Box>
+                        <Typography variant="caption">Current tank estimates</Typography>
+                      </Box>
                     </HoverButton>
-                    </motion.div>
+                  </motion.div>
 
-                    <motion.div whileHover={{ scale: 1.02 }}>
+                  <motion.div whileHover={{ scale: 1.02 }}>
                     <HoverButton
-                        variant="outlined"
-                        color="success"
-                        onClick={() => setContactModalOpen(true)}
-                        startIcon={<Email sx={{ fontSize: 32 }} />}
-                        sx={{
+                      variant="outlined"
+                      color="success"
+                      onClick={() => setContactModalOpen(true)}
+                      startIcon={<Email sx={{ fontSize: 32 }} />}
+                      sx={{
                         height: 80,
                         width: '100%',
                         maxWidth: "100vw",
@@ -673,17 +579,16 @@ const FuelPage = () => {
                         justifyContent: 'flex-start',
                         px: 3,
                         textTransform: 'none'
-                        }}
+                      }}
                     >
-                        <Box>
+                      <Box>
                         <Typography variant="h6" fontWeight={600}>Support Center</Typography>
                         <Typography variant="caption">24/7 assistance</Typography>
-                        </Box>
+                      </Box>
                     </HoverButton>
-                    </motion.div>
+                  </motion.div>
                 </Stack>
-                </CardContent>
-
+              </CardContent>
             </Card>
           </Grid>
         </Grid>
