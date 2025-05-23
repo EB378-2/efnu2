@@ -42,6 +42,7 @@ import resources from '@/resources';
 import { CanAccess } from "@refinedev/core";
 import { useLogout } from '@refinedev/core';
 import { useTheme } from '@hooks/useTheme';
+import { useTranslations } from 'use-intl';
 
 const StyledFab = styled(Fab)(({ theme }) => ({
   position: 'relative',
@@ -58,6 +59,7 @@ const StyledFab = styled(Fab)(({ theme }) => ({
 }));
 
 export default function MobileNav() {
+  const t = useTranslations("NavBar");
   const [menuOpen, setMenuOpen] = useState(false);
   const theme = useTheme();
   const pathname = usePathname();
@@ -211,7 +213,7 @@ export default function MobileNav() {
           {mainNavResources.slice(0, 2).map((resource) => (
             <BottomNavigationAction
               key={resource.name}
-              label={resource.meta.label}
+              label={t(`${resource.meta.label}`)}
               icon={resource.meta.icon}
               component={Link}
               href={resource.list}
@@ -266,7 +268,7 @@ export default function MobileNav() {
           {mainNavResources.slice(2).map((resource) => (
             <BottomNavigationAction
               key={resource.name}
-              label={resource.meta.label}
+              label={t(`${resource.meta.label}`)}
               icon={resource.meta.icon}
               component={Link}
               href={resource.list}

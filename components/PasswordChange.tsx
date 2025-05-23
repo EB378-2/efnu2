@@ -16,6 +16,7 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useNotification } from "@refinedev/core";
 import { useGetIdentity } from "@refinedev/core";
+import { useTranslations } from "use-intl";
 
 interface PasswordChangeData {
   currentPassword: string;
@@ -25,6 +26,7 @@ interface PasswordChangeData {
 
 export const PasswordChangeBlock = () => {
   const { open } = useNotification();
+  const t = useTranslations("Profile");
   const { data: identity } = useGetIdentity<{ id: string }>();
   const currentUserId = identity?.id; // Adjust this based on your auth setup
   const [showPassword, setShowPassword] = useState({
@@ -131,7 +133,7 @@ export const PasswordChangeBlock = () => {
     <Card sx={{ mt: 4 }}>
       <CardContent>
         <Typography variant="h6" gutterBottom>
-          Change Password
+          {t("ChangePassword")}
         </Typography>
         <Box component="form" onSubmit={handleSubmit}>
           <FormControl fullWidth margin="normal" error={!!errors.currentPassword}>

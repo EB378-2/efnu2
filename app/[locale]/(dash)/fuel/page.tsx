@@ -52,7 +52,6 @@ import {
   Place,
   Info
 } from "@mui/icons-material";
-import { SaveButton } from "@refinedev/mui";
 import { motion } from "framer-motion";
 import { FuelOption, FuelingValues, FuelItem } from '@/types/index';
 import { FuelName } from "@/components/functions/FetchFunctions";
@@ -96,6 +95,7 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
 
 const FuelPage = () => {
   const { data: identityData } = useGetIdentity<{ id: string }>();
+  const t = useTranslations("Fuel");
   const theme = useTheme();
   const [selectedFuel, setSelectedFuel] = useState<string>("");
   const [createModalOpen, setCreateModalOpen] = useState(false);
@@ -167,14 +167,14 @@ const FuelPage = () => {
           p: 3,
         }}>
           <Typography variant="h5" gutterBottom>
-            <LocalGasStation /> Record Fuel Addition
+            <LocalGasStation /> {t("Create.RecordFuelAddition")}
           </Typography>
 
           <form onSubmit={handleFormSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <Typography variant="subtitle2" gutterBottom>
-                  Adding to: {fuels?.data?.find(f => f.id === selectedFuel)?.label}
+                  {t("Create.AddingTo")}: {fuels?.data?.find(f => f.id === selectedFuel)?.label}
                 </Typography>
               </Grid>
               
@@ -183,7 +183,7 @@ const FuelPage = () => {
                   fullWidth
                   required
                   name="amount"
-                  label="Amount Added (Liters)"
+                  label={t("Create.AmountAdded")}
                   type="number"
                   inputProps={{ min: 0.1, step: 0.1 }}
                 />
@@ -194,8 +194,8 @@ const FuelPage = () => {
                   fullWidth
                   required
                   name="aircraft"
-                  label="Aircraft/Vehicle"
-                  placeholder="Optional identifier"
+                  label={t("Create.AircraftRegistration")}
+                  placeholder={t("Create.egOHABC")}
                 />
               </Grid>
               
@@ -207,7 +207,8 @@ const FuelPage = () => {
                 variant="contained" 
                 fullWidth
               >
-                Record Fuel Addition
+                
+                {t("Create.RecordFuelAddition")}
               </Button>
             </Box>
           </form>
@@ -238,7 +239,7 @@ const FuelPage = () => {
             <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
               <Typography variant="h5" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <EventAvailable color="primary" />
-                Fueling History
+                {t("FuelingHistory")}
               </Typography>
               <IconButton onClick={() => setMyRefuelingsModalOpen(false)}>
                 <Close />
@@ -316,7 +317,7 @@ const FuelPage = () => {
             <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
               <Typography variant="h5" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <Email color="primary" />
-                Contact Us
+                {t("Contact.ContactUs")}
               </Typography>
               <IconButton onClick={() => setContactModalOpen(false)}>
                 <Close />
@@ -333,22 +334,22 @@ const FuelPage = () => {
                     <Email fontSize="small" /> fuel@efnu.fi
                   </Typography>
                   <Typography variant="body1" sx={{ mb: 1, display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <Phone fontSize="small" /> +358 123 456 789
+                    <Phone fontSize="small" /> +358 40 6655846
                   </Typography>
                   <Typography variant="body1" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <Place fontSize="small" /> 123 Aviation St, Helsinki
+                    <Place fontSize="small" /> Lentokentäntie 5, 03100 Nummela
                   </Typography>
                 </Box>
               </Grid>
               <Grid item xs={12} md={6}>
                 <Box sx={{ p: 2 }}>
                   <Typography variant="body2" color="text.secondary" paragraph>
-                    We&apos;re available 24/7 for your fueling needs. Reach out for:
+                    {t("Contact.Subtitle")}:
                   </Typography>
                   <ul style={{ paddingLeft: 20, margin: 0 }}>
-                    <li><Typography variant="body2">Emergency support</Typography></li>
-                    <li><Typography variant="body2">Bulk orders</Typography></li>
-                    <li><Typography variant="body2">Service inquiries</Typography></li>
+                    <li><Typography variant="body2">{t("Contact.EmergencySupport")}</Typography></li>
+                    <li><Typography variant="body2">{t("Contact.BulkOrders")}</Typography></li>
+                    <li><Typography variant="body2">{t("Contact.ServiceInquiries")}</Typography></li>
                   </ul>
                 </Box>
               </Grid>
@@ -372,31 +373,27 @@ const FuelPage = () => {
           p: 3,
         }}>
           <Typography variant="h5" gutterBottom>
-            <LocalGasStation /> Fuel Tank Estimates
+            <LocalGasStation /> {t("Status.FuelTankEstimates")}
           </Typography>
           
           <Typography variant="body2" color="text.secondary" paragraph>
-            Based on recorded fuelings. Actual levels may vary.
+            {t("Status.subtitle")}
           </Typography>
 
           <TableContainer>
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>Fuel Type</TableCell>
-                  <TableCell align="right">Capacity</TableCell>
-                  <TableCell align="right">Estimated</TableCell>
-                  <TableCell align="right">% Full</TableCell>
-                  <TableCell align="right">Last Added</TableCell>
+                  <TableCell>{t("Status.FuelType")}</TableCell>
+                  <TableCell align="right">{t("Status.Capacity")}</TableCell>
+                  <TableCell align="right">{t("Status.Estimated")}</TableCell>
+                  <TableCell align="right">{t("Status.percentFull")}</TableCell>
+                  <TableCell align="right">{t("Status.LastAdded")}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {fuels?.data?.map((fuel: FuelOption) => {
                   const percent = (fuel?.remaining ?? 0) / (fuel?.capacity ?? 1) * 100;
-                  console.log(percent);
-                  console.log(fuel.remaining);
-                  console.log(fuel.capacity);
-                  console.log(fuel);
                   const lastAdded = fuel.lastFueling?.toLocaleDateString() || 'Never';
                   
                   return (
@@ -431,7 +428,7 @@ const FuelPage = () => {
 
           <Box mt={2}>
             <Typography variant="caption" color="text.secondary">
-              Note: Estimates assume no fuel consumption between recordings.
+              {t("Status.Details")}
             </Typography>
           </Box>
         </Box>
@@ -440,7 +437,7 @@ const FuelPage = () => {
       <Container maxWidth="lg">
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
           <Typography variant="h4" component="h1" fontWeight="bold">
-            Fuel Management System
+            {t("Title")}
           </Typography>
         </Box>
 
@@ -454,10 +451,10 @@ const FuelPage = () => {
               <CardHeader
                 title={
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Typography variant="h6">Report Fuel</Typography>
+                    <Typography variant="h6">{t("ReportFuel")}</Typography>
                   </Box>
                 }
-                subheader="Fuel Reporting system"
+                subheader={t("ReportFuel")}
               />
               <CardContent>
                 <Grid container spacing={2} sx={{ mt: 2 }}>
@@ -488,7 +485,7 @@ const FuelPage = () => {
                             {option.label}
                           </Typography>
                           <Typography variant="caption" sx={{ opacity: 0.9 }}>
-                            From €{option?.price}/L
+                            €{option?.price}/L
                           </Typography>
                         </HoverButton>
                       </motion.div>
@@ -508,11 +505,11 @@ const FuelPage = () => {
               <CardHeader
                 title={
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Typography variant="h6">Fuel Management</Typography>
+                    <Typography variant="h6">{t("FuelManagement")}</Typography>
                     <DollarIcon color="action" />
                   </Box>
                 }
-                subheader="Your fuelings, etc"
+                subheader={t("subheader")}
               />
               <CardContent>
                 <Stack spacing={2} sx={{ mt: 3 }}>
@@ -534,8 +531,8 @@ const FuelPage = () => {
                       }}
                     >
                       <Box>
-                        <Typography variant="h6" fontWeight={600}>Refueling History</Typography>
-                        <Typography variant="caption">View past transactions</Typography>
+                        <Typography variant="h6" fontWeight={600}>{t("RefuelingHistory")}</Typography>
+                        <Typography variant="caption">{t("ViewPastTransactions")}</Typography>
                       </Box>
                     </HoverButton>
                   </motion.div>
@@ -558,8 +555,8 @@ const FuelPage = () => {
                       }}
                     >
                       <Box>
-                        <Typography variant="h6" fontWeight={600}>Fuel Availability</Typography>
-                        <Typography variant="caption">Current tank estimates</Typography>
+                        <Typography variant="h6" fontWeight={600}>{t("FuelAvailability")}</Typography>
+                        <Typography variant="caption">{t("CurrentTankEstimates")}</Typography>
                       </Box>
                     </HoverButton>
                   </motion.div>
@@ -582,8 +579,8 @@ const FuelPage = () => {
                       }}
                     >
                       <Box>
-                        <Typography variant="h6" fontWeight={600}>Support Center</Typography>
-                        <Typography variant="caption">24/7 assistance</Typography>
+                        <Typography variant="h6" fontWeight={600}>{t("SupportCenter")}</Typography>
+                        <Typography variant="caption">{t("assistance")}</Typography>
                       </Box>
                     </HoverButton>
                   </motion.div>
