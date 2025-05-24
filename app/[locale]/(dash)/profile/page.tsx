@@ -160,7 +160,6 @@ const Profile = () => {
                 <LanguageSwitcher/>
               </CardActions>
             </Card>
-            <PasswordChangeBlock />
           </Grid>
 
           {/* Fee Status Card */}
@@ -242,10 +241,12 @@ const Profile = () => {
               </CardActions>
             </Card>
           </Grid>
-
-          {/* Fuel Totals Card */}
-          <FuelData profileId={uid} />
+          <Grid item xs={12} md={4}>
+            <PasswordChangeBlock />
+          </Grid>
         </Grid>
+        {/* Fuel Totals Card */}
+        <FuelData profileId={uid} />
       </Container>
     </Box>
   );

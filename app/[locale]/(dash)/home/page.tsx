@@ -117,13 +117,15 @@ export default function HomePage() {
           <Box sx={{ 
             display: 'flex', 
             alignItems: 'center', 
+            
             justifyContent: 'space-between', 
-            mb: 2 
+            mb: 2, 
+            flexDirection: { xs: 'column', md: 'row' }
           }}>
             <Typography variant="h4" sx={{ fontWeight: 600 }}>
               {t("title")}
             </Typography>
-            <Box sx={{ gap: 3 }}>
+            <Box sx={{ gap: 3, mt: { xs: 2, md: 0 } }}>
               <SunriseSunsetCard />
               <Typography variant="subtitle1" sx={{ fontWeight: 500 }}>
                 {t("hours")}: 06:00 - 18:00 UTC
@@ -138,9 +140,9 @@ export default function HomePage() {
           <Box sx={{ 
             display: 'flex', 
             flexDirection: { xs: 'column', md: 'row' }, 
-            gap: 3, 
-            mb: 4,
-            p: 2,
+            gap: { xs: 2, md: 3 },
+            mb: { xs: 2, md: 4 },
+            p: { xs: 1, md: 2 },
             borderRadius: '16px',
             background: theme.palette.mode === 'dark' 
               ? 'linear-gradient(45deg, #1a1a1a 30%, #2a2a2a 90%)' 
@@ -152,6 +154,7 @@ export default function HomePage() {
             {/* Local Time Card */}
             <Card sx={{ 
               flex: 1,
+              display: { xs: 'none', md: 'block' },
               background: 'transparent',
               boxShadow: 'none',
               position: 'relative',
@@ -218,12 +221,12 @@ export default function HomePage() {
                 maskComposite: 'exclude'
               }
             }}>
-              <CardContent>
+              <CardContent sx={{ p: { xs: 1, md: 2 } }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                   <Public sx={{ 
                     mr: 1, 
                     color: theme.palette.mode === 'dark' ? '#43e97b' : '#2e7d32',
-                    fontSize: '1.5rem'
+                    fontSize: { xs: '1.2rem', md: '1.5rem' }
                   }} />
                   <Typography variant="h6" sx={{ fontWeight: 600 }}>
                     {t("UTCTime")}
@@ -231,6 +234,7 @@ export default function HomePage() {
                 </Box>
                 <Typography variant="h3" sx={{ 
                   fontWeight: 300,
+                  fontSize: { xs: '1.8rem', md: '3rem' },
                   background: theme.palette.mode === 'dark' 
                     ? 'linear-gradient(45deg, #43e97b 0%, #38f9d7 100%)' 
                     : 'linear-gradient(45deg, #2e7d32 0%, #4caf50 100%)',
@@ -242,6 +246,7 @@ export default function HomePage() {
                 </Typography>
                 <Typography variant="subtitle2" sx={{ 
                   mt: 1,
+                  display: {xs:'none', md: 'block'},
                   color: theme.palette.mode === 'dark' ? '#8bf0c5' : '#66bb6a'
                 }}>
                   {utcDate}
@@ -268,12 +273,12 @@ export default function HomePage() {
                 maskComposite: 'exclude'
               }
             }}>
-              <CardContent>
+              <CardContent sx={{ p: { xs: 1, md: 2 } }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                   <Timer sx={{ 
                     mr: 1, 
                     color: theme.palette.mode === 'dark' ? '#ff6b6b' : '#d32f2f',
-                    fontSize: '1.5rem'
+                    fontSize: { xs: '1.2rem', md: '1.5rem' }
                   }} />
                   <Typography variant="h6" sx={{ fontWeight: 600 }}>
                     {t("FINTime")}
@@ -281,6 +286,7 @@ export default function HomePage() {
                 </Box>
                 <Typography variant="h3" sx={{ 
                   fontWeight: 300,
+                  fontSize: { xs: '1.8rem', md: '3rem' },
                   background: theme.palette.mode === 'dark' 
                     ? 'linear-gradient(45deg, #ff6b6b 0%, #ff8e53 100%)' 
                     : 'linear-gradient(45deg, #d32f2f 0%, #f44336 100%)',
@@ -292,6 +298,7 @@ export default function HomePage() {
                 </Typography>
                 <Typography variant="subtitle2" sx={{ 
                   mt: 1,
+                  display: {xs:'none', md: 'block'},
                   color: theme.palette.mode === 'dark' ? '#ffab91' : '#ef5350'
                 }}>
                   {finishDate}

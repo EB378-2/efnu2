@@ -33,14 +33,15 @@
     "Home": "Home",
     "ATIS": "ATIS",
     "Fuel": "Fuel",
-    "Profile": "Profile"
+    "Profile": "Profile",
+    "LogOut": "Log Out"
   },
 
 
   "Home": {
     "title": "Welcome to the EFNU",
     "hours": "Operational hours",
-    "LocalTime": "Local Time",
+    "LocalTime": "Your Local Time",
     "UTCTime": "UTC Time",
     "FINTime": "Finnish Time",
     "WelcomeBack": "Welcome back",

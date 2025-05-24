@@ -176,7 +176,7 @@ export default function MobileNav() {
                 sx={{ color: theme.palette.error.main }}
               >
                 <AccountBox sx={{ mr: 2 }} />
-                Log Out
+                {t("LogOut")}
               </MenuItem>
             </Grid>
           </Box>

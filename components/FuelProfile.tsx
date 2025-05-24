@@ -1,127 +1,317 @@
 "use client";
 
 import React from "react";
-import { BarChart } from "recharts";
-import { Grid, Card, CardHeader, Box, Typography, CardContent, Tooltip, CardActions, Button } from "@mui/material";
+import { 
+  Grid, 
+  Card, 
+  CardHeader, 
+  Box, 
+  Typography, 
+  CardContent, 
+  CardActions, 
+  Button,
+  useTheme
+} from "@mui/material";
 import { useList } from "@refinedev/core";
-import { FuelIcon } from "lucide-react";
-import { ResponsiveContainer, CartesianGrid, XAxis, YAxis, Bar } from "recharts";
-import { FuelItem, FuelStats, ProcessedFuelData } from '@/types/index';
+import { Fuel } from "lucide-react";
+import { 
+  ResponsiveContainer, 
+  BarChart, 
+  CartesianGrid, 
+  XAxis, 
+  YAxis, 
+  Tooltip, 
+  Bar, 
+  Cell
+} from "recharts";
+import { FuelingValues, ProcessedFuelData, FuelTypeUsage } from '@/types/index';
+import { useTranslations } from "next-intl";
 
-  
-  export function FuelData({ profileId }: { profileId: string }) {
-    const { data: MyRefuelingsData } = useList<FuelItem>({
-      resource: "fuelings",
-      filters: [{ field: "uid", operator: "eq", value: profileId }],
-      queryOptions: { enabled: !!profileId },
+const getMonthLabel = (date: Date): string => {
+  return date.toLocaleString('default', { month: 'short' }) + ' ' + 
+         date.getFullYear().toString().slice(-2);
+};
+
+interface FuelType {
+  id: string;
+  label: string;
+  color: string;
+}
+
+export function FuelData({ profileId }: { profileId: string }) {
+  const t = useTranslations("profile");
+  const theme = useTheme();
+
+  // Fuel transactions data
+  const { data: myRefuelingsData } = useList<FuelingValues>({
+    resource: "fuelings",
+    filters: [{ 
+      field: "uid", 
+      operator: "eq", 
+      value: profileId 
+    }, {
+      field: "aircraft", 
+      operator: "ne", 
+      value: "FUEL ADDITION"
+    }],
+    pagination: { mode: "off" },
+    queryOptions: { enabled: !!profileId }
+  });
+
+  // Fuel types data
+  const { data: fuels } = useList<FuelType>({
+    resource: "fuels",
+    pagination: { mode: "off" }
+  });
+
+  const processFuelData = (): ProcessedFuelData[] => {
+    if (!myRefuelingsData?.data?.length) return [];
+
+    const months = Array.from({ length: 6 }, (_, i) => {
+      const date = new Date();
+      date.setMonth(date.getMonth() - (5 - i));
+      return date;
     });
-    console.log("MyRefuelingsData:", MyRefuelingsData);
-  
-    const processFuelData = (): [ProcessedFuelData[], FuelStats] => {
-      if (!MyRefuelingsData?.data) return [[], { totalYTD: 0, currentMonth: 0, monthlyAverage: 0 }];
-  
-      // Group data by month and calculate totals
-      const monthlyTotals: Record<string, number> = {};
-      const currentDate = new Date();
-      const sixMonthsAgo = new Date();
-      sixMonthsAgo.setMonth(currentDate.getMonth() - 5);
-  
-      // Initialize last 6 months with zeros
-      const months = Array.from({ length: 6 }, (_, i) => {
-        const date = new Date();
-        date.setMonth(currentDate.getMonth() - i);
-        return date.toISOString().slice(0, 7); // YYYY-MM format
-      }).reverse();
-  
-      MyRefuelingsData.data.forEach((entry) => {
-        const entryDate = new Date(entry.created_at);
-        if (entryDate >= sixMonthsAgo) {
-          const monthKey = entryDate.toLocaleString('default', { month: 'short' }) + ' ' + entryDate.getFullYear().toString().slice(-2);
-          monthlyTotals[monthKey] = (monthlyTotals[monthKey] || 0) + entry.amount;
-        }
-      });
-  
-      // Create chart data with all months, filling in zeros where needed
-      const fuelData = months.map(monthStr => {
-        const date = new Date(monthStr + '-01');
-        const monthLabel = date.toLocaleString('default', { month: 'short' }) + ' ' + date.getFullYear().toString().slice(-2);
-        return {
-          month: monthLabel,
-          amount: monthlyTotals[monthLabel] || 0
-        };
-      });
-  
-      // Calculate statistics
-      const totalYTD = fuelData.reduce((sum, entry) => sum + entry.amount, 0);
-      const currentMonth = fuelData[fuelData.length - 1]?.amount || 0;
-      const monthlyAverage = totalYTD / 6;
-  
-      return [fuelData, { totalYTD, currentMonth, monthlyAverage }];
-    };
-    console.log("processFuelData:", processFuelData);
-  
-    const [fuelData, stats] = processFuelData();
-    console.log("Fuel Data:", fuelData);
-    console.log("Fuel Stats:", stats);
-  
-    if (!MyRefuelingsData?.data) return null;
-  
-    return (
-      <Grid item xs={12} md={4}>
+
+    const monthlyData = new Map<string, number>(
+      months.map(date => [getMonthLabel(date), 0])
+    );
+
+    myRefuelingsData.data.forEach((entry: FuelingValues) => {
+      const entryDate = new Date(entry.created_at);
+      const entryMonth = getMonthLabel(entryDate);
+      if (monthlyData.has(entryMonth)) {
+        monthlyData.set(entryMonth, (monthlyData.get(entryMonth) || 0) + entry.amount);
+      }
+    });
+
+    return Array.from(monthlyData, ([month, amount]) => ({ 
+      month, 
+      amount: Number(amount.toFixed(2)) 
+    }));
+  };
+
+  const getFuelTypeUsage = (): FuelTypeUsage[] => {
+    if (!myRefuelingsData?.data || !fuels?.data) return [];
+
+    const fuelMap = new Map<string, FuelTypeUsage>(
+      fuels.data.map(fuel => [fuel.id, {
+        name: fuel.label,
+        total: 0,
+        color: fuel.color
+      }])
+    );
+
+    myRefuelingsData.data.forEach((entry: FuelingValues) => {
+      if (entry.amount > 0 && fuelMap.has(entry.fuel)) {
+        const fuel = fuelMap.get(entry.fuel)!;
+        fuelMap.set(entry.fuel, {
+          ...fuel,
+          total: fuel.total + entry.amount
+        });
+      }
+    });
+
+    return Array.from(fuelMap.values())
+      .filter(fuel => fuel.total > 0)
+      .sort((a, b) => b.total - a.total);
+  };
+
+  const fuelData = processFuelData();
+  const totalFuel = fuelData.reduce((sum: number, entry: ProcessedFuelData) => 
+    sum + entry.amount, 0
+  );
+  const currentMonth = fuelData[fuelData.length - 1]?.amount || 0;
+  const monthlyAverage = totalFuel / (fuelData.length || 1);
+
+  if (!myRefuelingsData?.data) return null;
+
+  return (
+    <Grid container spacing={3} mt={2}>
+      {/* Fuel Consumption Card */}
+      <Grid item xs={12} md={6}>
         <Card elevation={2} sx={{ 
           borderRadius: '12px',
-          boxShadow: '0 0 40px -10px rgba(34, 211, 238, 0.5)',
+          boxShadow: theme.shadows[4],
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column'
         }}>
           <CardHeader
             title={
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <Typography variant="h6">Fuel Consumption</Typography>
-                <FuelIcon color="action" />
+                <Fuel color={theme.palette.primary.main} size={24} />
               </Box>
             }
-            subheader="Beta Testing"
+            subheader="Last 6 months overview"
           />
-          <CardContent>
-            <Box sx={{ height: 240, mb: 3 }}>
+          
+          <CardContent sx={{ flex: 1 }}>
+            <Box sx={{ height: 200, mb: 3 }}>
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={fuelData} margin={{ top: 20, right: 0, left: 0, bottom: 5 }}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                  <XAxis dataKey="month" />
-                  <YAxis />
-                  <Tooltip title="Fuel Usage">
-                    <span />
-                  </Tooltip>
-                  <Bar dataKey="amount" name="Fuel" fill="#8884d8" radius={[4, 4, 0, 0]} />
+                <BarChart data={fuelData} margin={{ top: 10, right: 10, left: -20 }}>
+                  <CartesianGrid 
+                    strokeDasharray="3 3" 
+                    vertical={false} 
+                    stroke={theme.palette.divider}
+                  />
+                  <XAxis 
+                    dataKey="month" 
+                    tick={{ fill: theme.palette.text.secondary }}
+                  />
+                  <YAxis 
+                    tick={{ fill: theme.palette.text.secondary }}
+                    tickFormatter={(value: number) => `${value}L`}
+                  />
+                  <Tooltip
+                    contentStyle={{
+                      borderRadius: 8,
+                      backgroundColor: theme.palette.background.paper,
+                      borderColor: theme.palette.divider
+                    }}
+                  />
+                  <Bar 
+                    dataKey="amount" 
+                    name="Fuel Used"
+                    fill={theme.palette.primary.main}
+                    radius={[4, 4, 0, 0]}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </Box>
-            <Box>
-              {[
-                { label: "Total YTD", value: `${stats.totalYTD.toLocaleString()} gallons` },
-                { label: "Current Month", value: `${stats.currentMonth.toLocaleString()} gallons` },
-                { label: "Avg. Monthly", value: `${Math.round(stats.monthlyAverage).toLocaleString()} gallons` }
-              ].map((item, index) => (
-                <Box 
-                  key={index} 
-                  sx={{ 
-                    display: 'flex', 
-                    justifyContent: 'space-between', 
-                    py: 1, 
-                    borderBottom: '1px solid #e0e0e0'
-                  }}
-                >
-                  <Typography color="text.secondary">{item.label}</Typography>
-                  <Typography fontWeight="medium">{item.value}</Typography>
-                </Box>
-              ))}
+
+            <Box sx={{ display: 'grid', gap: 1 }}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Typography variant="body2" color="text.secondary">
+                  Total Consumption:
+                </Typography>
+                <Typography variant="body2" fontWeight="medium">
+                  {totalFuel.toFixed(1)}L
+                </Typography>
+              </Box>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Typography variant="body2" color="text.secondary">
+                  Current Month:
+                </Typography>
+                <Typography variant="body2" fontWeight="medium">
+                  {currentMonth.toFixed(1)}L
+                </Typography>
+              </Box>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Typography variant="body2" color="text.secondary">
+                  Monthly Average:
+                </Typography>
+                <Typography variant="body2" fontWeight="medium">
+                  {monthlyAverage.toFixed(1)}L
+                </Typography>
+              </Box>
             </Box>
           </CardContent>
-          <CardActions>
-            <Button fullWidth variant="outlined" size="small" href="/fuel">
-              Go To Fuel Management
+          
+          <CardActions sx={{ p: 2 }}>
+            <Button 
+              fullWidth 
+              variant="outlined" 
+              size="small" 
+              href="/fuel"
+              sx={{ textTransform: 'none' }}
+            >
+              View Detailed History
             </Button>
           </CardActions>
         </Card>
       </Grid>
-    );
-  }
+
+      {/* Fuel Type Usage Card */}
+      <Grid item xs={12} md={6}>
+        <Card elevation={2} sx={{ 
+          borderRadius: '12px',
+          boxShadow: theme.shadows[4],
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column'
+        }}>
+          <CardHeader
+            title={
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography variant="h6">Fuel Type Usage</Typography>
+                <Fuel color={theme.palette.primary.main} size={24} />
+              </Box>
+            }
+            subheader="Total consumption by fuel type"
+          />
+          
+          <CardContent sx={{ flex: 1 }}>
+            <Box sx={{ height: 200, mb: 3 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart 
+                  data={getFuelTypeUsage()}
+                  layout="vertical"
+                  margin={{ left: -20 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" horizontal={false} />
+                  <XAxis 
+                    type="number" 
+                    tickFormatter={(value: number) => `${value}L`} 
+                  />
+                  <YAxis 
+                    type="category" 
+                    dataKey="name" 
+                    width={80}
+                    tick={{ fill: theme.palette.text.secondary }}
+                  />
+                  <Tooltip
+                    contentStyle={{
+                      borderRadius: 8,
+                      backgroundColor: theme.palette.background.paper,
+                      borderColor: theme.palette.divider
+                    }}
+                  />
+                  <Bar dataKey="total" radius={[0, 4, 4, 0]}>
+                    {getFuelTypeUsage().map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </Box>
+
+            <Box sx={{ display: 'grid', gap: 1.5 }}>
+              {getFuelTypeUsage().map((fuel, index) => (
+                <Box 
+                  key={index}
+                  sx={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: 1.5,
+                    p: 1,
+                    borderRadius: 2,
+                    bgcolor: theme.palette.mode === 'dark' 
+                      ? 'rgba(255, 255, 255, 0.05)' 
+                      : 'rgba(0, 0, 0, 0.03)'
+                  }}
+                >
+                  <Box 
+                    sx={{ 
+                      width: 12, 
+                      height: 12, 
+                      borderRadius: '50%', 
+                      bgcolor: fuel.color 
+                    }} 
+                  />
+                  <Typography variant="body2" sx={{ flex: 1 }}>
+                    {fuel.name}
+                  </Typography>
+                  <Typography variant="body2" fontWeight="medium">
+                    {fuel.total.toFixed(1)}L
+                  </Typography>
+                </Box>
+              ))}
+            </Box>
+          </CardContent>
+        </Card>
+      </Grid>
+    </Grid>
+  );
+}

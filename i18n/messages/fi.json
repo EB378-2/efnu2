@@ -38,7 +38,8 @@
     "Home": "Koti",
     "ATIS": "ATIS",
     "Fuel": "Polttoaine",
-    "Profile": "Profiili"
+    "Profile": "Profiili",
+    "LogOut": "Kirjaudu ulos"
   },
 
   "Home": {

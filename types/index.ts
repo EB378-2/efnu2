@@ -35,6 +35,7 @@ export interface FuelOption {
 // Fuelings
 
 export interface FuelingValues {
+  id: string;
   aircraft: string;
   amount: number;
   fuel: string;
@@ -54,6 +55,11 @@ export interface FuelStats {
     totalYTD: number;
     currentMonth: number;
     monthlyAverage: number;
+}
+export interface FuelTypeUsage {
+  name: string;
+  total: number;
+  color: string;
 }
 
 

@@ -12,8 +12,9 @@ import {
   IconButton,
   FormControl,
   FormHelperText,
+  CardHeader,
 } from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { Visibility, VisibilityOff, AttachMoney as DollarIcon } from "@mui/icons-material";
 import { useNotification } from "@refinedev/core";
 import { useGetIdentity } from "@refinedev/core";
 import { useTranslations } from "use-intl";
@@ -130,7 +131,19 @@ export const PasswordChangeBlock = () => {
   };
 
   return (
-    <Card sx={{ mt: 4 }}>
+    <Card elevation={2} sx={{ 
+      borderRadius: '12px',
+      boxShadow: '0 0 40px -10px rgba(34, 211, 238, 0.5)',
+    }}>
+      <CardHeader
+        title={
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Typography variant="h6">{t("FeeStatus")}</Typography>
+            <DollarIcon color="action" />
+          </Box>
+        }
+        subheader={t("Yourcurrentairportfees")}
+      />
       <CardContent>
         <Typography variant="h6" gutterBottom>
           {t("ChangePassword")}
