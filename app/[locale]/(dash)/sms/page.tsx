@@ -32,7 +32,7 @@ const ReportListPage = () => {
   // Mock data - replace with real API calls
   const mockReports = [
     {
-      id: "SAFE-001",
+      id: "7875a9c5-5ce2-4dd2-9ew2-dd483cf7fb30",
       title: "Slippery Floor in Hangar B",
       category: "Housekeeping",
       status: "open",
@@ -41,7 +41,7 @@ const ReportListPage = () => {
       severity: "medium"
     },
     {
-      id: "SAFE-002",
+      id: "7875a9c5-12de-4dd2-95b2-dd483cf7fb30",
       title: "Missing Fire Extinguisher in Workshop",
       category: "Fire Safety",
       status: "in-progress",
@@ -50,7 +50,7 @@ const ReportListPage = () => {
       severity: "high"
     },
     {
-      id: "SAFE-003",
+      id: "7875a9c5-5ce2-4dd2-95b2-dd4cd237fb30",
       title: "Frayed Electrical Wiring Spotted",
       category: "Electrical",
       status: "resolved",

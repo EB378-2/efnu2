@@ -39,8 +39,10 @@
     "ATIS": "ATIS",
     "Fuel": "Polttoaine",
     "Profile": "Profiili",
-    "LogOut": "Kirjaudu ulos"
+    "LogOut": "Kirjaudu ulos",
+    "NavigationMenu": "Navigointivalikko"
   },
+  
 
   "Home": {
     "title": "Tervetuloa EFNU:hun",
@@ -107,6 +109,38 @@
     "Certification": "Sertifiointi",
     "FeeStatus": "Maksuasema",
     "Yourcurrentairportfees": "Nykyiset lentokenttämaksusi",
-    "ChangePassword": "Vaihda salasana"
+    "ChangePassword": "Vaihda salasana",
+    "ChangePasswordDescription": "Vaihda salasanasi turvallisuuden parantamiseksi.",
+    "CurrentPassword": "Nykyinen salasana",
+    "NewPassword": "Uusi salasana",
+    "ConfirmNewPassword": "Vahvista uusi salasana",
+    "Updating": "Päivitetään...",
+    "FuelConsumption": "Fuel Consumption",
+    "LastSixMonthsOverview": "Last 6 Months Overview",
+    "TotalConsumption": "Total Consumption",
+    "CurrentMonth": "Current Month",
+    "MonthlyAverage": "Monthly Average",
+    "ViewDetailedHistory": "View Detailed History",
+    "FuelTypeUsage": "Fuel Type Usage",
+    "TotalConsumptionByFuelType": "Total Consumption by Fuel Type"
+  },
+  "PN": {
+    "UpcomingFlights": "Tulevat lennot",
+    "CreatePN": "Luo PN",
+    "approved": "Hyväksytty",
+    "pending": "Odottaa",
+    "rejected": "Hylätty",
+    "NoUpcomingFlightsScheduled": "Ei tulevia lentoja suunniteltu"
+  },
+  "WebCam": {
+    "EFNUWebcams": "EFNU Webcams",
+    "Description": "Livenäkymät lentokentältä. Kuvia päivitetään 60 sekunnin välein.",
+    "Runway27": "Kiitotie 27",
+    "ViewOfMainRunwayApproach": "Näköala pääkiitotien lähestymiseen",
+    "RunwayIntersection": "Kiitotien risteys",
+    "TaxiwayAndRunwayIntersection": "Rullausväylän ja kiitotien risteysnäkymä",
+    "GliderRunway22": "Purjelento Kiitotie 22",
+    "GliderOperationsArea": "Purjelentoalueen näkymä",
+    "LastUpdated": "Viimeksi päivitetty"
   }
 }

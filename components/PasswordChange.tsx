@@ -14,7 +14,7 @@ import {
   FormHelperText,
   CardHeader,
 } from "@mui/material";
-import { Visibility, VisibilityOff, AttachMoney as DollarIcon } from "@mui/icons-material";
+import { Visibility, VisibilityOff, LockReset } from "@mui/icons-material";
 import { useNotification } from "@refinedev/core";
 import { useGetIdentity } from "@refinedev/core";
 import { useTranslations } from "use-intl";
@@ -138,20 +138,17 @@ export const PasswordChangeBlock = () => {
       <CardHeader
         title={
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Typography variant="h6">{t("FeeStatus")}</Typography>
-            <DollarIcon color="action" />
+            <Typography variant="h6">{t("ChangePassword")}</Typography>
+            <LockReset color="action" />
           </Box>
         }
-        subheader={t("Yourcurrentairportfees")}
+        subheader={t("ChangePasswordDescription")}
       />
       <CardContent>
-        <Typography variant="h6" gutterBottom>
-          {t("ChangePassword")}
-        </Typography>
         <Box component="form" onSubmit={handleSubmit}>
           <FormControl fullWidth margin="normal" error={!!errors.currentPassword}>
             <TextField
-              label="Current Password"
+              label={t("CurrentPassword")}
               name="currentPassword"
               type={showPassword.current ? "text" : "password"}
               value={formData.currentPassword}
@@ -177,7 +174,7 @@ export const PasswordChangeBlock = () => {
 
           <FormControl fullWidth margin="normal" error={!!errors.newPassword}>
             <TextField
-              label="New Password"
+              label={t("NewPassword")}
               name="newPassword"
               type={showPassword.new ? "text" : "password"}
               value={formData.newPassword}
@@ -203,7 +200,7 @@ export const PasswordChangeBlock = () => {
 
           <FormControl fullWidth margin="normal" error={!!errors.confirmPassword}>
             <TextField
-              label="Confirm New Password"
+              label={t("ConfirmNewPassword")}
               name="confirmPassword"
               type={showPassword.confirm ? "text" : "password"}
               value={formData.confirmPassword}
@@ -234,7 +231,7 @@ export const PasswordChangeBlock = () => {
             disabled={loading}
             sx={{ mt: 2 }}
           >
-            {loading ? "Updating..." : "Change Password"}
+            {loading ? t("Updating") : t("ChangePassword")}
           </Button>
         </Box>
       </CardContent>

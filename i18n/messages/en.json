@@ -34,7 +34,23 @@
     "ATIS": "ATIS",
     "Fuel": "Fuel",
     "Profile": "Profile",
-    "LogOut": "Log Out"
+    "LogOut": "Log Out",
+    "NavigationMenu": "Navigation Menu",
+    "PN": "PN",
+    "WebCam": "WebCam",
+    "Blog": "Blog",
+    "NOTAMS": "NOTAMS",
+    "INFO": "INFO",
+    "FLYK": "FLYK",
+    "Weather": "Weather",
+    "RWY Lights": "RWY Lights",
+    "SMS": "SMS",
+    "Contact": "Contact",
+    "Handbook": "Handbook",
+    "Rules": "Rules",
+    "PIC Fees": "PIC Fees",
+    "Admin": "Admin",
+    "Create": "Create"
   },
 
 
@@ -94,7 +110,7 @@
     }
   },
   "Profile": {
-    "Title": "Profile",
+    "Profile": "Profile",
     "PersonalInformation": "Personal Information",
     "Yourpilotdetails": "Your pilot details",
     "License": "License",
@@ -103,6 +119,38 @@
     "Certification": "Certification",
     "FeeStatus": "Fee Status",
     "Yourcurrentairportfees": "Your current airport fees",
-    "ChangePassword": "Change Password"
+    "ChangePassword": "Change Password",
+    "ChangePasswordDescription": "Change your password to keep your account secure.",
+    "CurrentPassword": "Current Password",
+    "NewPassword": "New Password",
+    "ConfirmNewPassword": "Confirm New Password",
+    "Updating": "Updating...",
+    "FuelConsumption": "Fuel Consumption",
+    "LastSixMonthsOverview": "Last 6 Months Overview",
+    "TotalConsumption": "Total Consumption",
+    "CurrentMonth": "Current Month",
+    "MonthlyAverage": "Monthly Average",
+    "ViewDetailedHistory": "View Detailed History",
+    "FuelTypeUsage": "Fuel Type Usage",
+    "TotalConsumptionByFuelType": "Total Consumption by Fuel Type"
+  },
+  "PN": {
+    "UpcomingFlights": "Upcoming Flights",
+    "CreatePN": "Create PN",
+    "approved": "Approved",
+    "pending": "Pending",
+    "rejected": "Rejected",
+    "NoUpcomingFlightsScheduled": "No upcoming flights scheduled"
+  },
+  "WebCam": {
+    "EFNUWebcams": "EFNU Webcams",
+    "Description": "Live views from around the airfield. Images refresh every 60 seconds.",
+    "Runway27": "Runway 27",
+    "ViewOfMainRunwayApproach": "View of the main runway approach",
+    "RunwayIntersection": "Runway Intersection",
+    "TaxiwayAndRunwayIntersection": "Taxiway and runway intersection view",
+    "GliderRunway22": "Glider Runway 22",
+    "GliderOperationsArea": "Glider operations area view",
+    "LastUpdated": "Last Updated"
   }
 }

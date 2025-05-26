@@ -39,7 +39,7 @@ interface FuelType {
 }
 
 export function FuelData({ profileId }: { profileId: string }) {
-  const t = useTranslations("profile");
+  const t = useTranslations("Profile");
   const theme = useTheme();
 
   // Fuel transactions data
@@ -140,11 +140,11 @@ export function FuelData({ profileId }: { profileId: string }) {
           <CardHeader
             title={
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Typography variant="h6">Fuel Consumption</Typography>
+                <Typography variant="h6">{t("FuelConsumption")}</Typography>
                 <Fuel color={theme.palette.primary.main} size={24} />
               </Box>
             }
-            subheader="Last 6 months overview"
+            subheader={t("LastSixMonthsOverview")}
           />
           
           <CardContent sx={{ flex: 1 }}>
@@ -184,7 +184,7 @@ export function FuelData({ profileId }: { profileId: string }) {
             <Box sx={{ display: 'grid', gap: 1 }}>
               <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Typography variant="body2" color="text.secondary">
-                  Total Consumption:
+                  {t("TotalConsumption")}:
                 </Typography>
                 <Typography variant="body2" fontWeight="medium">
                   {totalFuel.toFixed(1)}L
@@ -192,7 +192,7 @@ export function FuelData({ profileId }: { profileId: string }) {
               </Box>
               <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Typography variant="body2" color="text.secondary">
-                  Current Month:
+                  {t("CurrentMonth")}:
                 </Typography>
                 <Typography variant="body2" fontWeight="medium">
                   {currentMonth.toFixed(1)}L
@@ -200,7 +200,7 @@ export function FuelData({ profileId }: { profileId: string }) {
               </Box>
               <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Typography variant="body2" color="text.secondary">
-                  Monthly Average:
+                  {t("MonthlyAverage")}:
                 </Typography>
                 <Typography variant="body2" fontWeight="medium">
                   {monthlyAverage.toFixed(1)}L
@@ -217,7 +217,7 @@ export function FuelData({ profileId }: { profileId: string }) {
               href="/fuel"
               sx={{ textTransform: 'none' }}
             >
-              View Detailed History
+              {t("ViewDetailedHistory")}
             </Button>
           </CardActions>
         </Card>
@@ -235,11 +235,11 @@ export function FuelData({ profileId }: { profileId: string }) {
           <CardHeader
             title={
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Typography variant="h6">Fuel Type Usage</Typography>
+                <Typography variant="h6">{t("FuelTypeUsage")}</Typography>
                 <Fuel color={theme.palette.primary.main} size={24} />
               </Box>
             }
-            subheader="Total consumption by fuel type"
+            subheader={t("TotalConsumptionByFuelType")}
           />
           
           <CardContent sx={{ flex: 1 }}>
@@ -250,10 +250,15 @@ export function FuelData({ profileId }: { profileId: string }) {
                   layout="vertical"
                   margin={{ left: -20 }}
                 >
-                  <CartesianGrid strokeDasharray="3 3" horizontal={false} />
+                  <CartesianGrid 
+                    strokeDasharray="3 3" 
+                    horizontal={false} 
+                    stroke={theme.palette.divider}
+                  />
                   <XAxis 
                     type="number" 
                     tickFormatter={(value: number) => `${value}L`} 
+                    tick={{ fill: theme.palette.text.secondary }}
                   />
                   <YAxis 
                     type="category" 
@@ -268,9 +273,9 @@ export function FuelData({ profileId }: { profileId: string }) {
                       borderColor: theme.palette.divider
                     }}
                   />
-                  <Bar dataKey="total" radius={[0, 4, 4, 0]}>
+                  <Bar dataKey="total" color={theme.palette.text.secondary} radius={[0, 4, 4, 0]}>
                     {getFuelTypeUsage().map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
+                      <Cell key={`cell-${index}`} fill={theme.palette.secondary.main} color={theme.palette.text.secondary } />
                     ))}
                   </Bar>
                 </BarChart>
@@ -303,7 +308,7 @@ export function FuelData({ profileId }: { profileId: string }) {
                   <Typography variant="body2" sx={{ flex: 1 }}>
                     {fuel.name}
                   </Typography>
-                  <Typography variant="body2" fontWeight="medium">
+                  <Typography variant="body2" fontWeight="medium" color={theme.palette.text.secondary}>
                     {fuel.total.toFixed(1)}L
                   </Typography>
                 </Box>

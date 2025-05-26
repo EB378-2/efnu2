@@ -23,6 +23,7 @@ export const adapter = new StringAdapter(`
 g, member, guest
 g, admin, member
 g, pilot, member
+g, staff, member
 
 
 //Policies  
