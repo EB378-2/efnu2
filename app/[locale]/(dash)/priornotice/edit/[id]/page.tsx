@@ -16,11 +16,11 @@ import { Controller } from 'react-hook-form';
 import { useTheme } from '@hooks/useTheme';
 import { useParams } from "next/navigation";
 import { PriorNotice } from "@/types/index";
+import { useTranslations } from 'next-intl';
 
 const PNEdit = () => {
-
-    const { id: pnID } = useParams<{ id: string }>();
-
+  const t = useTranslations('PN');
+  const { id: pnID } = useParams<{ id: string }>();
   const theme = useTheme();
   const {
     refineCore: { formLoading, queryResult },
@@ -33,7 +33,12 @@ const PNEdit = () => {
       resource: 'pn_forms',
       action: 'edit',
       id: pnID,
-      redirect: false,
+      metaData: {
+        transform: (data: PriorNotice) => ({
+          ...data,
+          status: 'pending' // Add status field with pending value
+        })
+      }
     },
   });
 
@@ -45,7 +50,7 @@ const PNEdit = () => {
       saveButtonProps={saveButtonProps}
       title={
         <Typography variant="h4">
-          Edit Prior Notice (PN)
+          {t("Edittitle")}
         </Typography>
       }
     >
@@ -53,17 +58,8 @@ const PNEdit = () => {
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Typography variant="body1" color={theme.palette.error.main}>
-              All operations outside of 0900-2100 local time are forbidden
+              {t("subtitle")}
             </Typography>
-            <TextField
-              {...register('status', {
-                required: 'Departure Location is required',
-              })}
-              value={"pending"}
-              error={!!errors.status}
-              helperText={typeof errors.status?.message === 'string' ? errors.status.message : ''}
-              sx={{ display: "hidden" }}
-            />
           </Grid>
 
           {/* Departure Location */}
@@ -76,7 +72,7 @@ const PNEdit = () => {
               error={!!errors.from_location}
               helperText={typeof errors.from_location?.message === 'string' ? errors.from_location.message : ''}
               fullWidth
-              label="Departure Location"
+              label={t("DepartureLocation")}
             />
           </Grid>
 
@@ -90,7 +86,7 @@ const PNEdit = () => {
               error={!!errors.to_location}
               helperText={typeof errors.to_location?.message === 'string' ? errors.to_location.message : ''}
               fullWidth
-              label="Arrival Location"
+              label={t("ArrivalLocation")}
             />
           </Grid>
 
@@ -108,7 +104,7 @@ const PNEdit = () => {
               error={!!errors.dep_time}
               helperText={typeof errors.dep_time?.message === 'string' ? errors.dep_time.message : ''}
               fullWidth
-              label="DEP (UTC HHMM)"
+              label={t("DEP (UTC HHMM)")}
             />
           </Grid>
 
@@ -125,7 +121,7 @@ const PNEdit = () => {
               defaultValue={defaultValues?.arr_time}
               error={!!errors.arr_time}
               helperText={typeof errors.arr_time?.message === 'string' ? errors.arr_time.message : ''}              fullWidth
-              label="ARR (UTC HHMM)"
+              label={t("ARR (UTC HHMM)")}
             />
           </Grid>
 
@@ -136,7 +132,7 @@ const PNEdit = () => {
               defaultValue={defaultValues?.dep_date?.split('T')[0]}
               fullWidth
               type="date"
-              label="DEP Date"
+              label={t("DEP Date")}
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
@@ -148,7 +144,7 @@ const PNEdit = () => {
               defaultValue={defaultValues?.arr_date?.split('T')[0]}
               fullWidth
               type="date"
-              label="ARR Date"
+              label={t("ARR Date")}
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
@@ -163,7 +159,7 @@ const PNEdit = () => {
               error={!!errors.aircraft_reg}
               helperText={typeof errors.aircraft_reg?.message === 'string' ? errors.aircraft_reg.message : ''}
               fullWidth
-              label="Aircraft registration"
+              label={t("Aircraft registration")}
             />
           </Grid>
 
@@ -181,7 +177,7 @@ const PNEdit = () => {
               helperText={typeof errors.mtow?.message === 'string' ? errors.mtow.message : ''}
               fullWidth
               type="number"
-              label="MTOW (Kg)"
+              label={t("MTOW (Kg)")}
             />
           </Grid>
 
@@ -193,7 +189,7 @@ const PNEdit = () => {
               error={!!errors.pic_name}
               helperText={typeof errors.pic_name?.message === 'string' ? errors.pic_name.message : ''}
               fullWidth
-              label="PIC (Full name)"
+              label={t("PIC (Full name)")}
             />
           </Grid>
 
@@ -211,7 +207,7 @@ const PNEdit = () => {
               error={!!errors.phone}
               helperText={typeof errors.phone?.message === 'string' ? errors.phone.message : ''}
               fullWidth
-              label="Phone"
+              label={t("Phone")}
             />
           </Grid>
 
@@ -229,7 +225,7 @@ const PNEdit = () => {
               error={!!errors.email}
               helperText={typeof errors.email?.message === 'string' ? errors.email.message : ''}
               fullWidth
-              label="PIC e-mail (for billing)"
+              label={t("PIC e-mail")}
             />
           </Grid>
 
@@ -242,7 +238,7 @@ const PNEdit = () => {
               render={({ field }) => (
                 <FormControlLabel
                   control={<Checkbox {...field} checked={field.value} color="primary" />}
-                  label="IFR Arrival"
+                  label={t("IFR Arrival")}
                 />
               )}
             />

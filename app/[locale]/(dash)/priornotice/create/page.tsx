@@ -17,8 +17,10 @@ import {
 import { Controller } from 'react-hook-form';
 import { useTheme } from '@hooks/useTheme';
 import { PriorNotice } from "@/types/index";
+import { useTranslations } from 'next-intl';
 
 const PNCreate = () => {
+  const t = useTranslations('PN');
   const theme = useTheme();
   const {
     refineCore: { formLoading },
@@ -29,7 +31,6 @@ const PNCreate = () => {
   } = useForm<PriorNotice>({
     refineCoreProps: {
       resource: 'pn_forms',
-      redirect: false,
     },
   });
 
@@ -47,7 +48,7 @@ const PNCreate = () => {
       goBack
       title={
         <Typography variant="h4">
-          EFNU - Prior Notice Form (PN)
+          {t("title")}
         </Typography>
       }
     >
@@ -55,7 +56,7 @@ const PNCreate = () => {
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Typography variant="body1" color={theme.palette.error.main}>
-              All operations outside of 0900-2100 local time are forbidden
+              {t("subtitle")}
             </Typography>
           </Grid>
 
@@ -68,8 +69,8 @@ const PNCreate = () => {
               error={!!errors.from_location}
               helperText={typeof errors.from_location?.message === 'string' ? errors.from_location.message : ''}
               fullWidth
-              label="Departure Location"
-              placeholder="Enter location here"
+              label={t("DepartureLocation")}
+              placeholder={t("Enterlocationhere")}
             />
           </Grid>
 
@@ -83,8 +84,8 @@ const PNCreate = () => {
               error={!!errors.to_location}
               helperText={typeof errors.to_location?.message === 'string' ? errors.to_location.message : ''}
               fullWidth
-              label="Arrival Location"
-              placeholder="Enter location here"
+              label={t("ArrivalLocation")}
+              placeholder={t("Enterlocationhere")}
             />
           </Grid>
 
@@ -101,8 +102,8 @@ const PNCreate = () => {
               error={!!errors.dep_time}
               helperText={typeof errors.dep_time?.message === 'string' ? errors.dep_time.message : ''}
               fullWidth
-              label="DEP (UTC HHMM)"
-              placeholder="Enter dep time here"
+              label={t("DEP (UTC HHMM)")}
+              placeholder={t("Enterdeptimehere")}
             />
           </Grid>
 
@@ -119,8 +120,8 @@ const PNCreate = () => {
               error={!!errors.arr_time}
               helperText={typeof errors.arr_time?.message === 'string' ? errors.arr_time.message : ''}
               fullWidth
-              label="ARR (UTC HHMM)"
-              placeholder="Enter arr time here"
+              label={t("ARR (UTC HHMM)")}
+              placeholder={t("Enterarrtimehere")}
             />
           </Grid>
 
@@ -130,7 +131,7 @@ const PNCreate = () => {
               {...register('dep_date')}
               fullWidth
               type="date"
-              label="DEP Date (leave empty if today)"
+              label={t("DEP Date")}
               defaultValue={new Date().toISOString().split('T')[0]}
               InputLabelProps={{ shrink: true }}
             />
@@ -143,7 +144,7 @@ const PNCreate = () => {
               fullWidth
               type="date"
               defaultValue={new Date().toISOString().split('T')[0]}
-              label="ARR Date (leave empty if today)"
+              label={t("ARR Date")}
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
@@ -157,7 +158,7 @@ const PNCreate = () => {
               error={!!errors.aircraft_reg}
               helperText={typeof errors.aircraft_reg?.message === 'string' ? errors.aircraft_reg.message : ''}
               fullWidth
-              label="Aircraft registration"
+              label={t("Aircraft registration")}
             />
           </Grid>
 
@@ -174,7 +175,7 @@ const PNCreate = () => {
               helperText={typeof errors.mtow?.message === 'string' ? errors.mtow.message : ''}
               fullWidth
               type="number"
-              label="MTOW (Kg)"
+              label={t("MTOW (Kg)")}
             />
           </Grid>
 
@@ -185,7 +186,7 @@ const PNCreate = () => {
               error={!!errors.pic_name}
               helperText={typeof errors.pic_name?.message === 'string' ? errors.pic_name.message : ''}
               fullWidth
-              label="PIC (Full name)"
+              label={t("PIC (Full name)")}
             />
           </Grid>
 
@@ -202,7 +203,7 @@ const PNCreate = () => {
               error={!!errors.phone}
               helperText={typeof errors.phone?.message === 'string' ? errors.phone.message : ''}
               fullWidth
-              label="Phone"
+              label={t("Phone")}
             />
           </Grid>
 
@@ -219,7 +220,7 @@ const PNCreate = () => {
               error={!!errors.email}
               helperText={typeof errors.email?.message === 'string' ? errors.email.message : ''}
               fullWidth
-              label="PIC e-mail (for billing)"
+              label={t("PIC e-mail")}
             />
           </Grid>
 
@@ -232,7 +233,7 @@ const PNCreate = () => {
               render={({ field }) => (
                 <FormControlLabel
                   control={<Checkbox {...field} color="primary" />}
-                  label="IFR Arrival"
+                  label={t("IFR Arrival")}
                 />
               )}
             />
