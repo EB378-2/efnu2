@@ -349,7 +349,7 @@ export default function HomePage() {
             borderRadius: '12px',
             boxShadow: '0 0 40px -10px rgba(34, 211, 238, 0.5)',
             height: '100%',
-            display: 'none',
+            display: 'flex',
             flexDirection: 'column'
           }}>
             <CardContent sx={{ flex: 1, p: 0 }}>
@@ -474,7 +474,7 @@ export default function HomePage() {
             borderRadius: '12px',
             boxShadow: '0 0 40px -10px rgba(34, 211, 238, 0.5)',
             height: '100%',
-            display: 'none',
+            display: 'flex',
             flexDirection: 'column'
           }}>
             <CardContent sx={{ flex: 1, p: 0 }}>

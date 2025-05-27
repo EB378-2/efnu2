@@ -67,7 +67,7 @@ export default function ProfileEditPage() {
       // Update role/status if admin
       if (profile) {
         const response = await fetch('/api/users/update-role-status', {
-          method: 'PATCH',
+          method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
           },
