@@ -155,3 +155,46 @@ create table public.blogs (
   constraint blogs_pkey primary key (id),
   constraint fk_blog_author foreign KEY (profile_id) references profiles (id) on update CASCADE on delete CASCADE
 ) TABLESPACE pg_default;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE TYPE report_status AS ENUM ('open', 'in-progress', 'resolved');
+CREATE TYPE severity_level AS ENUM ('low', 'medium', 'high', 'critical');
+CREATE TYPE report_category AS ENUM ('inflight', 'infrastructure', 'aircraft', 'medical', 'security', 'enviromental', 'communication', 'other');
+
+CREATE TABLE sms (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    category report_category NOT NULL,
+    status report_status NOT NULL DEFAULT 'open',
+    severity severity_level NOT NULL,
+    reported_by UUID NOT NULL,  -- Or UUID if you have users table
+    reported_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    resolved_at TIMESTAMPTZ,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    location VARCHAR(255),  -- Optional location information
+    comments JSONB  -- Array of comments/updates
+);
+
+-- Indexes for common queries
+CREATE INDEX idx_reports_status ON sms (status);
+CREATE INDEX idx_reports_category ON sms (category);
+CREATE INDEX idx_reports_severity ON sms (severity);
+CREATE INDEX idx_reports_created ON sms (reported_at);

@@ -124,6 +124,8 @@ const resources = [
       name: "sms",                          
       list: "/sms",
       create: "/sms/create",
+      show: "/sms/show/:id",
+      edit: "/sms/edit/:id",
       meta: {
         label: "SMS",
         icon: <EnhancedEncryption />

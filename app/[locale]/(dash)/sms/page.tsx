@@ -19,82 +19,102 @@ import { Search, Warning, CheckCircle, Assignment } from "@mui/icons-material";
 import React, { useState, useEffect } from "react";
 import NextLink from "next/link";
 import { formatDistanceToNow } from "date-fns";
+import { useTable, LogicalFilter, useGetIdentity } from "@refinedev/core";
 import { CreateButton } from "@refinedev/mui";
+import { ProfileName } from "@components/functions/FetchFunctions";
+import { SafetyReport } from "@/types"; // Adjust the import path as necessary
 
 const ReportListPage = () => {
-  const [loading, setLoading] = useState(true);
+  interface Identity {
+    id?: string | number;
+    [key: string]: any;
+  }
+  const { data: identity = {} as Identity } = useGetIdentity<Identity>();
   const [filter, setFilter] = useState({
     search: "",
     status: "all",
     category: "all"
   });
 
-  // Mock data - replace with real API calls
-  const mockReports = [
-    {
-      id: "7875a9c5-5ce2-4dd2-9ew2-dd483cf7fb30",
-      title: "Slippery Floor in Hangar B",
-      category: "Housekeeping",
-      status: "open",
-      reportedBy: "John D.",
-      date: "2025-05-05T17:11:38.947981+00:00",
-      severity: "medium"
+  const {
+    tableQueryResult,
+    current,
+    setCurrent,
+    pageCount,
+    setFilters,
+  } = useTable<SafetyReport>({
+    resource: "sms",
+    filters: {
+      initial: [
+        {
+          field: "reported_by",
+          operator: "eq",
+          value: identity?.id, // Replace with actual user ID or logic to get current user
+        }
+      ]
     },
-    {
-      id: "7875a9c5-12de-4dd2-95b2-dd483cf7fb30",
-      title: "Missing Fire Extinguisher in Workshop",
-      category: "Fire Safety",
-      status: "in-progress",
-      reportedBy: "Sarah M.",
-      date: "2025-05-04T09:45:00+00:00",
-      severity: "high"
-    },
-    {
-      id: "7875a9c5-5ce2-4dd2-95b2-dd4cd237fb30",
-      title: "Frayed Electrical Wiring Spotted",
-      category: "Electrical",
-      status: "resolved",
-      reportedBy: "Mike R.",
-      date: "2025-05-03T14:20:00+00:00",
-      severity: "critical"
-    },
-  ];
-
-  const [reports, setReports] = useState(mockReports);
+  });
 
   useEffect(() => {
-    // Simulate API call
-    const timer = setTimeout(() => setLoading(false), 1500);
-    return () => clearTimeout(timer);
-  }, []);
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'open': return 'warning';
-      case 'in-progress': return 'info';
-      case 'resolved': return 'success';
-      default: return 'default';
-    }
-  };
-
-  const getSeverityIcon = (severity: string) => {
-    const colorMap: Record<string, string> = {
-      low: '#4caf50',
-      medium: '#ff9800',
-      high: '#f44336',
-      critical: '#d32f2f'
-    };
+    const filters: LogicalFilter[] = [];
     
-    return (
-      <Avatar sx={{ 
-        bgcolor: colorMap[severity] || '#9e9e9e',
-        width: 32,
-        height: 32
-      }}>
-        <Warning fontSize="small" />
-      </Avatar>
-    );
-  };
+    if (filter.search) {
+      filters.push({
+        field: "title",
+        operator: "contains",
+        value: filter.search,
+      });
+    }
+    
+    if (filter.status !== "all") {
+      filters.push({
+        field: "status",
+        operator: "eq",
+        value: filter.status,
+      });
+    }
+    
+    if (filter.category !== "all") {
+      filters.push({
+        field: "category",
+        operator: "eq",
+        value: filter.category,
+      });
+    }
+    
+    setFilters(filters);
+  }, [filter]);
+
+  const reports = tableQueryResult?.data?.data || [];
+  const loading = tableQueryResult?.isLoading;
+
+  // Returns an icon based on the severity level
+  function getSeverityIcon(severity: string) {
+    switch (severity) {
+      case "high":
+        return <Warning color="error" fontSize="large" />;
+      case "medium":
+        return <Warning color="warning" fontSize="large" />;
+      case "low":
+        return <Warning color="info" fontSize="large" />;
+      default:
+        return <Warning color="disabled" fontSize="large" />;
+    }
+  }
+
+  // Returns the color for the status chip
+  function getStatusColor(status: string): "default" | "primary" | "secondary" | "error" | "info" | "success" | "warning" {
+    switch (status) {
+      case "open":
+        return "warning";
+      case "in-progress":
+        return "info";
+      case "resolved":
+        return "success";
+      default:
+        return "default";
+    }
+  }
 
   return (
     <Box sx={{ 
@@ -117,7 +137,9 @@ const ReportListPage = () => {
         <Typography variant="body1" color="text.secondary">
           Active safety reports and incident tracking
         </Typography>
-        <CreateButton/>
+        <CreateButton 
+          resource="sms"
+        />
       </Box>
 
       {/* Filter Bar */}
@@ -133,6 +155,8 @@ const ReportListPage = () => {
           placeholder="Search reports..."
           variant="outlined"
           size="small"
+          value={filter.search}
+          onChange={(e) => setFilter({...filter, search: e.target.value})}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -162,9 +186,14 @@ const ReportListPage = () => {
           sx={{ minWidth: 160 }}
         >
           <MenuItem value="all">All Categories</MenuItem>
-          <MenuItem value="Fire Safety">Fire Safety</MenuItem>
-          <MenuItem value="Electrical">Electrical</MenuItem>
-          <MenuItem value="Housekeeping">Housekeeping</MenuItem>
+          <MenuItem value="inflight">Inflight</MenuItem>
+          <MenuItem value="infrastructure">Infrastructure</MenuItem>
+          <MenuItem value="aircraft">Aircraft</MenuItem>
+          <MenuItem value="medical">Medical</MenuItem>
+          <MenuItem value="security">Security</MenuItem>
+          <MenuItem value="enviromental">Enviromental</MenuItem>
+          <MenuItem value="communication">Communication</MenuItem>
+          <MenuItem value="other">Other</MenuItem>
         </Select>
       </Paper>
 
@@ -179,7 +208,7 @@ const ReportListPage = () => {
         ) : (
           reports.map((report) => (
             <Grid item xs={12} md={6} lg={4} key={report.id}>
-              <NextLink href={`/safety-reports/${report.id}`} passHref>
+              <NextLink href={`/sms/show/${report.id}`} passHref>
                 <Paper component="a" sx={{ 
                   p: 3,
                   height: '100%',
@@ -212,10 +241,10 @@ const ReportListPage = () => {
                       
                       <Stack direction="row" spacing={2} sx={{ mt: 1 }} alignItems="center">
                         <Typography variant="caption" color="text.secondary">
-                          Reported by {report.reportedBy}
+                          Reported by <ProfileName profileId={report.reported_by} />
                         </Typography>
                         <Typography variant="caption" color="text.secondary">
-                          {formatDistanceToNow(new Date(report.date))} ago
+                          {formatDistanceToNow(new Date(report.reported_at))} ago
                         </Typography>
                       </Stack>
                     </Box>
@@ -234,7 +263,9 @@ const ReportListPage = () => {
       {/* Pagination */}
       <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
         <Pagination 
-          count={5} 
+          count={pageCount} 
+          page={current} 
+          onChange={(_, page) => setCurrent(page)}
           color="primary" 
           shape="rounded"
           sx={{ '& .MuiPaginationItem-root': { borderRadius: 2 } }}
