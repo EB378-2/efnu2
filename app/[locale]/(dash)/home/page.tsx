@@ -24,7 +24,7 @@ import {
 } from "@mui/icons-material";
 import { useTheme } from "@hooks/useTheme";
 import { useTranslations } from "next-intl";
-import { useGetIdentity } from "@refinedev/core";
+import { CanAccess, useGetIdentity } from "@refinedev/core";
 import { ProfileName, ProfileAvatar } from "@components/functions/FetchFunctions";
 import { useRouter } from "next/navigation";
 import { format } from 'date-fns';
@@ -307,7 +307,7 @@ export default function HomePage() {
             </Card> 
           </Box>
         </Grid>
-        {/* Profile Coloumn */}
+        {/* Left Coloumn */}
         <Grid item xs={12} md={6}>
           <Stack spacing={3}>
             {/* Profile Card */}
@@ -340,282 +340,279 @@ export default function HomePage() {
                 </Stack>
               </CardContent>
             </Card>
+          <CanAccess resource="blog" action="list">
+            <Card sx={{ 
+              borderRadius: '12px',
+              boxShadow: '0 0 40px -10px rgba(34, 211, 238, 0.5)',
+              display: 'flex',
+              flexDirection: 'column'
+            }}>
+              <CardContent sx={{ flex: 1, p: 0 }}>
+                <Box sx={{ 
+                  display: "flex",
+                  flexDirection: { xs: "column", md: "row" },
+                  alignItems: 'center', 
+                  justifyContent: 'space-between',
+                  p: 3,
+                  pb: 1
+                }}>
+                  <Typography variant="h6" sx={{ 
+                    display: 'flex', 
+                    alignItems: 'center',
+                    fontWeight: 600,
+                    color: theme.palette.mode === 'dark' ? 'text.primary' : 'primary.main'
+                  }}>
+                    <Announcement sx={{ 
+                      mr: 1.5, 
+                      fontSize: '1.4rem',
+                      color: theme.palette.mode === 'dark' ? 'primary.light' : 'primary.dark' 
+                    }} />
+                    {t("AirportUpdates")}
+                  </Typography>
+                </Box>
+
+                {/* Scrollable Posts Area */}
+                <Box sx={{ 
+                  height: { xs: 300, md: 400 },
+                  overflow: 'auto',
+                  px: 2,
+                  pb: 2
+                }}>
+                  {posts.map((post) => (
+                    <Card 
+                      key={post.id}
+                      sx={{ 
+                        mb: 2,
+                        borderRadius: '8px',
+                        borderLeft: `4px solid ${post.categoryColor || theme.palette.secondary.main}`,
+                        transition: '0.3s',
+                        '&:hover': {
+                          transform: 'translateX(4px)',
+                          boxShadow: theme.shadows[2]
+                        }
+                      }}
+                    >
+                      <ListItem>
+                        <ListItemText
+                          primary={
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                              <Chip 
+                                label={post.category}
+                                size="small"
+                                sx={{ 
+                                  borderRadius: '4px',
+                                  backgroundColor: post.categoryColor || theme.palette.secondary.light,
+                                  color: theme.palette.getContrastText(post.categoryColor || theme.palette.secondary.light)
+                                }}
+                              />
+                              <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                                {post.title}
+                              </Typography>
+                            </Box>
+                          }
+                          secondary={
+                            <>
+                              <Typography 
+                                variant="body2"
+                                sx={{ 
+                                  color: theme.palette.mode === 'dark' ? 'text.secondary' : 'text.primary',
+                                  mt: 1,
+                                  lineClamp: 2,
+                                  display: '-webkit-box',
+                                  WebkitBoxOrient: 'vertical',
+                                  overflow: 'hidden'
+                                }}
+                              >
+                                {post.excerpt}
+                              </Typography>
+                              
+                              <Typography 
+                                variant="caption"
+                                sx={{ 
+                                  display: 'block',
+                                  mt: 1,
+                                  color: theme.palette.text.secondary
+                                }}
+                              >
+                                {t("postedOn")} {format(post.date, 'MMM dd, yyyy • hh:mm a')}
+                              </Typography>
+                              <Button 
+                                variant="outlined" 
+                                size="small"
+                                onClick={() => handlePostClick(post.id)}
+                                sx={{
+                                  minWidth: '100px',
+                                  borderRadius: '6px',
+                                  textTransform: 'none',
+                                  boxShadow: 'none'
+                                }}
+                              >
+                                {t("readMore")}
+                              </Button>
+                            </>
+                          }
+                        />
+                      </ListItem>
+                    </Card>
+                  ))}
+                </Box>
+
+                {/* Sticky Footer Button */}
+                <Box sx={{ 
+                  p: 2,
+                  position: 'sticky',
+                  bottom: 0,
+                  background: theme.palette.mode === 'dark' 
+                    ? 'linear-gradient(transparent, rgba(18, 18, 18, 0.9))' 
+                    : 'linear-gradient(transparent, rgba(255, 255, 255, 0.9))',
+                  backdropFilter: 'blur(8px)',
+                  borderTop: `1px solid ${theme.palette.divider}`
+                }}>
+                  <Button 
+                    fullWidth 
+                    variant="outlined"
+                    endIcon={<ArrowForward />}
+                    sx={{
+                      py: 1.5,
+                      borderRadius: '8px',
+                      textTransform: 'none',
+                      fontWeight: 500
+                    }}
+                  >
+                    {t("ViewAllUpdates")}
+                  </Button>
+                </Box>
+              </CardContent>
+            </Card>
+          </CanAccess>
           </Stack>
         </Grid>
         
         {/* Right Column */}
         <Grid item xs={12} md={6}>
-          <Card sx={{ 
-            borderRadius: '12px',
-            boxShadow: '0 0 40px -10px rgba(34, 211, 238, 0.5)',
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column'
-          }}>
-            <CardContent sx={{ flex: 1, p: 0 }}>
-              <Box sx={{ 
-                display: "flex",
-                flexDirection: { xs: "column", md: "row" },
-                alignItems: 'center', 
-                justifyContent: 'space-between',
-                p: 3,
-                pb: 1
-              }}>
-                <Typography variant="h6" sx={{ 
-                  display: 'flex', 
-                  alignItems: 'center',
-                  fontWeight: 600,
-                  color: theme.palette.mode === 'dark' ? 'text.primary' : 'primary.main'
+          <CanAccess resource="calendar" action="list">
+            <Card sx={{ 
+              borderRadius: '12px',
+              boxShadow: '0 0 40px -10px rgba(34, 211, 238, 0.5)',
+              display: 'flex',
+              flexDirection: 'column'
+            }}>
+              <CardContent sx={{ flex: 1, p: 0 }}>
+                <Box sx={{ 
+                  display: "flex",
+                  flexDirection: { xs: "column", md: "row" },
+                  alignItems: 'center', 
+                  justifyContent: 'space-between',
+                  p: 3,
+                  pb: 1
                 }}>
-                  <CalendarToday sx={{ 
-                    mr: 1.5, 
-                    fontSize: '1.4rem',
-                    color: theme.palette.mode === 'dark' ? 'primary.light' : 'primary.dark' 
-                  }} />
-                  {t("UpcomingEvents")}
-                </Typography>
-              </Box>
+                  <Typography variant="h6" sx={{ 
+                    display: 'flex', 
+                    alignItems: 'center',
+                    fontWeight: 600,
+                    color: theme.palette.mode === 'dark' ? 'text.primary' : 'primary.main'
+                  }}>
+                    <CalendarToday sx={{ 
+                      mr: 1.5, 
+                      fontSize: '1.4rem',
+                      color: theme.palette.mode === 'dark' ? 'primary.light' : 'primary.dark' 
+                    }} />
+                    {t("UpcomingEvents")}
+                  </Typography>
+                </Box>
 
-              {/* Scrollable Events Area */}
-              <Box sx={{ 
-                height: { xs: 300, md: 400 },
-                overflow: 'auto',
-                px: 2,
-                pb: 2
-              }}>
-                {events.map((event, index) => (
-                  <Card 
-                    key={event.id}
-                    sx={{ 
-                      mb: 2,
-                      borderRadius: '8px',
-                      borderLeft: `4px solid ${event.color || theme.palette.primary.main}`,
-                      transition: '0.3s',
-                      '&:hover': {
-                        transform: 'translateX(4px)',
-                        boxShadow: theme.shadows[2]
-                      }
-                    }}
-                  >
-                    <ListItem 
-                      secondaryAction={
-                        <Button 
-                          variant="contained" 
-                          size="small"
-                          onClick={() => handleEventClick(event.id)}
-                          sx={{
-                            minWidth: '90px',
-                            borderRadius: '6px',
-                            textTransform: 'none',
-                            boxShadow: 'none'
-                          }}
-                        >
-                          {t("Details")}
-                        </Button>
-                      }
-                    >
-                      <ListItemText
-                        primary={
-                          <Typography variant="subtitle1" sx={{ fontWeight: 500 }}>
-                            {event.name}
-                          </Typography>
+                {/* Scrollable Events Area */}
+                <Box sx={{ 
+                  height: { xs: 300, md: 400 },
+                  overflow: 'auto',
+                  px: 2,
+                  pb: 2
+                }}>
+                  {events.map((event, index) => (
+                    <Card 
+                      key={event.id}
+                      sx={{ 
+                        mb: 2,
+                        borderRadius: '8px',
+                        borderLeft: `4px solid ${event.color || theme.palette.primary.main}`,
+                        transition: '0.3s',
+                        '&:hover': {
+                          transform: 'translateX(4px)',
+                          boxShadow: theme.shadows[2]
                         }
-                        secondary={
-                          <Typography 
-                            variant="body2"
-                            sx={{ 
-                              color: theme.palette.mode === 'dark' ? 'text.secondary' : 'text.primary',
-                              mt: 0.5
+                      }}
+                    >
+                      <ListItem 
+                        secondaryAction={
+                          <Button 
+                            variant="contained" 
+                            size="small"
+                            onClick={() => handleEventClick(event.id)}
+                            sx={{
+                              minWidth: '90px',
+                              borderRadius: '6px',
+                              textTransform: 'none',
+                              boxShadow: 'none'
                             }}
                           >
-                            <Box component="span" sx={{ fontWeight: 500, mr: 1 }}>
-                              {format(event.date, 'MMM dd, yyyy')}
-                            </Box>
-                            • {format(event.date, 'hh:mm a')}
-                          </Typography>
+                            {t("Details")}
+                          </Button>
                         }
-                      />
-                    </ListItem>
-                  </Card>
-                ))}
-              </Box>
-
-              {/* Sticky Footer Button */}
-              <Box sx={{ 
-                p: 2,
-                position: 'sticky',
-                bottom: 0,
-                background: theme.palette.mode === 'dark' 
-                  ? 'linear-gradient(transparent, rgba(18, 18, 18, 0.9))' 
-                  : 'linear-gradient(transparent, rgba(255, 255, 255, 0.9))',
-                backdropFilter: 'blur(8px)',
-                borderTop: `1px solid ${theme.palette.divider}`
-              }}>
-                <Button 
-                  fullWidth 
-                  variant="outlined"
-                  endIcon={<ArrowForward />}
-                  sx={{
-                    py: 1.5,
-                    borderRadius: '8px',
-                    textTransform: 'none',
-                    fontWeight: 500
-                  }}
-                >
-                  {t("ViewAllEvents")}
-                </Button>
-              </Box>
-            </CardContent>
-          </Card>
-        </Grid>
-        {/* Left Column */}
-        <Grid item xs={12} md={6}>
-          <Card sx={{ 
-            borderRadius: '12px',
-            boxShadow: '0 0 40px -10px rgba(34, 211, 238, 0.5)',
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column'
-          }}>
-            <CardContent sx={{ flex: 1, p: 0 }}>
-              <Box sx={{ 
-                display: "flex",
-                flexDirection: { xs: "column", md: "row" },
-                alignItems: 'center', 
-                justifyContent: 'space-between',
-                p: 3,
-                pb: 1
-              }}>
-                <Typography variant="h6" sx={{ 
-                  display: 'flex', 
-                  alignItems: 'center',
-                  fontWeight: 600,
-                  color: theme.palette.mode === 'dark' ? 'text.primary' : 'primary.main'
-                }}>
-                  <Announcement sx={{ 
-                    mr: 1.5, 
-                    fontSize: '1.4rem',
-                    color: theme.palette.mode === 'dark' ? 'primary.light' : 'primary.dark' 
-                  }} />
-                  {t("AirportUpdates")}
-                </Typography>
-              </Box>
-
-              {/* Scrollable Posts Area */}
-              <Box sx={{ 
-                height: { xs: 300, md: 400 },
-                overflow: 'auto',
-                px: 2,
-                pb: 2
-              }}>
-                {posts.map((post) => (
-                  <Card 
-                    key={post.id}
-                    sx={{ 
-                      mb: 2,
-                      borderRadius: '8px',
-                      borderLeft: `4px solid ${post.categoryColor || theme.palette.secondary.main}`,
-                      transition: '0.3s',
-                      '&:hover': {
-                        transform: 'translateX(4px)',
-                        boxShadow: theme.shadows[2]
-                      }
-                    }}
-                  >
-                    <ListItem 
-                      secondaryAction={
-                        <Button 
-                          variant="outlined" 
-                          size="small"
-                          onClick={() => handlePostClick(post.id)}
-                          sx={{
-                            minWidth: '100px',
-                            borderRadius: '6px',
-                            textTransform: 'none',
-                            boxShadow: 'none'
-                          }}
-                        >
-                          {t("readMore")}
-                        </Button>
-                      }
-                    >
-                      <ListItemText
-                        primary={
-                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                            <Chip 
-                              label={post.category}
-                              size="small"
-                              sx={{ 
-                                borderRadius: '4px',
-                                backgroundColor: post.categoryColor || theme.palette.secondary.light,
-                                color: theme.palette.getContrastText(post.categoryColor || theme.palette.secondary.light)
-                              }}
-                            />
-                            <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                              {post.title}
+                      >
+                        <ListItemText
+                          primary={
+                            <Typography variant="subtitle1" sx={{ fontWeight: 500 }}>
+                              {event.name}
                             </Typography>
-                          </Box>
-                        }
-                        secondary={
-                          <>
+                          }
+                          secondary={
                             <Typography 
                               variant="body2"
                               sx={{ 
                                 color: theme.palette.mode === 'dark' ? 'text.secondary' : 'text.primary',
-                                mt: 1,
-                                lineClamp: 2,
-                                display: '-webkit-box',
-                                WebkitBoxOrient: 'vertical',
-                                overflow: 'hidden'
+                                mt: 0.5
                               }}
                             >
-                              {post.excerpt}
+                              <Box component="span" sx={{ fontWeight: 500, mr: 1 }}>
+                                {format(event.date, 'MMM dd, yyyy')}
+                              </Box>
+                              • {format(event.date, 'hh:mm a')}
                             </Typography>
-                            <Typography 
-                              variant="caption"
-                              sx={{ 
-                                display: 'block',
-                                mt: 1,
-                                color: theme.palette.text.secondary
-                              }}
-                            >
-                              {t("postedOn")} {format(post.date, 'MMM dd, yyyy • hh:mm a')}
-                            </Typography>
-                          </>
-                        }
-                      />
-                    </ListItem>
-                  </Card>
-                ))}
-              </Box>
+                          }
+                        />
+                      </ListItem>
+                    </Card>
+                  ))}
+                </Box>
 
-              {/* Sticky Footer Button */}
-              <Box sx={{ 
-                p: 2,
-                position: 'sticky',
-                bottom: 0,
-                background: theme.palette.mode === 'dark' 
-                  ? 'linear-gradient(transparent, rgba(18, 18, 18, 0.9))' 
-                  : 'linear-gradient(transparent, rgba(255, 255, 255, 0.9))',
-                backdropFilter: 'blur(8px)',
-                borderTop: `1px solid ${theme.palette.divider}`
-              }}>
-                <Button 
-                  fullWidth 
-                  variant="outlined"
-                  endIcon={<ArrowForward />}
-                  sx={{
-                    py: 1.5,
-                    borderRadius: '8px',
-                    textTransform: 'none',
-                    fontWeight: 500
-                  }}
-                >
-                  {t("ViewAllUpdates")}
-                </Button>
-              </Box>
-            </CardContent>
-          </Card>
+                {/* Sticky Footer Button */}
+                <Box sx={{ 
+                  p: 2,
+                  position: 'sticky',
+                  bottom: 0,
+                  background: theme.palette.mode === 'dark' 
+                    ? 'linear-gradient(transparent, rgba(18, 18, 18, 0.9))' 
+                    : 'linear-gradient(transparent, rgba(255, 255, 255, 0.9))',
+                  backdropFilter: 'blur(8px)',
+                  borderTop: `1px solid ${theme.palette.divider}`
+                }}>
+                  <Button 
+                    fullWidth 
+                    variant="outlined"
+                    endIcon={<ArrowForward />}
+                    sx={{
+                      py: 1.5,
+                      borderRadius: '8px',
+                      textTransform: 'none',
+                      fontWeight: 500
+                    }}
+                  >
+                    {t("ViewAllEvents")}
+                  </Button>
+                </Box>
+              </CardContent>
+            </Card>
+          </CanAccess>
         </Grid>
       </Grid>
     </Box>

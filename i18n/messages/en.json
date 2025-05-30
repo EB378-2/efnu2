@@ -48,8 +48,9 @@
     "Contact": "Contact",
     "Handbook": "Handbook",
     "Rules": "Rules",
-    "PIC Fees": "PIC Fees",
+    "Fees": "PIC Fees",
     "Admin": "Admin",
+    "Calendar": "Calendar",
     "Create": "Create"
   },
 
@@ -170,5 +171,46 @@
     "GliderRunway22": "Glider Runway 22",
     "GliderOperationsArea": "Glider operations area view",
     "LastUpdated": "Last Updated"
+  },
+  "Alerts": {
+    "NBALERTS": "NB! ALERTS",
+    "ActiveAlerts": "Active Alerts",
+    "Loading alerts...": "Loading alerts...",
+    "Failed to load alerts": "Failed to load alerts",
+    "No active alerts at this time": "No active alerts at this time",
+    "Ongoing": "Ongoing",
+    "Ends: ": "Ends: ",
+    "Close": "Close"
+  },
+  "Contact": {
+    "title": "Contact Us(NOT IN USE)",
+    "subtitle": "We're here to help. Reach out to us through any of these channels or send us a message directly.",
+    "contactInfo": "Contact Information",
+    "emailTitle": "Email Support",
+    "phoneTitle": "Phone Support",
+    "addressTitle": "Visit Us",
+    "addressValue": "EFNU Airport Terminal, Gate A5, Helsinki, Finland",
+    "supportHours": "Support Hours",
+    "weekdays": "Monday-Friday",
+    "weekends": "Saturday-Sunday",
+    "sendMessage": "Send Us a Message",
+    "nameLabel": "Your Name",
+    "emailLabel": "Your Email",
+    "subjectLabel": "Subject",
+    "messageLabel": "Your Message",
+    "sendButton": "Send Message",
+    "faqTitle": "Frequently Asked Questions",
+    "question": "Question",
+    "question1Title": "How quickly do you respond to support requests?",
+    "question1Answer": "We typically respond to all support requests within 1 business day during our support hours.",
+    "question2Title": "Can I visit your office without an appointment?",
+    "question2Answer": "Our support office is available for walk-in visits during regular business hours. For specialized assistance, we recommend scheduling an appointment.",
+    "question3Title": "Do you provide support in multiple languages?",
+    "question3Answer": "Yes, our support team is fluent in English, Finnish, Swedish, and Russian.",
+    "question4Title": "What information should I include in my support request?",
+    "question4Answer": "Please include your contact information, flight details (if applicable), and a detailed description of your inquiry or issue."
+  },
+  "RunwayLights":{
+    "Runway Lights Guide": "Runway Lights Guide(ONLY IN FINISH )"
   }
 }

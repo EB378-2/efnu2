@@ -11,11 +11,13 @@ import {
   FlightTakeoff
 } from '@mui/icons-material';
 import PNStatusDashboard from '@components/AdminComponents/PNStatusDashboard';
-import { useProfileStats, usePnApprovalsToCome, usePNStatsToday } from '@hooks/getAdminStats';
+import { useProfileStats, usePnApprovalsToCome, usePNStatsToday, useRecentIncidents } from '@hooks/getAdminStats';
 import { useRouter } from "next/navigation";
 import CreateUserModalWithButton from '@components/AdminComponents/CreateUserModalWithButton';
 import { Warning, ListAlt } from '@mui/icons-material'; // Add these imports
 import AddFuelToStation from '@components/AdminComponents/AddFuelToStation';
+import AlertCreateModal from '@components/AdminComponents/AlertCreateModal';
+import React, { useState } from 'react';
 
 
 const pulse = keyframes`
@@ -75,9 +77,13 @@ const StatusIndicator = ({ label, status }: { label: string; status: string }) =
 };
 
 export default function AdminDashboard() {
+
+  const [createModalOpen, setCreateModalOpen] = useState(false);
+
   const { totalCount, todayCount } = useProfileStats();
   const { PnApprovalsToCome: PnApprovalsToCome } = usePnApprovalsToCome();
   const { TodaysApprovedPendingFlights, UpcomingFlightsCount } = usePNStatsToday();
+  const { recentIncidentsCount } = useRecentIncidents();
   const router = useRouter();
 
 
@@ -85,7 +91,7 @@ export default function AdminDashboard() {
   const metrics = {
     totalUsers: totalCount,
     pendingApprovals: PnApprovalsToCome,
-    weeklyIncidents: 5,
+    weeklyIncidents: recentIncidentsCount,
     activeFlights: TodaysApprovedPendingFlights,
     upcomingFlights: UpcomingFlightsCount,
     systemHealth: 'optimal'
@@ -246,6 +252,26 @@ export default function AdminDashboard() {
                   Flight Alerts
                 </Button>
                 <AddFuelToStation />
+                <Button
+                  variant="contained"
+                  sx={{
+                    borderRadius: 3,
+                    px: 3,
+                    py: 1.5,
+                    background: 'linear-gradient(135deg,rgb(255, 0, 0),rgb(155, 189, 20))'
+                  }}
+                  LinkComponent={'button'}
+                  onClick={() => setCreateModalOpen(true)}
+                >
+                  Create Alert
+                </Button>
+                <AlertCreateModal 
+                  open={createModalOpen}
+                  onClose={() => setCreateModalOpen(false)}
+                  onSuccess={() => {
+                    setCreateModalOpen(false);
+                  }}
+                />
               </Box>
             </Box>
           </StyledPaper>

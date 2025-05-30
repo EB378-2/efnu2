@@ -34,6 +34,7 @@ p, guest, priornotice, (list)|(show)|(create)
 p, guest, priornotice/*, (edit)|(delete) 
 p, guest, notams, (list)|(show)
 p, guest, info, (list)|(show)
+p, guest, alerts, (show)
 
 
 p, member, fuel, (list)|(show)|(create)
@@ -55,9 +56,12 @@ p, admin, blog, (list)|(show)|(create)
 p, admin, sms, (list)|(show)|(create)
 p, admin, contact, (list)|(show)
 p, admin, handbook, (list)|(show)
+p, admin, calendar, (list)|(show)
 p, admin, rules, (list)|(show)
-p, admin, pic, (list)|(show)
+p, admin, fees, (list)|(show)
 p, admin, admin, (list)|(show)
+p, admin, alerts, (show)|(create)
+p, admin, alerts/*, (edit)|(delete)
 `);
 
 

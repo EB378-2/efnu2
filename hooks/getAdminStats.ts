@@ -100,3 +100,23 @@ export function usePNStatsToday() {
     UpcomingFlightsCount: upcomingFlights.length,
   };
 }
+
+
+export function useRecentIncidents() {
+  const oneWeekAgo = dayjs().utc().subtract(1, 'week').format('YYYY-MM-DD HH:mm:ss.SSSSSS[+00]');
+  
+  const { data } = useList({
+    resource: "sms",  // Changed from "sms" to "incidents"
+    filters: [
+      {
+        field: "reported_at",  // Changed to appropriate date field
+        operator: "gte",       // Changed to "gte" (greater than or equal)
+        value: oneWeekAgo
+      }
+    ]
+  });
+
+  return {
+    recentIncidentsCount: data?.data?.length || 0,  // Better naming
+  };
+}

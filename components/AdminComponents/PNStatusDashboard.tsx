@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import { Flight } from "@mui/icons-material";
 import dayjs from "dayjs";
-import { useState } from "react";
+import React, { useState } from "react";
 import { PriorNotice } from "@/types/index";
 
 const PNStatusDashboard = () => {

@@ -53,7 +53,8 @@
     "Contact": "Ota yhteyttä",
     "Handbook": "Käsikirja",
     "Rules": "Säännöt",
-    "PIC Fees": "PIC Maksut",
+    "Fees": "PIC Maksut",
+    "Calendar": "Kalenteri",
     "Admin": "Admin",
     "Create": "Luo"
   },
@@ -175,5 +176,46 @@
     "GliderRunway22": "Purjelento Kiitotie 22",
     "GliderOperationsArea": "Purjelentoalueen näkymä",
     "LastUpdated": "Viimeksi päivitetty"
+  },
+  "Alerts": {
+    "NBALERTS": "HUOMIO!",
+    "ActiveAlerts": "Aktiiviset hälytykset",
+    "Loading alerts...": "Ladataan hälytyksiä...",
+    "Failed to load alerts": "Hälytysten lataaminen epäonnistui",
+    "No active alerts at this time": "Ei aktiivisia hälytyksiä tällä hetkellä",
+    "Ongoing": "Meneillään",
+    "Ends: ": "Loppuu: ",
+    "Close": "Sulje"
+  },
+  "Contact": {
+    "title": "Ota Yhteytä (EI KÄYTETÄVÄ)",
+    "subtitle": "Olemme täällä auttamassa. Ota meihin yhteyttä näiden kanavien kautta tai lähetä meille viesti suoraan.",
+    "contactInfo": "Yhteystiedot",
+    "emailTitle": "Sähköpostituki",
+    "phoneTitle": "Puhelintuki",
+    "addressTitle": "Vieraile meillä",
+    "addressValue": "EFNU Lentokenttäterminaali, Portti A5, Helsinki, Suomi",
+    "supportHours": "Tukiaukioloajat",
+    "weekdays": "Maanantai-perjantai",
+    "weekends": "Lauantai-sunnuntai",
+    "sendMessage": "Lähetä meille viesti",
+    "nameLabel": "Nimesi",
+    "emailLabel": "Sähköpostisi",
+    "subjectLabel": "Aihe",
+    "messageLabel": "Viestisi",
+    "sendButton": "Lähetä viesti",
+    "faqTitle": "Usein kysytyt kysymykset",
+    "question": "Kysymys",
+    "question1Title": "Kuinka nopeasti vastaamme tukipyyntöihin?",
+    "question1Answer": "Vastaamme yleensä tukipyyntöihin 24 tunnin kuluessa. Hätätilanteissa pyrimme vastaamaan välittömästi.",
+    "question2Title": "Voinko vierailla toimistossanne ilman ajanvarausta?",
+    "question2Answer": "Kyllä, toimistomme on avoinna maanantaista perjantaihin klo 9-17 ilman ajanvarausta. Suosittelemme kuitenkin varaamaan ajan etukäteen varmistaaksemme, että voimme palvella sinua parhaalla mahdollisella tavalla.",
+    "question3Title": "Puhuvatko tukitiimisi useita kieliä?",
+    "question3Answer": "Kyllä, tukitiimimme puhuu suomea, englantia ja ruotsia. Voit valita haluamasi kielen yhteydenotossasi.",
+    "question4Title": "Kuinka voin lähettää tukipyynnön?",
+    "question4Answer": "Voit lähettää tukipyynnön täyttämällä yhteydenottolomakkeen verkkosivuillamme tai lähettämällä sähköpostia suoraan tukiosastollemme. Pyrimme vastaamaan kaikkiin pyyntöihin mahdollisimman pian."
+  },
+  "RunwayLights":{
+    "Runway Lights Guide": "Kiitotien valojen opas"
   }
 }

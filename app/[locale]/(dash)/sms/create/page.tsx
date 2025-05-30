@@ -20,7 +20,7 @@ import { useCreate, useNavigation } from "@refinedev/core";
 import { useForm } from "@refinedev/react-hook-form";
 import { Controller } from "react-hook-form";
 import { useGetIdentity } from "@refinedev/core";
-import { useState } from "react";
+import React, { useState } from "react";
 import { CreateSafetyReport, SeverityLevel, ReportCategory } from "@/types"; // Adjust the import path as necessary
 
 const ReportCreatePage = () => {

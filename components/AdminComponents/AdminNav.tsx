@@ -6,6 +6,7 @@ import { Notifications, Settings, Logout, Dashboard, People, ListAlt, Flight, Me
 import { useState } from 'react';
 import { ProfileAvatar } from '@components/functions/FetchFunctions';
 import { useGetIdentity } from '@refinedev/core';
+import Link from '@node_modules/next/link';
 
 const pulse = keyframes`
   0% { transform: scale(1); }
@@ -91,7 +92,7 @@ export default function AdminNav() {
   };
 
   const navItems = [
-    { label: 'Dashboard', href: '/admin', icon: <Dashboard />, active: pathname === '/admin' },
+    { label: 'Alerts', href: '/admin/alert', icon: <Dashboard />, active: pathname === '/admin/alert' },
     { label: 'Users', href: '/admin/users', icon: <People />, active: pathname.startsWith('/admin/users') },
     { label: 'Incidents', href: '/admin/incidents', icon: <ListAlt />, active: pathname.startsWith('/admin/incidents') },
     { label: 'Flights', href: '/admin/flights', icon: <Flight />, active: pathname.startsWith('/admin/flights') },
@@ -118,12 +119,14 @@ export default function AdminNav() {
         </IconButton>
 
         {/* Logo/Brand */}
-        <Box sx={{ display: 'flex', alignItems: 'center', mr: 3 }}>
-          <Flight sx={{ fontSize: 32, mr: 1 }} />
-          <Typography variant="h6" component="div" sx={{ fontWeight: 700 }}>
-            EkoAdmin
-          </Typography>
-        </Box>
+        <Link href="/admin" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', mr: 3 }}>
+            <Flight sx={{ fontSize: 32, mr: 1 }} />
+            <Typography variant="h6" component="div" sx={{ fontWeight: 700 }}>
+              EkoAdmin
+            </Typography>
+          </Box>
+        </Link>
 
         {/* Desktop Navigation */}
         <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 1 }}>

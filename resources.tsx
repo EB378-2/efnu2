@@ -14,8 +14,8 @@ import {
   Lightbulb,
   AccountBox,
   EnhancedEncryption,
-
-
+  ContactSupport,
+  AdminPanelSettings
   } from "@mui/icons-material";
     
 const resources = [
@@ -136,7 +136,7 @@ const resources = [
       list: "/contact",
       meta: {
         label: "Contact",
-        icon: <ListAlt />
+        icon: <ContactSupport />
       }
   },
   {
@@ -156,10 +156,18 @@ const resources = [
       }
   },
   {
-      name: "pic",                          
-      list: "/pic",
+      name: "fees",                          
+      list: "/fees",
       meta: {
-        label: "PIC Fees",
+        label: "Fees",
+        icon: <ListAlt />
+      }
+  },
+  {
+      name: "calendar",                          
+      list: "/calendar",
+      meta: {
+        label: "Calendar",
         icon: <ListAlt />
       }
   },
@@ -168,7 +176,7 @@ const resources = [
     list: "/admin",
     meta: {
       label: "Admin",
-      icon: <ListAlt />,
+      icon: <AdminPanelSettings />,
       CanAccess: {resource: "admin", action: "list"}
     }
   },
@@ -208,6 +216,16 @@ const resources = [
     list: "/admin/flights",
     meta: {
       label: "Users",
+      icon: <ListAlt />,
+      hide: true,
+      parent: "admin"
+    }
+  },
+  {
+    name: "alerts",                          
+    list: "/admin/alerts",
+    meta: {
+      label: "Alerts",
       icon: <ListAlt />,
       hide: true,
       parent: "admin"
