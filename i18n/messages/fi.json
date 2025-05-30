@@ -217,5 +217,57 @@
   },
   "RunwayLights":{
     "Runway Lights Guide": "Kiitotien valojen opas"
+  },
+  "SafetyReports": {
+    "SafetyReports": "Turvallisuusraportit",
+    "Active safety reports and incident tracking": "Aktiiviset turvallisuusraportit ja tapahtumien seuranta",
+    "Search reports": "Hae raportteja...",
+    "allStatuses": "Kaikki tilat",
+    "open": "Avoin",
+    "in-progress": "Käynnissä",
+    "resolved"  : "Ratkaistu",
+    "All Categories": "Kaikki kategoriat",
+    "inflight": "Lennolla",
+    "infrastructure": "Infrastruktuuri",
+    "aircraft"  : "Ilma-alus",
+    "medical": "Lääketieteellinen",
+    "security"  : "Turvallisuus",
+    "enviromental"  : "Ympäristö",
+    "communication": "Viestintä",
+    "other": "Muu",
+    "low": "Matala",
+    "medium": "Keskitaso",
+    "high": "Korkea",
+    "critical": "Kriittinen",
+    "Reported by": "Raportoi",
+    "ago": "sitten",
+    "Loading report": "Ladataan raporttia...",
+    "Report not found": "Raporttia ei löytynyt",
+    "Create": {
+      "title": "Luo uusi turvallisuusraportti",
+      "Cancel": "Peruuta",
+      "SubmitReport": "Lähetä raportti",
+      "ReportTitle": "Raportin otsikko",
+      "Description": "Kuvaus",
+      "Category": "Kategoria",
+      "Status": "Tila",
+      "SeverityLevel": "Vakavuusaste",
+      "Location": "Sijainti"
+    },
+    "Show": {
+      "title":"Turvallisuusraportin tiedot",
+      "Location": "Sijainti",
+      "ReportedBy": "Raportoi",
+      "ReportedAt": "Raportoitu",
+      "ResolvedAt": "Ratkaistu",
+      "Comments": "Kommentit",
+      "EditReport": "Muokkaa raporttia"
+    },
+    "Edit":{
+      "title": "Muokkaa turvallisuusraporttia",
+      "Cancel": "Peruuta",
+      "LastUpdated": "Viimeksi päivitetty",
+      "Save Changes": "Tallenna muutokset"
+    }
   }
 }

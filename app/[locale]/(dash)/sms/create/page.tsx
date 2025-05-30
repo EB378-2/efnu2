@@ -22,8 +22,10 @@ import { Controller } from "react-hook-form";
 import { useGetIdentity } from "@refinedev/core";
 import React, { useState } from "react";
 import { CreateSafetyReport, SeverityLevel, ReportCategory } from "@/types"; // Adjust the import path as necessary
+import { useTranslations } from "next-intl";
 
 const ReportCreatePage = () => {
+  const t = useTranslations("SafetyReports");
   interface Identity {
     id?: string | number;
     [key: string]: any;
@@ -74,11 +76,8 @@ const ReportCreatePage = () => {
     <Box sx={{ p: 4, maxWidth: 1200, margin: "0 auto" }}>
       <Stack direction="row" justifyContent="space-between" alignItems="center" mb={4}>
         <Typography variant="h4" fontWeight={700}>
-          Create New Safety Report
+          {t("Create.title")}
         </Typography>
-        <Button variant="outlined" onClick={goBack}>
-          Cancel
-        </Button>
       </Stack>
 
       <Paper sx={{ p: 4 }}>
@@ -98,7 +97,7 @@ const ReportCreatePage = () => {
                   <Warning sx={{ fontSize: 60 }} />
                 </Avatar>
                 <Chip
-                  label={severity.toUpperCase()}
+                  label={t(severity).toUpperCase()}
                   sx={{
                     bgcolor: severityColors[severity],
                     color: "white",
@@ -117,7 +116,7 @@ const ReportCreatePage = () => {
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
-                    label="Report Title"
+                    label={t("Create.ReportTitle")}
                     {...register("title", {
                       required: "Title is required",
                       minLength: {
@@ -133,7 +132,7 @@ const ReportCreatePage = () => {
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
-                    label="Description"
+                    label={t("Create.Description")}
                     multiline
                     minRows={4}
                     {...register("description", {
@@ -146,7 +145,7 @@ const ReportCreatePage = () => {
 
                 <Grid item xs={12} md={6}>
                   <FormControl fullWidth>
-                    <InputLabel>Category</InputLabel>
+                    <InputLabel>{t("Create.Category")}</InputLabel>
                     <Controller
                       name="category"
                       control={control}
@@ -154,12 +153,12 @@ const ReportCreatePage = () => {
                       render={({ field }) => (
                         <Select
                           {...field}
-                          label="Category"
+                          label={t("Create.Category")}
                           error={!!errors.category}
                         >
                           {categories.map((category) => (
                             <MenuItem key={category} value={category}>
-                              {category}
+                              {t(category)}
                             </MenuItem>
                           ))}
                         </Select>
@@ -175,14 +174,14 @@ const ReportCreatePage = () => {
 
                 <Grid item xs={12} md={6}>
                   <FormControl fullWidth>
-                    <InputLabel>Severity Level</InputLabel>
+                    <InputLabel>{t("Create.SeverityLevel")}</InputLabel>
                     <Controller
                       name="severity"
                       control={control}
                       render={({ field }) => (
                         <Select
                           {...field}
-                          label="Severity Level"
+                          label={t("Create.SeverityLevel")}
                           onChange={(e) => {
                             field.onChange(e);
                             setSeverity(e.target.value as SeverityLevel);
@@ -190,7 +189,7 @@ const ReportCreatePage = () => {
                         >
                           {severities.map((level) => (
                             <MenuItem key={level} value={level}>
-                              {level.charAt(0).toUpperCase() + level.slice(1)}
+                              {t(level).charAt(0).toUpperCase() + level.slice(1)}
                             </MenuItem>
                           ))}
                         </Select>
@@ -202,33 +201,23 @@ const ReportCreatePage = () => {
                 <Grid item xs={12} md={6}>
                   <TextField
                     fullWidth
-                    label="Location"
+                    label={t("Create.Location")}
                     {...register("location")}
-                    placeholder="Building, Room, Area"
-                  />
-                </Grid>
-
-                <Grid item xs={12} md={6}>
-                  <TextField
-                    fullWidth
-                    label="Additional Comments"
-                    {...register("comments")}
-                    multiline
-                    minRows={2}
+                    placeholder="RWY, CUMULUS, etc."
                   />
                 </Grid>
 
                 <Grid item xs={12}>
                   <Stack direction="row" spacing={2} justifyContent="flex-end">
                     <Button variant="outlined" onClick={goBack}>
-                      Cancel
+                      {t("Create.Cancel")}
                     </Button>
                     <Button
                       variant="contained"
                       type="submit"
                       sx={{ minWidth: 120 }}
                     >
-                      Submit Report
+                      {t("Create.SubmitReport")}
                     </Button>
                   </Stack>
                 </Grid>

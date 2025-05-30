@@ -23,8 +23,10 @@ import { useTable, LogicalFilter, useGetIdentity } from "@refinedev/core";
 import { CreateButton } from "@refinedev/mui";
 import { ProfileName } from "@components/functions/FetchFunctions";
 import { SafetyReport } from "@/types"; // Adjust the import path as necessary
+import { useTranslations } from "next-intl";
 
 const ReportListPage = () => {
+  const t = useTranslations("SafetyReports");
   interface Identity {
     id?: string | number;
     [key: string]: any;
@@ -131,11 +133,11 @@ const ReportListPage = () => {
           gap: 2
         }}>
           <Assignment fontSize="large" />
-          Safety Reports
+          {t("SafetyReports")}
         </Typography>
         
         <Typography variant="body1" color="text.secondary">
-          Active safety reports and incident tracking
+          {t("Active safety reports and incident tracking")}
         </Typography>
         <CreateButton 
           resource="sms"
@@ -152,7 +154,7 @@ const ReportListPage = () => {
         alignItems: 'center'
       }}>
         <TextField
-          placeholder="Search reports..."
+          placeholder={t("Search reports")}
           variant="outlined"
           size="small"
           value={filter.search}
@@ -173,10 +175,10 @@ const ReportListPage = () => {
           size="small"
           sx={{ minWidth: 140 }}
         >
-          <MenuItem value="all">All Statuses</MenuItem>
-          <MenuItem value="open">Open</MenuItem>
-          <MenuItem value="in-progress">In Progress</MenuItem>
-          <MenuItem value="resolved">Resolved</MenuItem>
+          <MenuItem value="all">{t("allStatuses")}</MenuItem>
+          <MenuItem value="open">{t("open")}</MenuItem>
+          <MenuItem value="in-progress">{t("in-progress")}</MenuItem>
+          <MenuItem value="resolved">{t("resolved")}</MenuItem>
         </Select>
 
         <Select
@@ -185,15 +187,15 @@ const ReportListPage = () => {
           size="small"
           sx={{ minWidth: 160 }}
         >
-          <MenuItem value="all">All Categories</MenuItem>
-          <MenuItem value="inflight">Inflight</MenuItem>
-          <MenuItem value="infrastructure">Infrastructure</MenuItem>
-          <MenuItem value="aircraft">Aircraft</MenuItem>
-          <MenuItem value="medical">Medical</MenuItem>
-          <MenuItem value="security">Security</MenuItem>
-          <MenuItem value="enviromental">Enviromental</MenuItem>
-          <MenuItem value="communication">Communication</MenuItem>
-          <MenuItem value="other">Other</MenuItem>
+          <MenuItem value="all">{t("All Categories")}</MenuItem>
+          <MenuItem value="inflight">{t("inflight")}</MenuItem>
+          <MenuItem value="infrastructure">{t("infrastructure")}</MenuItem>
+          <MenuItem value="aircraft">{t("aircraft")}</MenuItem>
+          <MenuItem value="medical">{t("medical")}</MenuItem>
+          <MenuItem value="security">{t("security")}</MenuItem>
+          <MenuItem value="enviromental">{t("enviromental")}</MenuItem>
+          <MenuItem value="communication">{t("communication")}</MenuItem>
+          <MenuItem value="other">{t("other")}</MenuItem>
         </Select>
       </Paper>
 
@@ -230,21 +232,21 @@ const ReportListPage = () => {
                       
                       <Stack direction="row" spacing={2} sx={{ mt: 1 }}>
                         <Chip 
-                          label={report.status.replace('-', ' ')}
+                          label={t(report.status.replace('-', ' '))}
                           color={getStatusColor(report.status)}
                           size="small"
                         />
                         <Typography variant="body2" color="text.secondary">
-                          {report.category}
+                          {t(report.category)}
                         </Typography>
                       </Stack>
                       
                       <Stack direction="row" spacing={2} sx={{ mt: 1 }} alignItems="center">
                         <Typography variant="caption" color="text.secondary">
-                          Reported by <ProfileName profileId={report.reported_by} />
+                          {t("Reported by")} <ProfileName profileId={report.reported_by} />
                         </Typography>
                         <Typography variant="caption" color="text.secondary">
-                          {formatDistanceToNow(new Date(report.reported_at))} ago
+                          {formatDistanceToNow(new Date(report.reported_at))} {t("ago")}
                         </Typography>
                       </Stack>
                     </Box>

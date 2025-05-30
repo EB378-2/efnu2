@@ -31,8 +31,10 @@ import {
   SeverityLevel,
   ReportCategory,
 } from "@/types"; // Adjust the import path as necessary
+import { useTranslations } from "next-intl";
 
 const ReportEditPage = () => {
+  const t = useTranslations("SafetyReports");
   const { id } = useParams();
   const { edit, goBack } = useNavigation();
   const { mutate: updateReport } = useUpdate();
@@ -101,7 +103,7 @@ const ReportEditPage = () => {
   };
 
   if (!report) {
-    return <Typography>Loading report...</Typography>;
+    return <Typography>{t("Loading report")}</Typography>;
   }
 
 
@@ -125,11 +127,8 @@ const ReportEditPage = () => {
     <Box sx={{ p: 4, maxWidth: 1200, margin: "0 auto" }}>
       <Stack direction="row" justifyContent="space-between" alignItems="center" mb={4}>
         <Typography variant="h4" fontWeight={700}>
-          Edit Safety Report
+          {t("Edit.title")}
         </Typography>
-        <Button variant="outlined" onClick={goBack}>
-          Cancel
-        </Button>
       </Stack>
 
       <Paper sx={{ p: 4, mb: 4 }}>
@@ -143,7 +142,7 @@ const ReportEditPage = () => {
 
               <Box>
                 <Typography variant="subtitle2" color="text.secondary">
-                  Reported By
+                  {t("Show.ReportedBy")}
                 </Typography>
                 <Typography variant="body1" mb={2}>
                   <ProfileName profileId={report.reported_by} />
@@ -152,7 +151,7 @@ const ReportEditPage = () => {
 
               <Box>
                 <Typography variant="subtitle2" color="text.secondary">
-                  Reported At
+                  {t("Show.ReportedAt")}
                 </Typography>
                 <Typography variant="body1" mb={2}>
                   {format(new Date(report.reported_at), "MMM dd, yyyy HH:mm")}
@@ -162,7 +161,7 @@ const ReportEditPage = () => {
               {resolvedDate && (
                 <Box>
                   <Typography variant="subtitle2" color="text.secondary">
-                    Resolved At
+                    {t("Show.ResolvedAt")}
                   </Typography>
                   <Typography variant="body1" mb={2}>
                     {format(new Date(resolvedDate), "MMM dd, yyyy HH:mm")}
@@ -172,7 +171,7 @@ const ReportEditPage = () => {
 
               <Box>
                 <Typography variant="subtitle2" color="text.secondary">
-                  Last Updated
+                  {t("Edit.LastUpdated")}
                 </Typography>
                 <Typography variant="body1">
                   {format(new Date(report.updated_at), "MMM dd, yyyy HH:mm")}
@@ -188,7 +187,7 @@ const ReportEditPage = () => {
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
-                    label="Title"
+                    label={t("Create.ReportTitle")}
                     {...register("title", { required: "Title is required" })}
                     defaultValue={report.title}
                     error={!!errors.title}
@@ -199,7 +198,7 @@ const ReportEditPage = () => {
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
-                    label="Description"
+                    label={t("Create.Description")}
                     multiline
                     minRows={4}
                     {...register("description", {
@@ -213,16 +212,16 @@ const ReportEditPage = () => {
 
                 <Grid item xs={12} md={6}>
                   <FormControl fullWidth>
-                    <InputLabel>Category</InputLabel>
+                    <InputLabel>{t("Create.Category")}</InputLabel>
                     <Controller
                       name="category"
                       control={control}
-                      defaultValue={report.category}
+                      defaultValue={t(report.category)}
                       render={({ field }) => (
-                        <Select {...field} label="Category">
+                        <Select {...field} label={t("Create.Category")}>
                           {categories.map((category) => (
                             <MenuItem key={category} value={category}>
-                              {category}
+                              {t(category)}
                             </MenuItem>
                           ))}
                         </Select>
@@ -233,16 +232,16 @@ const ReportEditPage = () => {
 
                 <Grid item xs={12} md={6}>
                   <FormControl fullWidth>
-                    <InputLabel>Severity</InputLabel>
+                    <InputLabel>{t("Create.SeverityLevel")}</InputLabel>
                     <Controller
                       name="severity"
                       control={control}
-                      defaultValue={report.severity}
+                      defaultValue={t(report.severity)}
                       render={({ field }) => (
-                        <Select {...field} label="Severity">
+                        <Select {...field} label={t("Create.SeverityLevel")}>
                           {severityOptions.map((level) => (
                             <MenuItem key={level} value={level}>
-                              {level.charAt(0).toUpperCase() + level.slice(1)}
+                              {t(level).charAt(0).toUpperCase() + level.slice(1)}
                             </MenuItem>
                           ))}
                         </Select>
@@ -254,7 +253,7 @@ const ReportEditPage = () => {
                 <Grid item xs={12} md={6}>
                   <TextField
                     fullWidth
-                    label="Location"
+                    label={t("Create.Location")}
                     {...register("location")}
                     defaultValue={report.location}
                   />
@@ -263,14 +262,14 @@ const ReportEditPage = () => {
                 <Grid item xs={12}>
                   <Stack direction="row" spacing={2} justifyContent="flex-end">
                     <Button variant="outlined" onClick={goBack}>
-                      Cancel
+                      {t("Edit.Cancel")}
                     </Button>
                     <Button
                       variant="contained"
                       type="submit"
                       sx={{ minWidth: 120 }}
                     >
-                      Save Changes
+                      {t("Edit.Save Changes")}
                     </Button>
                   </Stack>
                 </Grid>

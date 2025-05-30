@@ -212,5 +212,57 @@
   },
   "RunwayLights":{
     "Runway Lights Guide": "Runway Lights Guide(ONLY IN FINISH )"
+  },
+  "SafetyReports": {
+    "SafetyReports": "Safety Reports",
+    "Active safety reports and incident tracking": "Active safety reports and incident tracking",
+    "Search reports": "Search reports...",
+    "allStatuses": "All Statuses",
+    "open": "Open",
+    "in-progress": "In Progress",
+    "resolved"  : "Resolved",
+    "All Categories": "All Categories",
+    "inflight": "Inflight",
+    "infrastructure": "Infrastructure",
+    "aircraft"  : "Aircraft",
+    "medical": "Medical",
+    "security"  : "Security",
+    "enviromental"  : "Enviromental",
+    "communication": "Communication",
+    "other": "Other",
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High",
+    "critical": "Critical",
+    "Reported by": "Reported by",
+    "ago": "ago",
+    "Loading report": "Loading report...",
+    "Report not found": "Report not found",
+    "Create": {
+      "title": "Create New Safety Report",
+      "Cancel": "Cancel",
+      "SubmitReport": "Submit Report",
+      "ReportTitle": "Report Title",
+      "Description": "Description",
+      "Category": "Category",
+      "Status": "Status",
+      "SeverityLevel": "Severity Level",
+      "Location": "Location"
+    },
+    "Show": {
+      "title":"Safety Report Details",
+      "Location": "Location",
+      "ReportedBy": "Reported By",
+      "ReportedAt": "Reported At",
+      "ResolvedAt": "Resolved At",
+      "Comments": "Comments",
+      "EditReport": "Edit Report"
+    },
+    "Edit":{
+      "title": "Edit Safety Report",
+      "Cancel": "Cancel",
+      "LastUpdated": "Last Updated",
+      "Save Changes": "Save Changes"
+    }
   }
 }

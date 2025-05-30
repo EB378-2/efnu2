@@ -17,8 +17,11 @@ import { useOne } from "@refinedev/core";
 import { format } from "date-fns";
 import { useParams } from "next/navigation";
 import { ProfileName } from "@components/functions/FetchFunctions";
+import React from "react";
+import { useTranslations } from "next-intl";
 
 const ReportShowPage = () => {
+  const t = useTranslations("SafetyReports");
   const { id } = useParams();
   const { queryResult } = useShow({
     resource: "sms",
@@ -65,25 +68,25 @@ const ReportShowPage = () => {
 
 
   if (isLoading) {
-    return <Typography>Loading report...</Typography>;
+    return <Typography>{t("Loading report")}</Typography>;
   }
 
   if (!report) {
-    return <Typography>Report not found</Typography>;
+    return <Typography>{t("Report not found")}</Typography>;
   }
 
   return (
     <Box sx={{ p: 4, maxWidth: 1200, margin: '0 auto' }}>
       <Stack direction="row" justifyContent="space-between" alignItems="center" mb={4}>
         <Typography variant="h4" fontWeight={700}>
-          Safety Report Details
+          {t("Show.title")}
         </Typography>
         <Button 
           variant="contained" 
           startIcon={<Edit />}
           onClick={() => report.id !== undefined && edit("sms", report.id)}
         >
-          Edit Report
+          {t("Show.EditReport")}
         </Button>
       </Stack>
 
@@ -98,15 +101,15 @@ const ReportShowPage = () => {
             
             <Stack direction="row" spacing={2} mb={2}>
               <Chip 
-                label={report.status.replace('-', ' ')}
+                label={t(report.status).replace('-', ' ')}
                 color={getStatusColor(report.status)}
               />
               <Chip 
-                label={report.category}
+                label={t(report.category)}
                 variant="outlined"
               />
               <Chip 
-                label={report.severity}
+                label={t(report.severity)}
                 variant="outlined"
                 color="primary"
               />
@@ -121,14 +124,14 @@ const ReportShowPage = () => {
             <Grid container spacing={2}>
               <Grid item xs={12} md={6}>
                 <Typography variant="subtitle2" color="text.secondary">
-                  Location
+                  {t("Show.Location")}
                 </Typography>
                 <Typography variant="body1" mb={2}>
                   {report.location || 'Not specified'}
                 </Typography>
                 
                 <Typography variant="subtitle2" color="text.secondary">
-                  Reported By
+                  {t("Show.ReportedBy")}
                 </Typography>
                 <Typography variant="body1" mb={2}>
                   <ProfileName profileId={report.reported_by} />
@@ -137,7 +140,7 @@ const ReportShowPage = () => {
               
               <Grid item xs={12} md={6}>
                 <Typography variant="subtitle2" color="text.secondary">
-                  Reported At
+                  {t("Show.ReportedAt")}
                 </Typography>
                 <Typography variant="body1" mb={2}>
                   {format(new Date(report.reported_at), 'MMM dd, yyyy HH:mm')}
@@ -146,7 +149,7 @@ const ReportShowPage = () => {
                 {report.resolved_at && (
                   <>
                     <Typography variant="subtitle2" color="text.secondary">
-                      Resolved At
+                      {t("Show.ResolvedAt")}
                     </Typography>
                     <Typography variant="body1" mb={2}>
                       {format(new Date(report.resolved_at), 'MMM dd, yyyy HH:mm')}
@@ -162,7 +165,7 @@ const ReportShowPage = () => {
       {report.comments && (
         <Paper sx={{ p: 4, mb: 4 }}>
           <Typography variant="h6" mb={2}>
-            Comments
+            {t("Show.Comments")}
           </Typography>
           <Typography variant="body1">
             {report.comments}
