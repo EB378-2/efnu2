@@ -35,6 +35,8 @@ p, guest, alerts, (show)
 p, guest, blog, (list)|(show)
 p, guest, handbook, (list)|(show)
 p, guest, rules, (list)|(show)
+p, guest, lights, (list)|(show)
+p, guest, contact, (list)|(show)
 
 p, pilot, alerts, (show)
 p, pilot, priornotice, (list)|(show)|(create)
@@ -45,9 +47,8 @@ p, pilot, flyk, (list)|(show)
 p, pilot, weather, (list)|(show)
 p, pilot, profile, (list)|(show)
 p, pilot, profile/*, edit
-p, pilot, lights, (list)|(show)
-p, pilot, contact, (list)|(show)
 p, pilot, sms, (list)|(show)|(create)
+p, pilot, calendar, (list)|(show)
 
 
 
@@ -63,7 +64,7 @@ p, admin, sms/*, (edit)|(delete)
 p, admin, alerts, (create)
 p, admin, alerts/*, (edit)|(delete)
 p, admin, admin, (list)|(show)
-p, admin, calendar, (list)|(show)|(create)
+p, admin, calendar, (create)
 p, admin, calendar/*, (edit)|(delete)
 p, admin, fees, (list)|(show)
 
