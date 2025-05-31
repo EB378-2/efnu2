@@ -10,7 +10,7 @@ const nextConfig = {
   productionBrowserSourceMaps: false,
   compress: true,
   images: {
-    domains: ['atis.efnu.fi'],
+    domains: ['atis.efnu.fi', 'flyk.com'],
   },
   async headers() {
     return [
@@ -81,7 +81,7 @@ const pwaConfig = withPWA({
       },
     },
     {
-      urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp|woff|woff2|ttf|eot)$/,
+      urlPattern: /\.(?:png|jpg|jpeg|svg|pdf|gif|webp|woff|woff2|ttf|eot)$/,
       handler: 'CacheFirst',
       options: {
         cacheName: 'image-cache',

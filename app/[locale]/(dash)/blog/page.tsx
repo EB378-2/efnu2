@@ -24,6 +24,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import CalendarToday from "@mui/icons-material/CalendarToday";
 import Person from "@mui/icons-material/Person";
 import { useList } from "@refinedev/core";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { format } from 'date-fns';
 import { ProfileAvatar, ProfileName } from "@components/functions/FetchFunctions";
@@ -31,6 +32,7 @@ import { Blog } from "@/types";
 
 const BlogPage = () => {
   const theme = useTheme();
+  const t = useTranslations("Blog");
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
@@ -113,17 +115,17 @@ const BlogPage = () => {
               WebkitTextFillColor: 'transparent'
             }}
           >
-            EFNU Airport Insights
+            {t("title")}
           </Typography>
           <Typography variant="h5" sx={{ maxWidth: 700, mx: 'auto', mb: 4 }}>
-            Discover the latest news, updates, and stories from EFNU Airport
+            {t("subtitle")}
           </Typography>
           
           {/* Search Bar */}
           <TextField
             fullWidth
             variant="outlined"
-            placeholder="Search blog posts..."
+            placeholder={`${t("Search blog posts")}...`}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             sx={{
@@ -201,7 +203,7 @@ const BlogPage = () => {
                 : 'white'
             }}>
               <Chip 
-                label="Featured" 
+                label={t("Featured" )}
                 color="primary" 
                 size="small"
                 sx={{ 
@@ -271,7 +273,7 @@ const BlogPage = () => {
                   }}
                   onClick={() => handleBlogClick(featuredBlog.id)}
                 >
-                  Read More
+                  {t("readMore")}
                 </Button>
               </Box>
             </CardContent>
@@ -280,7 +282,7 @@ const BlogPage = () => {
 
         {/* Blog Grid */}
         <Typography variant="h4" sx={{ fontWeight: 700, mb: 4 }}>
-          Latest Updates
+          {t("LatestUpdates")}
         </Typography>
         
         <Grid container spacing={4}>
@@ -423,10 +425,10 @@ const BlogPage = () => {
                 backdropFilter: 'blur(10px)'
               }}>
                 <Typography variant="h5" sx={{ mb: 2 }}>
-                  No blog posts found
+                  {t("noPosts")}
                 </Typography>
                 <Typography variant="body1">
-                  Try adjusting your search or check back later for new content
+                  {t("Try adjusting your search or check back later for new content")}
                 </Typography>
               </Box>
             </Grid>

@@ -15,7 +15,10 @@ import {
   AccountBox,
   EnhancedEncryption,
   ContactSupport,
-  AdminPanelSettings
+  AdminPanelSettings,
+  Gavel,
+  MenuBook,
+  CalendarMonth
   } from "@mui/icons-material";
     
 const resources = [
@@ -144,7 +147,7 @@ const resources = [
       list: "/handbook",
       meta: {
         label:  "Handbook",
-        icon: <ListAlt />
+        icon: <MenuBook />
       }
   },
   {
@@ -152,7 +155,7 @@ const resources = [
       list: "/rules",
       meta: {
         label: "Rules",
-        icon: <ListAlt />
+        icon: <Gavel />
       }
   },
   {
@@ -168,7 +171,7 @@ const resources = [
       list: "/calendar",
       meta: {
         label: "Calendar",
-        icon: <ListAlt />
+        icon: <CalendarMonth />
       }
   },
   {
@@ -185,7 +188,7 @@ const resources = [
     list: "/admin/users",
     edit: "admin/users/edit/:id",
     meta: {
-      label: "Users",
+      label: "users",
       icon: <ListAlt />,
       hide: true,
       parent: "admin"
@@ -215,7 +218,7 @@ const resources = [
     name: "flights",                          
     list: "/admin/flights",
     meta: {
-      label: "Users",
+      label: "flights",
       icon: <ListAlt />,
       hide: true,
       parent: "admin"
@@ -225,7 +228,7 @@ const resources = [
     name: "alerts",                          
     list: "/admin/alerts",
     meta: {
-      label: "Alerts",
+      label: "alerts",
       icon: <ListAlt />,
       hide: true,
       parent: "admin"

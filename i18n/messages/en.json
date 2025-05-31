@@ -51,7 +51,12 @@
     "Fees": "Fees",
     "Admin": "Admin",
     "Calendar": "Calendar",
-    "Create": "Create"
+    "Create": "Create",
+    "users": "Users",
+    "incidents": "Incidents",
+    "fuel": "Fuel",
+    "flights": "Flights",
+    "alerts": "Alerts"
   },
 
 
@@ -358,5 +363,29 @@
       "p4": "Upon dissolution of the association, the association's assets shall primarily be used for the benefit of Nummela Airfield and secondarily for promoting general aviation and sports aviation, in the manner decided by the meeting deciding on the dissolution. If the association is dissolved, its assets shall be used for the same purpose."
     },
     "downloadButton": "Download Full Rules (PDF)"
+  },
+  "PdfViewer": {
+    "title": "Association Rules Document(ONLY IN FINISH)",
+    "description": "Official rules and regulations of the association. Please review carefully.",
+    "OpenButton": "Open PDF"
+  },
+  "Blog": {
+    "title": "EFNU Airport Insights",
+    "subtitle": "Discover the latest news, updates, and stories from EFNU Airport",
+    "Search blog posts": "Search blog posts",
+    "Featured": "Featured",
+    "readMore": "Read More",
+    "LatestUpdates": "Latest Updates",
+    "noPosts": "No blog posts found",
+    "Try adjusting your search or check back later for new content": "Try adjusting your search or check back later for new content",
+    "PostNotFound": "Post Not Found",
+    "The blog post you're looking for doesn't exist or may have been removed.": "The blog post you're looking for doesn't exist or may have been removed.",
+    "BackToBlog": "Back to Blog",
+    "Back": "Back",
+    "Article": "Article",
+    "AboutTheAuthor": "About the Author",
+    "ViewAllPosts": "View All Posts",
+    "RelatedPosts": "Related Posts",
+    "NoRelatedPosts": "No related posts found"
   }
 }

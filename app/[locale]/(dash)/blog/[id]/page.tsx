@@ -25,8 +25,7 @@ import ArrowBack from "@mui/icons-material/ArrowBack";
 import CalendarToday from "@mui/icons-material/CalendarToday";
 import Person from "@mui/icons-material/Person";
 import Share from "@mui/icons-material/Share";
-import BookmarkBorder from "@mui/icons-material/BookmarkBorder";
-import Bookmark from "@mui/icons-material/Bookmark";
+import { useTranslations } from "next-intl";
 import { ProfileAvatar, ProfileEmail, ProfileLicence, ProfileName, ProfilePhone, ProfileRole } from "@components/functions/FetchFunctions";
 
 type Blog = {
@@ -41,6 +40,7 @@ type Blog = {
 
 const BlogShowPage = () => {
   const theme = useTheme();
+  const t = useTranslations("Blog");
   const router = useRouter();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -131,10 +131,10 @@ const BlogShowPage = () => {
       }}>
         <Container maxWidth="md" sx={{ textAlign: 'center', py: 8 }}>
           <Typography variant="h3" sx={{ mb: 3, fontWeight: 700 }}>
-            Post Not Found
+            {t("PostNotFound")}
           </Typography>
           <Typography variant="h6" sx={{ mb: 4, maxWidth: 600, mx: 'auto' }}>
-            The blog post you're looking for doesn't exist or may have been removed.
+            {t("The blog post you're looking for doesn't exist or may have been removed.")}
           </Typography>
           <Button
             variant="contained"
@@ -148,7 +148,7 @@ const BlogShowPage = () => {
               fontWeight: 600
             }}
           >
-            Back to Blog
+            {t("BackToBlog")}
           </Button>
         </Container>
       </Box>
@@ -176,7 +176,7 @@ const BlogShowPage = () => {
             }
           }}
         >
-          Back
+          {t("Back")}
         </Button>
 
         {/* Main Content */}
@@ -236,7 +236,7 @@ const BlogShowPage = () => {
                 ) : (
                   <>
                     <Chip 
-                      label="Article" 
+                      label={t("Article")} 
                       color="primary" 
                       size="medium"
                       sx={{ 
@@ -374,7 +374,7 @@ const BlogShowPage = () => {
                 alignItems: 'center'
               }}>
                 <Person sx={{ mr: 1, fontSize: '1.2rem' }} />
-                About the Author
+                {t("AboutTheAuthor")}
               </Typography>
               
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
@@ -410,7 +410,7 @@ const BlogShowPage = () => {
                 }}
                 onClick={() => router.push(`/blog`)}
               >
-                View All Posts
+                {t("ViewAllPosts")}
               </Button>
             </Card>
             
@@ -431,7 +431,7 @@ const BlogShowPage = () => {
                 alignItems: 'center'
               }}>
                 <CalendarToday sx={{ mr: 1, fontSize: '1.2rem' }} />
-                Related Posts
+                {t("RelatedPosts")}
               </Typography>
               
               <Stack spacing={3}>
@@ -514,7 +514,7 @@ const BlogShowPage = () => {
                     py: 2,
                     opacity: 0.7
                   }}>
-                    No related posts available
+                    {t("NoRelatedPosts")}
                   </Typography>
                 )}
               </Stack>

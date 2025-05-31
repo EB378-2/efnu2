@@ -56,7 +56,12 @@
     "Fees": "Maksut",
     "Calendar": "Kalenteri",
     "Admin": "Admin",
-    "Create": "Luo"
+    "Create": "Luo",
+    "users": "Käyttäjät",
+    "incidents": "Tapahtumat",
+    "fuel": "Polttoaine",
+    "flights": "Lennot",
+    "alerts": "Hälytykset"
   },
   
 
@@ -363,5 +368,29 @@
       "p4": "Yhdistyksen purkautuessa yhdistyksen varat käytetään ensisijaisesti Nummela Airfieldin hyväksi ja toissijaisesti yleisen ilmailun ja urheiluilmailun edistämiseen purkamisesta päättävän kokouksen päättämällä tavalla. Yhdistyksen purkautuessa sen varat käytetään samaan tarkoitukseen."
     },
     "downloadButton": "Lataa täydelliset säännöt (PDF)"
+  },
+  "PdfViewer": {
+    "title": "Nummelan lentokenttäyhdistyksen säännöt",
+    "description": "Voit tarkastella ja ladata Nummelan lentokenttäyhdistyksen säännöt PDF-muodossa.",
+    "OpenButton": "Avaa PDF"
+  },
+   "Blog": {
+    "title": "EFNU-lentoaseman tiedotteet",
+    "subtitle": "Löydä uusimmat uutiset, päivitykset ja tarinat EFNU-lentoasemalta",
+    "Search blog posts": "Hae blogikirjoituksia",
+    "Featured": "Esittelyssä",
+    "readMore": "Lue lisää",
+    "LatestUpdates": "Viimeisimmät päivitykset",
+    "noPosts": "Blogikirjoituksia ei löytynyt",
+    "Try adjusting your search or check back later for new content": "Yritä muuttaa hakua tai tarkista myöhemmin uutta sisältöä",
+    "PostNotFound": "Julkaisua ei löytynyt",
+    "The blog post you're looking for doesn't exist or may have been removed.": "The blog post you're looking for doesn't exist or may have been removed.",
+    "BackToBlog": "Takaisin blogiin",
+    "Back": "Takaisin",
+    "Article": "Artikkeli",
+    "AboutTheAuthor": "Tietoja kirjoittajasta",
+    "ViewAllPosts": "Näytä kaikki julkaisut",
+    "RelatedPosts": "Aiheeseen liittyviä julkaisuja",
+    "NoRelatedPosts": "Aiheeseen liittyviä julkaisuja ei löytynyt"
   }
 }
