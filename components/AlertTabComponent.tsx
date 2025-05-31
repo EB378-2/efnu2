@@ -198,7 +198,7 @@ const AlertTabModal = () => {
             <Box sx={{ p: 4, textAlign: 'center' }}>
               <CircularProgress />
               <Typography variant="body2" sx={{ mt: 2 }}>
-                {t("Loading alerts...")}
+                {t("Loading alerts")}...
               </Typography>
             </Box>
           ) : isError ? (

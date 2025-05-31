@@ -63,7 +63,8 @@ p, admin, sms/*, (edit)|(delete)
 p, admin, alerts, (create)
 p, admin, alerts/*, (edit)|(delete)
 p, admin, admin, (list)|(show)
-p, admin, calendar, (list)|(show)
+p, admin, calendar, (list)|(show)|(create)
+p, admin, calendar/*, (edit)|(delete)
 p, admin, fees, (list)|(show)
 
 

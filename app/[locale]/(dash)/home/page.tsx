@@ -39,6 +39,20 @@ interface LocalBlog extends Blog {
   date: string; // API returns date as string
 }
 
+interface CalendarEvent {
+  id: string;
+  title: string;
+  start_time: Date | string;
+  end_time: Date | string;
+  is_all_day: boolean;
+  description?: string;
+  location?: string;
+  event_type: string;
+  status: string;
+  timezone: string;
+  organizer_id: string;
+};
+
 export default function HomePage() {
   const t = useTranslations("Home");
   const theme = useTheme();
@@ -60,17 +74,29 @@ export default function HomePage() {
     };
   
 
-
-
-  const events = [
-    {
-      id: "1",
-      name: 'Airport Grill Event',
-      date: new Date('2025-06-15T19:00:00'),
-      color: '#ff6b6b'
+  const { data: eventData, isLoading: eventloading } = useList<CalendarEvent>({
+    resource: "events",
+    meta: {
+      select: "*"
     },
-    // ... more events
-  ]
+    pagination: {
+      pageSize: 5,
+    },
+    sorters: [
+      {
+        field: "end_time",
+        order: "asc",
+      },
+    ],
+    filters: [
+      {
+        field: "end_time",
+        operator: "gte",
+        value: new Date().toISOString(),
+      },
+    ],
+  });
+  const events = eventData?.data || [];
 
   const { data: postData, isLoading } = useList<LocalBlog>({
     resource: "blogs",
@@ -99,9 +125,11 @@ export default function HomePage() {
 
   const handleEventClick = (eventId: String) => {
     // Handle event click logic
+    router.push(`/calendar/${eventId}`);
   }
   const handlePostClick = (postId: String) => {
     // Handle post click logic
+    router.push(`/blog/${postId}`);
   }
 
   const utcString = currentTime.toUTCString();
@@ -112,11 +140,6 @@ export default function HomePage() {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
-
-  // Create safe formatters
-  const createFormatter = (options: Intl.DateTimeFormatOptions, timeZone?: string) => {
-    return new Intl.DateTimeFormat('en-US', { ...options, timeZone });
-  };
 
 // Fixed UTC and FIN time formatters
   const localTimeFormatter = new Intl.DateTimeFormat('en-US', { 
@@ -407,7 +430,7 @@ export default function HomePage() {
                 <Typography variant="h5" gutterBottom sx={{ fontWeight: 600, color: theme.palette.primary.contrastText }}>
                   {t("WelcomeBack")}, <br/><ProfileName profileId={identityData?.id || ""} />
                 </Typography>
-                <Typography variant="subtitle1" sx={{ mb: 3, opacity: 0.9 }}>
+                <Typography variant="subtitle1" sx={{ mb: 3, opacity: 0.9, color: theme.palette.primary.contrastText }}>
                   {formattedDate}
                 </Typography>
                 <Stack spacing={1}>
@@ -507,7 +530,7 @@ export default function HomePage() {
                                   color: theme.palette.text.secondary
                                 }}
                               >
-                                {t("postedOn")}{formatDate(post.published_at || post.created_at)}
+                                {t("postedOn")} {formatDate(post.published_at || post.created_at)}
                               </Typography>
                               <Button 
                                 variant="outlined" 
@@ -608,7 +631,7 @@ export default function HomePage() {
                       sx={{ 
                         mb: 2,
                         borderRadius: '8px',
-                        borderLeft: `4px solid ${event.color || theme.palette.primary.main}`,
+                        borderLeft: `4px solid ${theme.palette.primary.main}`,
                         transition: '0.3s',
                         '&:hover': {
                           transform: 'translateX(4px)',
@@ -636,7 +659,7 @@ export default function HomePage() {
                         <ListItemText
                           primary={
                             <Typography variant="subtitle1" sx={{ fontWeight: 500 }}>
-                              {event.name}
+                              {event.title}
                             </Typography>
                           }
                           secondary={
@@ -648,9 +671,9 @@ export default function HomePage() {
                               }}
                             >
                               <Box component="span" sx={{ fontWeight: 500, mr: 1 }}>
-                                {format(event.date, 'MMM dd, yyyy')}
+                                {format(event.start_time, 'dd/mm/yyyy, hh:mm a')}
                               </Box>
-                              • {format(event.date, 'hh:mm a')}
+                              • {format(event.end_time, 'dd/mm/yyyy, hh:mm a')}
                             </Typography>
                           }
                         />
