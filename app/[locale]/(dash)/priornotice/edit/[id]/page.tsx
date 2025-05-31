@@ -1,7 +1,5 @@
 "use client";
 
-// src/pages/pn-form/edit.tsx
-
 import { useForm } from '@refinedev/react-hook-form';
 import { Edit } from '@refinedev/mui';
 import {
@@ -14,19 +12,23 @@ import {
 } from '@mui/material';
 import { Controller } from 'react-hook-form';
 import { useTheme } from '@hooks/useTheme';
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { PriorNotice } from "@/types/index";
 import { useTranslations } from 'next-intl';
+import { useEffect } from 'react';
 
 const PNEdit = () => {
   const t = useTranslations('PN');
   const { id: pnID } = useParams<{ id: string }>();
+  const router = useRouter();
   const theme = useTheme();
   const {
-    refineCore: { formLoading, queryResult },
+    refineCore: { formLoading, queryResult, onFinish },
     saveButtonProps,
     register,
     control,
+    setValue,
+    getValues,
     formState: { errors },
   } = useForm<PriorNotice>({
     refineCoreProps: {
@@ -44,17 +46,51 @@ const PNEdit = () => {
 
   const defaultValues = queryResult?.data?.data;
 
+  // Set form values when data is loaded
+  useEffect(() => {
+    if (defaultValues) {
+      setValue('from_location', defaultValues.from_location);
+      setValue('to_location', defaultValues.to_location);
+      setValue('dep_time', defaultValues.dep_time);
+      setValue('arr_time', defaultValues.arr_time);
+      setValue('dep_date', defaultValues.dep_date?.split('T')[0]);
+      setValue('arr_date', defaultValues.arr_date?.split('T')[0]);
+      setValue('aircraft_reg', defaultValues.aircraft_reg);
+      setValue('mtow', defaultValues.mtow);
+      setValue('pic_name', defaultValues.pic_name);
+      setValue('phone', defaultValues.phone);
+      setValue('email', defaultValues.email);
+      setValue('ifr_arrival', defaultValues.ifr_arrival || false);
+    }
+  }, [defaultValues, setValue]);
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await onFinish(getValues());
+      router.push('/priornotice');
+    } catch (error) {
+      console.error("Form submission error:", error);
+    }
+  };
+
   return (
     <Edit
       isLoading={formLoading}
-      saveButtonProps={saveButtonProps}
+      saveButtonProps={{
+        ...saveButtonProps,
+        onClick: (e) => {
+          e.preventDefault();
+          handleFormSubmit(e);
+        },
+      }}
       title={
         <Typography variant="h4">
           {t("Edittitle")}
         </Typography>
       }
     >
-      <Box component="form" sx={{ mt: 3 }}>
+      <Box component="form" sx={{ mt: 3 }} onSubmit={handleFormSubmit}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Typography variant="body1" color={theme.palette.error.main}>
@@ -66,11 +102,10 @@ const PNEdit = () => {
           <Grid item xs={12} md={6}>
             <TextField
               {...register('from_location', {
-                required: 'Departure Location is required',
+                required: t("DepartureLocationRequired"),
               })}
-              defaultValue={defaultValues?.from_location}
               error={!!errors.from_location}
-              helperText={typeof errors.from_location?.message === 'string' ? errors.from_location.message : ''}
+              helperText={errors.from_location?.message as string}
               fullWidth
               label={t("DepartureLocation")}
             />
@@ -80,11 +115,10 @@ const PNEdit = () => {
           <Grid item xs={12} md={6}>
             <TextField
               {...register('to_location', {
-                required: 'Arrival Location is required',
+                required: t("ArrivalLocationRequired"),
               })}
-              defaultValue={defaultValues?.to_location}
               error={!!errors.to_location}
-              helperText={typeof errors.to_location?.message === 'string' ? errors.to_location.message : ''}
+              helperText={errors.to_location?.message as string}
               fullWidth
               label={t("ArrivalLocation")}
             />
@@ -94,15 +128,14 @@ const PNEdit = () => {
           <Grid item xs={12} md={6}>
             <TextField
               {...register('dep_time', {
-                required: 'Departure time is required',
+                required: t("DepartureTimeRequired"),
                 pattern: {
                   value: /^([0-1][0-9]|2[0-3])[0-5][0-9]$/,
-                  message: 'Invalid UTC time format (HHMM)',
+                  message: t("InvalidTimeFormat"),
                 },
               })}
-              defaultValue={defaultValues?.dep_time}
               error={!!errors.dep_time}
-              helperText={typeof errors.dep_time?.message === 'string' ? errors.dep_time.message : ''}
+              helperText={errors.dep_time?.message as string}
               fullWidth
               label={t("DEP (UTC HHMM)")}
             />
@@ -112,15 +145,15 @@ const PNEdit = () => {
           <Grid item xs={12} md={6}>
             <TextField
               {...register('arr_time', {
-                required: 'Arrival time is required',
+                required: t("ArrivalTimeRequired"),
                 pattern: {
                   value: /^([0-1][0-9]|2[0-3])[0-5][0-9]$/,
-                  message: 'Invalid UTC time format (HHMM)',
+                  message: t("InvalidTimeFormat"),
                 },
               })}
-              defaultValue={defaultValues?.arr_time}
               error={!!errors.arr_time}
-              helperText={typeof errors.arr_time?.message === 'string' ? errors.arr_time.message : ''}              fullWidth
+              helperText={errors.arr_time?.message as string}
+              fullWidth
               label={t("ARR (UTC HHMM)")}
             />
           </Grid>
@@ -129,7 +162,6 @@ const PNEdit = () => {
           <Grid item xs={12} md={6}>
             <TextField
               {...register('dep_date')}
-              defaultValue={defaultValues?.dep_date?.split('T')[0]}
               fullWidth
               type="date"
               label={t("DEP Date")}
@@ -141,7 +173,6 @@ const PNEdit = () => {
           <Grid item xs={12} md={6}>
             <TextField
               {...register('arr_date')}
-              defaultValue={defaultValues?.arr_date?.split('T')[0]}
               fullWidth
               type="date"
               label={t("ARR Date")}
@@ -153,11 +184,10 @@ const PNEdit = () => {
           <Grid item xs={12} md={6}>
             <TextField
               {...register('aircraft_reg', {
-                required: 'Aircraft registration is required',
+                required: t("AircraftRegRequired"),
               })}
-              defaultValue={defaultValues?.aircraft_reg}
               error={!!errors.aircraft_reg}
-              helperText={typeof errors.aircraft_reg?.message === 'string' ? errors.aircraft_reg.message : ''}
+              helperText={errors.aircraft_reg?.message as string}
               fullWidth
               label={t("Aircraft registration")}
             />
@@ -167,14 +197,13 @@ const PNEdit = () => {
           <Grid item xs={12} md={6}>
             <TextField
               {...register('mtow', {
-                required: 'MTOW is required',
-                min: { value: 1, message: 'Invalid MTOW' },
-                max: { value: 10000, message: 'MTOW too high' },
+                required: t("MTOWRequired"),
+                min: { value: 1, message: t("InvalidMTOW") },
+                max: { value: 10000, message: t("MTOWTooHigh") },
                 valueAsNumber: true,
               })}
-              defaultValue={defaultValues?.mtow}
               error={!!errors.mtow}
-              helperText={typeof errors.mtow?.message === 'string' ? errors.mtow.message : ''}
+              helperText={errors.mtow?.message as string}
               fullWidth
               type="number"
               label={t("MTOW (Kg)")}
@@ -184,10 +213,11 @@ const PNEdit = () => {
           {/* PIC Name */}
           <Grid item xs={12} md={6}>
             <TextField
-              {...register('pic_name', { required: 'PIC name is required' })}
-              defaultValue={defaultValues?.pic_name}
+              {...register('pic_name', { 
+                required: t("PICNameRequired") 
+              })}
               error={!!errors.pic_name}
-              helperText={typeof errors.pic_name?.message === 'string' ? errors.pic_name.message : ''}
+              helperText={errors.pic_name?.message as string}
               fullWidth
               label={t("PIC (Full name)")}
             />
@@ -197,15 +227,14 @@ const PNEdit = () => {
           <Grid item xs={12} md={6}>
             <TextField
               {...register('phone', {
-                required: 'Phone number is required',
+                required: t("PhoneRequired"),
                 pattern: {
                   value: /^\+?[0-9\s-]+$/,
-                  message: 'Invalid phone number',
+                  message: t("InvalidPhone"),
                 },
               })}
-              defaultValue={defaultValues?.phone}
               error={!!errors.phone}
-              helperText={typeof errors.phone?.message === 'string' ? errors.phone.message : ''}
+              helperText={errors.phone?.message as string}
               fullWidth
               label={t("Phone")}
             />
@@ -215,17 +244,16 @@ const PNEdit = () => {
           <Grid item xs={12}>
             <TextField
               {...register('email', {
-                required: 'Email is required',
+                required: t("EmailRequired"),
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: 'Invalid email address',
+                  message: t("InvalidEmail"),
                 },
               })}
-              defaultValue={defaultValues?.email}
               error={!!errors.email}
-              helperText={typeof errors.email?.message === 'string' ? errors.email.message : ''}
+              helperText={errors.email?.message as string}
               fullWidth
-              label={t("PIC e-mail")}
+              label={t("PIC email")}
             />
           </Grid>
 
@@ -234,7 +262,6 @@ const PNEdit = () => {
             <Controller
               control={control}
               name="ifr_arrival"
-              defaultValue={defaultValues?.ifr_arrival || false}
               render={({ field }) => (
                 <FormControlLabel
                   control={<Checkbox {...field} checked={field.value} color="primary" />}

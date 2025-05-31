@@ -162,7 +162,7 @@
     "MTOW (Kg)": "MTOW (Kg)",
     "PIC (Full name)": "PIC (Full Name)",
     "Phone": "Phone",
-    "PIC e-mail": "PIC E-mail",
+    "PIC email": "PIC E-mail",
     "IFR Arrival": "IFR Arrival",
     "Edittitle": "Edit Prior Notice (PN)"
   },
@@ -178,7 +178,7 @@
     "LastUpdated": "Last Updated"
   },
   "Alerts": {
-    "NBALERTS": "NB! ALERTS",
+    "NBALERTS": "ALERTS",
     "ActiveAlerts": "Active Alerts",
     "Loading alerts": "Loading alerts",
     "Failed to load alerts": "Failed to load alerts",

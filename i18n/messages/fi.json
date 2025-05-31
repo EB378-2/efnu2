@@ -166,7 +166,7 @@
     "Aircraft registration": "Ilma-aluksen rekisteröinti",
     "MTOW (Kg)": "MTOW (Kg)",
     "PIC (Full name)": "PIC (Koko nimi)",
-    "PIC E-mail": "PIC Sähköposti",
+    "PIC email": "PIC Sähköposti",
     "Phone": "Puhelin",
     "IFR Arrival": "IFR Saapuminen",
     "Edittitle": "Muokkaa PN"
@@ -183,7 +183,7 @@
     "LastUpdated": "Viimeksi päivitetty"
   },
   "Alerts": {
-    "NBALERTS": "HUOMIO!",
+    "NBALERTS": "HUOMIO",
     "ActiveAlerts": "Aktiiviset hälytykset",
     "Loading alerts": "Ladataan hälytyksiä",
     "Failed to load alerts": "Hälytysten lataaminen epäonnistui",
