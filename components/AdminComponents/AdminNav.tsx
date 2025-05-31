@@ -97,6 +97,7 @@ export default function AdminNav() {
     { label: 'Incidents', href: '/admin/incidents', icon: <ListAlt />, active: pathname.startsWith('/admin/incidents') },
     { label: 'Flights', href: '/admin/flights', icon: <Flight />, active: pathname.startsWith('/admin/flights') },
     { label: 'Fuel', href: '/admin/fuel', icon: <LocalGasStation />, active: pathname.startsWith('/admin/fuel') },
+    { label: 'Blog', href: '/admin/blog', icon: <Dashboard />, active: pathname.startsWith('/admin/blog') },
   ];
 
   const notifications = [

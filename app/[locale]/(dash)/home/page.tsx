@@ -24,11 +24,20 @@ import {
 } from "@mui/icons-material";
 import { useTheme } from "@hooks/useTheme";
 import { useTranslations } from "next-intl";
-import { CanAccess, useGetIdentity } from "@refinedev/core";
+import { CanAccess, useGetIdentity, useList } from "@refinedev/core";
 import { ProfileName, ProfileAvatar } from "@components/functions/FetchFunctions";
 import { useRouter } from "next/navigation";
 import { format } from 'date-fns';
 import SunriseSunsetCard from "@components/SunriseSunsetCard";
+import { Blog } from "@types";
+import dayjs from "dayjs";
+
+interface LocalBlog extends Blog {
+  category: string;
+  categoryColor?: string;
+  excerpt: string;
+  date: string; // API returns date as string
+}
 
 export default function HomePage() {
   const t = useTranslations("Home");
@@ -46,6 +55,10 @@ export default function HomePage() {
     }, 1000);
     return () => clearInterval(timer);
   }, []);
+   const formatDate = (dateString: string | null) => {
+      return dateString ? dayjs(dateString).format("MMM D, YYYY") : "Draft";
+    };
+  
 
 
 
@@ -58,26 +71,31 @@ export default function HomePage() {
     },
     // ... more events
   ]
-  const posts = [
-    {
-      id: "123ksldf",
-      title: "New Security Checkpoint Procedures",
-      category: "Security Update",
-      categoryColor: "#ff6b6b",
-      excerpt: "Starting June 1st, enhanced security measures will be implemented at all checkpoints. Please arrive 30 minutes earlier than usual.",
-      date: new Date('2024-03-15T10:00:00'),
-      content: "...full content..."
+
+  const { data: postData, isLoading } = useList<LocalBlog>({
+    resource: "blogs",
+    meta: {
+      select: "*"
     },
-    {
-      id: "456jkl",
-      title: "Terminal B Renovation Notice",
-      category: "Facility Update",
-      categoryColor: "#4caf50",
-      excerpt: "Phase 2 of Terminal B renovations begins April 1st. Expect temporary closure of gates B5-B8.",
-      date: new Date('2024-03-14T14:30:00'),
-      content: "...full content..."
-    }
-  ]
+    pagination: {
+      pageSize: 5,
+    },
+    sorters: [
+      {
+        field: "published_at",
+        order: "desc",
+      },
+    ],
+    filters: [
+      {
+        field: "published",
+        operator: "eq",
+        value: true,
+      },
+    ],
+  });
+  const posts = postData?.data || [];
+
 
   const handleEventClick = (eventId: String) => {
     // Handle event click logic
@@ -86,19 +104,83 @@ export default function HomePage() {
     // Handle post click logic
   }
 
-  const localString = currentTime.toLocaleString();
-  const localTime = localString.split(',')[1].trim();
-  const localDate = localString.split(',')[0].trim();
-  
   const utcString = currentTime.toUTCString();
-  const utcTime = utcString.split(' ')[4];
-  const utcDate = utcString.split(' ').slice(0, 3).join(' ');
-  
-  const finishTime = new Date(currentTime.getTime() + 0 * 24 * 60 * 60 * 1000).toLocaleString().split(',')[1].trim();;
-  const finishDate = new Date(currentTime.getTime() + 0 * 24 * 60 * 60 * 1000).toLocaleString().split(',')[0].trim();
-  
-  const formattedTime = utcString.split(' ')[4];
   const formattedDate = utcString.split(' ').slice(0, 3).join(' ');
+
+  
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Create safe formatters
+  const createFormatter = (options: Intl.DateTimeFormatOptions, timeZone?: string) => {
+    return new Intl.DateTimeFormat('en-US', { ...options, timeZone });
+  };
+
+// Fixed UTC and FIN time formatters
+  const localTimeFormatter = new Intl.DateTimeFormat('en-US', { 
+    hour: '2-digit', 
+    minute: '2-digit', 
+    second: '2-digit',
+    hour12: false 
+  });
+  
+  const localDateFormatter = new Intl.DateTimeFormat('en-US', { 
+    day: '2-digit', 
+    month: '2-digit', 
+    year: 'numeric' 
+  });
+
+  // UTC formatter - explicitly set timeZone to 'UTC'
+  const utcTimeFormatter = new Intl.DateTimeFormat('en-US', { 
+    hour: '2-digit', 
+    minute: '2-digit', 
+    second: '2-digit',
+    hour12: false,
+    timeZone: 'UTC'  // Explicit UTC timezone
+  });
+  
+  const utcDateFormatter = new Intl.DateTimeFormat('en-US', { 
+    day: '2-digit', 
+    month: '2-digit', 
+    year: 'numeric',
+    timeZone: 'UTC'  // Explicit UTC timezone
+  });
+
+  // Finnish time formatter - explicit timezone
+  const finTimeFormatter = new Intl.DateTimeFormat('en-US', { 
+    hour: '2-digit', 
+    minute: '2-digit', 
+    second: '2-digit',
+    hour12: false,
+    timeZone: 'Europe/Helsinki'  // Helsinki timezone
+  });
+  
+  const finDateFormatter = new Intl.DateTimeFormat('en-US', { 
+    day: '2-digit', 
+    month: '2-digit', 
+    year: 'numeric',
+    timeZone: 'Europe/Helsinki'  // Helsinki timezone
+  });
+
+
+  // Format values safely
+  const formatSafe = (formatter: Intl.DateTimeFormat, date: Date) => {
+    try {
+      return formatter.format(date);
+    } catch {
+      return '--:--:--';
+    }
+  };
+
+  // Get formatted values
+  const localTime = formatSafe(localTimeFormatter, currentTime);
+  const localDate = formatSafe(localDateFormatter, currentTime);
+  const utcTime = formatSafe(utcTimeFormatter, currentTime);
+  const utcDate = formatSafe(utcDateFormatter, currentTime);
+  const finishTime = formatSafe(finTimeFormatter, currentTime);
+  const finishDate = formatSafe(finDateFormatter, currentTime);
   
   return (
     <Box sx={{ 
@@ -128,7 +210,7 @@ export default function HomePage() {
             <Box sx={{ gap: 3, mt: { xs: 2, md: 0 } }}>
               <SunriseSunsetCard />
               <Typography variant="subtitle1" sx={{ fontWeight: 500 }}>
-                {t("hours")}: 06:00 - 18:00 UTC
+                {t("hours")}: 04:00 - 19:00 UTC
               </Typography>
             </Box>
           </Box>
@@ -378,7 +460,7 @@ export default function HomePage() {
                   px: 2,
                   pb: 2
                 }}>
-                  {posts.map((post) => (
+                  {posts?.map((post: LocalBlog) => (
                     <Card 
                       key={post.id}
                       sx={{ 
@@ -396,15 +478,6 @@ export default function HomePage() {
                         <ListItemText
                           primary={
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                              <Chip 
-                                label={post.category}
-                                size="small"
-                                sx={{ 
-                                  borderRadius: '4px',
-                                  backgroundColor: post.categoryColor || theme.palette.secondary.light,
-                                  color: theme.palette.getContrastText(post.categoryColor || theme.palette.secondary.light)
-                                }}
-                              />
                               <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
                                 {post.title}
                               </Typography>
@@ -423,7 +496,7 @@ export default function HomePage() {
                                   overflow: 'hidden'
                                 }}
                               >
-                                {post.excerpt}
+                                {post.content.substring(0, 60)}...
                               </Typography>
                               
                               <Typography 
@@ -434,7 +507,7 @@ export default function HomePage() {
                                   color: theme.palette.text.secondary
                                 }}
                               >
-                                {t("postedOn")} {format(post.date, 'MMM dd, yyyy • hh:mm a')}
+                                {t("postedOn")}{formatDate(post.published_at || post.created_at)}
                               </Typography>
                               <Button 
                                 variant="outlined" 
@@ -478,6 +551,7 @@ export default function HomePage() {
                       textTransform: 'none',
                       fontWeight: 500
                     }}
+                    onClick={() => router.push("/blog")}
                   >
                     {t("ViewAllUpdates")}
                   </Button>
@@ -606,6 +680,7 @@ export default function HomePage() {
                       textTransform: 'none',
                       fontWeight: 500
                     }}
+                    onClick={() => router.push("/calendar")}
                   >
                     {t("ViewAllEvents")}
                   </Button>

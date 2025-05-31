@@ -131,6 +131,18 @@ export interface UpdateSafetyReport {
 
 // Blog
 
+export type Blog = {
+  id: string;
+  title: string;
+  content: string;
+  image_link: string | null;
+  published_at: string | null;
+  created_at: string;
+  uid: string;
+  updated_at: string;
+  published: boolean;
+};
+
 // types/index.ts
 export interface AlertItem {
   id: string;

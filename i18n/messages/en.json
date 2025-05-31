@@ -48,7 +48,7 @@
     "Contact": "Contact",
     "Handbook": "Handbook",
     "Rules": "Rules",
-    "Fees": "PIC Fees",
+    "Fees": "Fees",
     "Admin": "Admin",
     "Calendar": "Calendar",
     "Create": "Create"
@@ -143,7 +143,7 @@
     "rejected": "Rejected",
     "NoUpcomingFlightsScheduled": "No upcoming flights scheduled",
     "title": "EFNU - Prior Notice Form (PN)",
-    "subtitle": "All operations outside of 0900-2100 local time are forbidden",
+    "subtitle": "All operations outside of 0700-2200 local time are forbidden",
     "Enterlocationhere": "Enter location here",
     "DepartureLocation": "Departure Location",
     "ArrivalLocation": "Arrival Location",
@@ -189,7 +189,6 @@
     "emailTitle": "Email Support",
     "phoneTitle": "Phone Support",
     "addressTitle": "Visit Us",
-    "addressValue": "EFNU Airport Terminal, Gate A5, Helsinki, Finland",
     "supportHours": "Support Hours",
     "weekdays": "Monday-Friday",
     "weekends": "Saturday-Sunday",
@@ -264,5 +263,100 @@
       "LastUpdated": "Last Updated",
       "Save Changes": "Save Changes"
     }
+  },
+  "AssociationRules": {
+    "title": "Rules of the Nummela Airfield Association",
+    "effectiveDate": "Effective date: November 8, 2022 at 13:41:50",
+    "section1": {
+      "title": "§ 1 Name and Domicile",
+      "content": "The name of the association is Nummela Airfield Association and its domicile is the municipality of Vihti."
+    },
+    "section2": {
+      "title": "§ 2 Purpose and Nature of Activities",
+      "p1": "The purpose of the association's activities is to promote aviation, aviation training, sports activities, and youth work in Vihti. To fulfill its purpose, the association operates in Nummela and maintains the Nummela airfield.",
+      "p2": "In its activities, the association maintains and promotes, in a fair and equitable manner, the operational prerequisites and flight safety for general aviation, recreational aviation, and commercial aviation at Nummela airfield.",
+      "p3": "To secure the association's activities, the association makes initiatives and proposals to various authorities, monitors and comments on regulatory changes affecting its operations, agrees on airspace use with the controlling authority, and cooperates with other communities operating at the airfield.",
+      "p4": "To support its activities, the association collects membership and usage fees from its members and airfield users, and acquires funds from public and private grants. The association may carry out all publishing, revenue-generating, and fundraising activities to fulfill its statutory purpose, applying for necessary permits. The association may accept donations and bequests. The association may own and manage real and movable property. The association's activities are not profit-seeking, nor is its aim to gain immediate financial benefit for participants."
+    },
+    "section3": {
+      "title": "§ 3 Members",
+      "content": "A legally competent entity that accepts the association's purpose and commits to complying with the association's rules and guidelines prepared by the board may be accepted as a regular member."
+    },
+    "section4": {
+      "title": "§ 4 Membership Termination and Expulsion",
+      "p1": "A member has the right to resign from the association by notifying the board in writing.",
+      "p2": "The board may expel a member if the member has failed to fulfill the obligations they committed to upon joining the association, or if by their conduct within or outside the association they have significantly harmed the association, or if the specified membership fee has not been paid."
+    },
+    "section5": {
+      "title": "§ 5 Membership and Joining Fees",
+      "content": "The amounts of the joining fee and annual membership fee for regular members and supporting members shall be decided separately for each member group by the autumn meeting. The fee may vary for supporting members that are entities."
+    },
+    "section6": {
+      "title": "§ 6 Nummela Airfield Operations Manual",
+      "content": "To ensure the safety, environmental friendliness, and fair and equitable operational conditions for all airfield users, an operations manual shall be prepared. The operations manual is maintained by the airfield manager, and its changes are approved by the association's board by majority decision. Activities at Nummela Airfield shall follow the operations manual. The operations manual contains guidelines for safe flight operations and other aviation and ground operations within the Nummela Airfield area."
+    },
+    "section7": {
+      "title": "§ 7 Board",
+      "p1": "The association's affairs are managed by a board. The board consists of a chairperson and at least four (4) and at most eight (8) regular members elected at the autumn meeting for two (2) calendar years at a time. Board members serve for two years, with half of the board members retiring annually.",
+      "p2": "In the first members' meeting after the approval of these rule changes, half of the elected board members shall retire after 1 year, determined by lot.",
+      "p3": "The board selects from among its members a vice-chairperson. Additionally, the board selects an airfield manager, secretary, treasurer, and other necessary officials. The board may establish working groups as needed and may invite experts to handle and prepare matters affecting the achievement of the association's operational objectives.",
+      "p4": "The board convenes when called by the chairperson or, if they are prevented, by the vice-chairperson, when they deem it necessary or when at least half of the board members request it.",
+      "p5": "The board has a quorum when at least half of its members, including the chairperson or vice-chairperson, are present. If neither the chairperson nor vice-chairperson is present at the meeting, one of the board members shall be selected to chair the meeting. Decisions are made by absolute majority. In case of a tie, the chairperson's vote decides.",
+      "p6": "Board meetings may be attended by telephone or other technical means when the person is identified. Board meetings may also be held remotely. The board prepares the Nummela Airfield Operations Manual together with the selected airfield manager and maintains it. The board decides on airfield usage fees."
+    },
+    "section8": {
+      "title": "§ 8 Signing for the Association",
+      "content": "The association's name may be signed by the chairperson, vice-chairperson, and treasurer each alone, or by two board members together."
+    },
+    "section9": {
+      "title": "§ 9 Fiscal Year",
+      "content": "The association's fiscal year is the calendar year."
+    },
+    "section10": {
+      "title": "§ 10 Association Meetings",
+      "p1": "The association holds two regular meetings annually. The association's spring meeting is held in March-May and the autumn meeting in September-December on a date determined by the board. The time and place of the meeting are decided by the board.",
+      "p2": "An extraordinary meeting of the association shall be held when so decided by an association meeting, or when the association's board deems it necessary, or when at least one-tenth (1/10) of the association's voting members request it in writing for handling a specific matter. The board must arrange the meeting within thirty (30) days of receiving the written notice.",
+      "p3": "At association meetings, each regular member has one vote. Meeting representatives must present a power of attorney from their member community. The decision of the association meeting is the proposal that receives more than half of the votes cast. In case of a tie, the chairperson's vote decides; in elections, however, the lot decides.",
+      "p4": "Supporting members have the right to attend association meetings but do not have voting rights at association meetings. Participation in association meetings may also be by telecommunications, telephone, or other technical means during or before the meeting when the person is identified, if so decided by the board or the association meeting. Association meetings may also be held remotely."
+    },
+    "section11": {
+      "title": "§ 11 Convening Association Meetings",
+      "p1": "The board must convene association meetings at least seven days before the meeting.",
+      "p2": "The meeting notice is sent to the association member at the email address they have provided to the association. If a member does not have an email address, the notice is delivered by mail."
+    },
+    "section12": {
+      "title": "§ 12 Regular Meetings",
+      "springMeeting": {
+        "title": "Spring Meeting",
+        "item1": "Opening of the meeting",
+        "item2": "Election of meeting chairperson, secretary, two minutes reviewers, and two vote counters",
+        "item3": "Confirmation of the legality and quorum of the meeting and participants",
+        "item4": "Approval of the meeting agenda",
+        "item5": "Presentation of financial statements, annual report, and audit report",
+        "item6": "Decision on approval of financial statements and granting discharge from liability to the board and other liable persons",
+        "item7": "Handling of other matters mentioned in the meeting notice"
+      },
+      "autumnMeeting": {
+        "title": "Autumn Meeting",
+        "item1": "Opening of the meeting",
+        "item2": "Election of meeting chairperson, secretary, two minutes reviewers, and two vote counters",
+        "item3": "Confirmation of the legality and quorum of the meeting and participants",
+        "item4": "Approval of the meeting agenda",
+        "item5": "Approval of operational plan, income and expenditure budget, and amounts of joining and membership fees for the next fiscal year",
+        "item6": "Election of the board chairperson for the next two calendar years",
+        "item7": "Election of other board members (4-8) as provided in the rules",
+        "item8": "Election of auditor and deputy auditor or audit firm for the fiscal year",
+        "item9": "Decision on remuneration for board members, auditors, etc."
+      },
+      "footer": "If an association member wishes to have a matter handled at the spring or autumn meeting, they must notify the board in writing 30 days before the meeting."
+    },
+    "section13": {
+      "title": "§ 13 Amendment of Rules and Dissolution of Association",
+      "p1": "The association's rules are amended by a decision of the association meeting by majority vote.",
+      "p2": "A decision to dissolve the association must be made at an association meeting by a majority of at least three-quarters (3/4) of the votes cast.",
+      "p3": "The meeting notice must mention the amendment of rules or dissolution of the association.",
+      "p4": "Upon dissolution of the association, the association's assets shall primarily be used for the benefit of Nummela Airfield and secondarily for promoting general aviation and sports aviation, in the manner decided by the meeting deciding on the dissolution. If the association is dissolved, its assets shall be used for the same purpose."
+    },
+    "downloadButton": "Download Full Rules (PDF)"
   }
 }

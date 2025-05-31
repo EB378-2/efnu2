@@ -53,7 +53,7 @@
     "Contact": "Ota yhteyttä",
     "Handbook": "Käsikirja",
     "Rules": "Säännöt",
-    "Fees": "PIC Maksut",
+    "Fees": "Maksut",
     "Calendar": "Kalenteri",
     "Admin": "Admin",
     "Create": "Luo"
@@ -148,7 +148,7 @@
     "rejected": "Hylätty",
     "NoUpcomingFlightsScheduled": "Ei tulevia lentoja suunniteltu",
     "title": "EFNU - Ennen ilmoituslomake (PN)",
-    "subtitle": "Kaikki toiminnot paikallisen ajan ulkopuolella 0900-2100 ovat kiellettyjä",
+    "subtitle": "Kaikki toiminnot paikallisen ajan ulkopuolella 0700-2200 ovat kiellettyjä",
     "Enterlocationhere": "Syötä sijainti tähän",
     "DepartureLocation": "Lähtösijainti",
     "ArrivalLocation":  "Saapumissijainti",
@@ -194,7 +194,6 @@
     "emailTitle": "Sähköpostituki",
     "phoneTitle": "Puhelintuki",
     "addressTitle": "Vieraile meillä",
-    "addressValue": "EFNU Lentokenttäterminaali, Portti A5, Helsinki, Suomi",
     "supportHours": "Tukiaukioloajat",
     "weekdays": "Maanantai-perjantai",
     "weekends": "Lauantai-sunnuntai",
@@ -269,5 +268,100 @@
       "LastUpdated": "Viimeksi päivitetty",
       "Save Changes": "Tallenna muutokset"
     }
+  },
+  "AssociationRules": {
+    "title": "Nummelan lentokenttäyhdistyksen säännöt",
+    "effectiveDate": "Voimaantulopäivämäärä: 8. marraskuuta 2022 klo 13:41:50",
+    "section1": {
+      "title": "§ 1 Nimi ja kotipaikka",
+      "content": "Yhdistyksen nimi on Nummelan lentokenttäyhdistys ja sen kotipaikka on Vihdin kunta."
+    },
+    "section2": {
+      "title": "§ 2 Tarkoitus ja toiminnan laatu",
+      "p1": "Yhdistyksen toiminnan tarkoituksena on edistää ilmailua, ilmailukoulutusta, urheilutoimintaa ja nuorisotyötä Vihdissä. Tarkoituksensa toteuttamiseksi yhdistys toimii Nummelassa ja ylläpitää Nummelan lentokenttää.",
+      "p2": "Toiminnassaan yhdistys ylläpitää ja edistää tasapuolisesti yleisilmailun, harrasteilmailun ja kaupallisen ilmailun toimintaedellytyksiä ja lentoturvallisuutta Nummelan lentokentällä.",
+      "p3": "Toimintansa turvaamiseksi yhdistys tekee aloitteita ja ehdotuksia eri viranomaisille, seuraa ja kommentoi toimintaansa vaikuttavia sääntelymuutoksia, sopii ilmatilaan liittyvistä asioista lennonjohdon kanssa ja tekee yhteistyötä kentällä toimivia muiden yhteisöjen kanssa.",
+      "p4": "Toimintansa tukemiseksi yhdistys kerää jäsenmaksuja ja käyttömaksuja jäseniltään ja kentän käyttäjiltä sekä hankkii varoja julkisista ja yksityisistä avustuksista. Yhdistys voi harjoittaa kaikkea sääntöjen mukaista julkaisutoimintaa, tulojen hankkimista ja varainhankintaa tarvittavat luvat hankkien. Yhdistys voi ottaa vastaan lahjoituksia ja testamentteja. Yhdistys voi omistaa ja hallita kiinteistöjä ja irtainta omaisuutta. Yhdistyksen toiminta ei ole voittoa tavoittelevaa eikä sen tarkoituksena ole osallistujien välitön taloudellinen hyöty."
+    },
+    "section3": {
+      "title": "§ 3 Jäsenet",
+      "content": "Yhdistyksen tarkoituksen hyväksyvä ja yhdistyksen sääntöjä ja hallituksen laatimia ohjeita noudattamaan sitoutunut oikeustoimikelpoinen taho voidaan hyväksyä varsinaiseksi jäseneksi."
+    },
+    "section4": {
+      "title": "§ 4 Jäsenyyden päättyminen ja erottaminen",
+      "p1": "Jäsenellä on oikeus erota yhdistyksestä ilmoittamalla siitä kirjallisesti hallitukselle.",
+      "p2": "Hallitus voi erottaa jäsenen, jos jäsen ei ole täyttänyt liittyessään antamiaan velvoitteita tai jos hän on toiminnallaan yhdistyksen sisällä tai ulkopuolella olennaisesti vahingoittanut yhdistystä tai jos määrättyä jäsenmaksua ei ole maksettu."
+    },
+    "section5": {
+      "title": "§ 5 Jäsen- ja liittymismaksut",
+      "content": "Varsinaisten ja kannattajien liittymis- ja vuotuiset jäsenmaksut päättää syyskokous erikseen kullekin jäsenryhmälle. Kannattajajäsenille, jotka ovat yhteisöjä, maksu voi olla erilainen."
+    },
+    "section6": {
+      "title": "§ 6 Nummelan lentokentän käyttöohje",
+      "content": "Kaikkien kentän käyttäjien turvallisuuden, ympäristöystävällisyyden ja tasapuolisen toiminnan varmistamiseksi laaditaan käyttöohje. Käyttöohjetta ylläpitää kenttäpäällikkö ja sen muutokset hyväksyy yhdistyksen hallitus enemmistöpäätöksellä. Nummelan lentokentällä toimitaan käyttöohjeen mukaisesti. Käyttöohje sisältää ohjeet turvalliselle lentotoimintaa ja muulle ilmailu- ja maatoiminnalle Nummelan lentokentän alueella."
+    },
+    "section7": {
+      "title": "§ 7 Hallitus",
+      "p1": "Yhdistyksen asioita hoitaa hallitus. Hallitukseen kuuluu puheenjohtaja ja vähintään neljä (4) ja enintään kahdeksan (8) varsinaista jäsentä, jotka syyskokous valitsee kahdeksi (2) kalenterivuodeksi kerrallaan. Hallituksen jäsenten toimikausi on kaksi vuotta, ja puolet hallituksen jäsenistä jää eläkkeelle vuosittain.",
+      "p2": "Näiden sääntömuutosten hyväksymisen jälkeisessä ensimmäisessä jäsenkokouksessa puolet valituista hallituksen jäsenistä eroaa vuoden kuluttua arvalla määrätyn järjestyksen mukaan.",
+      "p3": "Hallitus valitsee jäsentensä joukosta varapuheenjohtajan. Lisäksi hallitus valitsee lentokentänpäällikön, sihteerin, rahastonhoitajan ja muut tarvittavat virkamiehet. Hallitus voi tarvittaessa perustaa työryhmiä ja kutsua asiantuntijoita käsittelemään ja valmistelemaan yhdistyksen operatiivisten tavoitteiden saavuttamiseen vaikuttavia asioita.",
+      "p4": "Hallitus kokoontuu puheenjohtajan tai tämän estyneenä ollessa varapuheenjohtajan kutsusta, kun he katsovat sen tarpeelliseksi tai kun vähintään puolet hallituksen jäsenistä sitä pyytää.",
+      "p5": "Hallituksella on päätösvalta, kun läsnä on vähintään puolet sen jäsenistä, mukaan lukien puheenjohtaja tai varapuheenjohtaja. Jos kokouksessa ei ole läsnä puheenjohtajaa eikä varapuheenjohtajaa, kokouksen puheenjohtajaksi valitaan yksi hallituksen jäsenistä. Päätökset tehdään yksinkertaisella ääntenenemmistöllä. Tasaäänten sattuessa puheenjohtajan ääni ratkaisee.",
+      "p6": "Hallituksen kokoukseen voi osallistua puhelimitse tai muulla teknisillä välineillä, kun henkilö on tunnistettu. Hallituksen kokouksia voidaan pitää myös etänä. Hallitus laatii yhdessä valitun lentokentänpäällikön kanssa Nummela Airfield Operations Manualin ja pitää sen ajan tasalla. Hallitus päättää lentokentän käyttömaksuista."
+    },
+    "section8": {
+      "title": "§ 8 Yhdistyksen nimikirjoitus",
+      "content": "Yhdistyksen nimeä saavat allekirjoittaa puheenjohtaja, varapuheenjohtaja ja rahastonhoitaja kukin yksin tai kaksi hallituksen jäsentä yhdessä."
+    },
+    "section9": {
+      "title": "§ 9 Talousvuosi",
+      "content": "Yhdistyksen tilikausi on kalenterivuosi."
+    },
+    "section10": {
+      "title": "§ 10 Yhdistyksen kokoukset",
+      "p1": "Yhdistys pitää kaksi varsinaista kokousta vuosittain. Yhdistyksen kevätkokous pidetään maalis-toukokuussa ja syyskokous syys-joulukuussa hallituksen määräämänä päivänä. Kokouksen ajan ja paikan päättää hallitus.",
+      "p2": "Yhdistyksen ylimääräinen kokous pidetään, kun yhdistyksen kokous niin päättää tai kun yhdistyksen hallitus katsoo sen tarpeelliseksi tai kun vähintään yksi kymmenesosa (1/10) yhdistyksen äänioikeutetuista jäsenistä kirjallisesti sitä pyytää tietyn asian käsittelyä varten. Hallituksen on järjestettävä kokous kolmenkymmenen (30) päivän kuluessa kirjallisen ilmoituksen vastaanottamisesta.",
+      "p3": "Yhdistyksen kokouksissa jokaisella varsinaisella jäsenellä on yksi ääni. Kokousvaltuutettujen on esitettävä valtakirja jäsenyhteisöltään. Yhdistyksen kokouksen päätökseksi tulee ehdotus, joka saa yli puolet annetuista äänistä. Tasaäänten sattuessa puheenjohtajan ääni ratkaisee; vaaleissa kuitenkin arpa ratkaisee.",
+      "p4": "Kannatusjäsenillä on oikeus osallistua yhdistyksen kokouksiin, mutta heillä ei ole äänioikeutta yhdistyksen kokouksissa. Yhdistyksen kokouksiin voi osallistua myös etäyhteyksin, puhelimitse tai muilla teknisillä välineillä kokouksen aikana tai ennen sitä, kun henkilö on tunnistettu, jos hallitus tai yhdistyksen kokous niin päättää. Yhdistyksen kokouksia voidaan pitää myös etänä."
+    },
+    "section11": {
+      "title": "§ 11 Yhdistyksen kokousten koollekutsuminen",
+      "p1": "Hallituksen on kutsuttava yhdistyksen kokoukset koolle vähintään seitsemän päivää ennen kokousta.",
+      "p2": "Kokouskutsu lähetetään yhdistyksen jäsenelle sähköpostiosoitteeseen, jonka jäsen on antanut yhdistykselle. Jos jäsenellä ei ole sähköpostiosoitetta, kutsu toimitetaan postitse."
+    },
+    "section12": {
+      "title": "§ 12 Varsinaiset kokoukset",
+      "springMeeting": {
+        "title": "Kevätkokous",
+        "item1": "Kokouksen avaaminen",
+        "item2": "Kokouksen puheenjohtajan, sihteerin, kahden pöytäkirjantarkastajan ja kahden ääntenlaskijan valitseminen",
+        "item3": "Kokouksen laillisuuden ja päätösvaltaisuuden sekä osallistujien vahvistaminen",
+        "item4": "Kokousohjelman hyväksyminen",
+        "item5": "Tilinpäätöksen, vuosikertomuksen ja tilintarkastuskertomuksen esittely",
+        "item6": "Tilinpäätöksen hyväksymisestä ja hallituksen ja muiden vastuussa olevien henkilöiden vastuuvapauden myöntämisestä päättäminen",
+        "item7": "Kokouskutsussa mainittujen muiden asioiden käsittely"
+      },
+      "autumnMeeting": {
+        "title": "Syyskokous",
+        "item1": "Kokouksen avaaminen",
+        "item2": "Kokouksen puheenjohtajan, sihteerin, kahden pöytäkirjantarkastajan ja kahden ääntenlaskijan valitseminen",
+        "item3": "Kokouksen laillisuuden ja päätösvaltaisuuden sekä osallistujien vahvistaminen",
+        "item4": "Kokousohjelman hyväksyminen",
+        "item5": "Toimintasuunnitelman, tulo- ja menoarvion sekä seuraavan tilikauden liittymis- ja jäsenmaksujen määrän hyväksyminen",
+        "item6": "Hallituksen puheenjohtajan valitseminen seuraaviksi kahdeksi kalenterivuodelle",
+        "item7": "Muiden hallituksen jäsenten (4-8) valitseminen sääntöjen mukaisesti",
+        "item8": "Tilintarkastajan ja varatilintarkastajan tai tilintarkastusyhteisön valitseminen tilikaudelle",
+        "item9": "Hallituksen jäsenten, tilintarkastajien jne. palkkioista päättäminen"
+      },
+      "footer": "Jos jäsen haluaa jonkin asian käsiteltäväksi kevät- tai syyskokouksessa, hänen on ilmoitettava siitä hallitukselle kirjallisesti 30 päivää ennen kokousta."
+    },
+    "section13": {
+      "title": "§ 13 Sääntöjen muuttaminen ja yhdistyksen purkaminen",
+      "p1": "Yhdistyksen säännöt muutetaan yhdistyksen kokouksen päätöksellä yksinkertaisella ääntenenemmistöllä.",
+      "p2": "Päätös yhdistyksen purkamisesta on tehtävä yhdistyksen kokouksessa vähintään kolmen neljäsosan (3/4) enemmistöllä annetuista äänistä.",
+      "p3": "Kokouskutsussa on mainittava sääntöjen muutos tai yhdistyksen purkaminen.",
+      "p4": "Yhdistyksen purkautuessa yhdistyksen varat käytetään ensisijaisesti Nummela Airfieldin hyväksi ja toissijaisesti yleisen ilmailun ja urheiluilmailun edistämiseen purkamisesta päättävän kokouksen päättämällä tavalla. Yhdistyksen purkautuessa sen varat käytetään samaan tarkoitukseen."
+    },
+    "downloadButton": "Lataa täydelliset säännöt (PDF)"
   }
 }
