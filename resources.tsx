@@ -68,7 +68,6 @@ const resources = [
   {
       name: "blog",                          
       list: "/blog",
-      create: "/blog/create",
       meta: {
         label: "Blog",
         icon: <Book />

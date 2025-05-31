@@ -18,6 +18,7 @@ import { Warning, ListAlt } from '@mui/icons-material'; // Add these imports
 import AddFuelToStation from '@components/AdminComponents/AddFuelToStation';
 import AlertCreateModal from '@components/AdminComponents/AlertCreateModal';
 import React, { useState } from 'react';
+import BlogCreateModal from '@components/AdminComponents/BlogCreateModal';
 
 
 const pulse = keyframes`
@@ -79,6 +80,7 @@ const StatusIndicator = ({ label, status }: { label: string; status: string }) =
 export default function AdminDashboard() {
 
   const [createModalOpen, setCreateModalOpen] = useState(false);
+  const [createModalBlogOpen, setCreateModalBlogOpen] = useState(false);
 
   const { totalCount, todayCount } = useProfileStats();
   const { PnApprovalsToCome: PnApprovalsToCome } = usePnApprovalsToCome();
@@ -234,9 +236,18 @@ export default function AdminDashboard() {
                     py: 1.5,
                     background: 'linear-gradient(135deg, #4caf50, #388e3c)'
                   }}
+                  LinkComponent={'button'}
+                  onClick={() => setCreateModalBlogOpen(true)}
                 >
                   New Post
                 </Button>
+                <BlogCreateModal
+                  open={createModalBlogOpen}
+                  onClose={() => setCreateModalBlogOpen(false)}
+                  onSuccess={() => {
+                    setCreateModalBlogOpen(false);
+                  }}
+                />
                 <Button
                   variant="contained"
                   startIcon={<Flight />}
