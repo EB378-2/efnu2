@@ -28,7 +28,8 @@ import { CanAccess, useGetIdentity, useList } from "@refinedev/core";
 import { ProfileName, ProfileAvatar } from "@components/functions/FetchFunctions";
 import { useRouter } from "next/navigation";
 import { format } from 'date-fns';
-import SunriseSunsetCard from "@components/SunriseSunsetCard";
+import SunriseSunsetCard from "@components/home/SunriseSunsetCard";
+import AlertCreateModal from "@components/home/CreateAlertPublicModal";
 import { Blog } from "@types";
 import dayjs from "dayjs";
 
@@ -61,6 +62,7 @@ export default function HomePage() {
    
   // Current time state
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [createModalOpen, setCreateModalOpen] = useState(false);
   
   // Update time every second
   useEffect(() => {
@@ -232,6 +234,7 @@ export default function HomePage() {
             </Typography>
             <Box sx={{ gap: 3, mt: { xs: 2, md: 0 } }}>
               <SunriseSunsetCard />
+              <Typography variant='caption'>{t("Not Offical, Check AIP GEN")}</Typography>
               <Typography variant="subtitle1" sx={{ fontWeight: 500 }}>
                 {t("hours")}: 04:00 - 19:00 UTC
               </Typography>
@@ -434,7 +437,14 @@ export default function HomePage() {
                   {formattedDate}
                 </Typography>
                 <Stack spacing={1}>
-                  <Button variant="outlined" color="secondary" onClick={() => {router.push("/atis")}}>{t("ReportTroubleatEFNU")}</Button>
+                  <Button variant="outlined" color="secondary" onClick={() => setCreateModalOpen(true)}>{t("ReportTroubleatEFNU")}</Button>
+                  <AlertCreateModal 
+                  open={createModalOpen}
+                  onClose={() => setCreateModalOpen(false)}
+                  onSuccess={() => {
+                    setCreateModalOpen(false);
+                  }}
+                />
                   <Button 
                     variant="outlined"
                     color="primary"

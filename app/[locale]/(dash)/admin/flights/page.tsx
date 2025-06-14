@@ -217,11 +217,6 @@ export default function FlightsManagement() {
     return flightDateTime.isSameOrAfter(now, 'day');
   });
 
-  useEffect(() => {
-    console.log('Filtered flights:', flights);
-    console.log('Show past flights:', showPastFlights);
-  }, [flights, showPastFlights]);
-
   return (
     <Box sx={{ p: 4 }}>
       <Box display="flex" sx={{ flexDirection: { xs: "column", sm: "row" } }} justifyContent="space-between" alignItems="center" mb={4}>

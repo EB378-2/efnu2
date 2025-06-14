@@ -67,6 +67,7 @@
 
   "Home": {
     "title": "Tervetuloa EFNU:hun",
+    "Not Offical, Check AIP GEN": "Ei virallinen, tarkista AIP GEN 2.7",
     "hours": "Aukioloajat",
     "LocalTime": "Paikallinen aika",
     "UTCTime": "UTC aika",
@@ -190,7 +191,8 @@
     "No active alerts at this time": "Ei aktiivisia hälytyksiä tällä hetkellä",
     "Ongoing": "Meneillään",
     "Ends: ": "Loppuu: ",
-    "Close": "Sulje"
+    "Close": "Sulje",
+    "Not verified by a offical source": "Ei virallisen lähteen vahvistama."
   },
   "Contact": {
     "title": "Ota Yhteytä (EI KÄYTETÄVÄ)",

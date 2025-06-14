@@ -32,13 +32,11 @@ import {
 } from "@mui/icons-material";
 import DarkModeOutlined from "@mui/icons-material/DarkModeOutlined";
 import LightModeOutlined from "@mui/icons-material/LightModeOutlined";
-import { BarChart } from "recharts";
-import { Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { ProfileAvatar, ProfileLicence, ProfileName, ProfileEmail, ProfilePhone, ProfileRatings} from "@components/functions/FetchFunctions"
 import { EditButton } from "@refinedev/mui";
 import { ColorModeContext } from "@contexts/color-mode";
-import { FuelData } from "@components/FuelData";
-import { PasswordChangeBlock } from "@components/PasswordChange";
+import { FuelData } from "@components/profile/FuelData";
+import { PasswordChangeBlock } from "@components/profile/PasswordChange";
 import LanguageSwitcher from "@components/ui/LanguageSwitcher";
 import { useTranslations } from "next-intl";
 

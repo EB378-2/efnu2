@@ -6,7 +6,7 @@ import {
   ListItemIcon, Chip, CircularProgress, Alert, TextField, 
   Select, MenuItem, FormControl, InputLabel, Grid, Switch, FormControlLabel
 } from '@mui/material';
-import { CanAccess, useList, useUpdate } from '@refinedev/core';
+import { CanAccess, useGetIdentity, useList, useUpdate } from '@refinedev/core';
 import { Warning, Error, Info, Schedule, Close } from '@mui/icons-material';
 import { useTheme } from '@hooks/useTheme';
 import { formatDistanceToNow } from 'date-fns';
@@ -20,6 +20,9 @@ const AlertTabModal = () => {
   const [alertForm, setAlertForm] = useState<any>({});
   const theme = useTheme();
   const t = useTranslations('Alerts');
+  const { data: identityData } = useGetIdentity<{ id: string }>();
+  
+  const UserID = identityData?.id as string;
   
   // Fetch active alerts
   const { data, isLoading, isError, refetch } = useList({
@@ -51,6 +54,24 @@ const AlertTabModal = () => {
       is_active: alert.is_active
     });
     setEditModalOpen(true);
+  };
+
+  const handleVerified = (alert: any) => {
+    setCurrentAlert(alert)
+    
+    updateAlert({
+      resource: 'alerts',
+      id: currentAlert.id,
+      values: {
+        ...alertForm,
+        end_time: alertForm.end_time || null,
+        verified: true
+      },
+    }, {
+      onSuccess: () => {
+        refetch();
+      }
+    });
   };
 
   // Handle form changes
@@ -262,26 +283,36 @@ const AlertTabModal = () => {
                             </Box>
                           )}
                         </Typography>
+                        <Typography variant='caption' color={theme.palette.warning.main}>
+                          {alert.verified == false &&(
+                            <>
+                            {t("Not verified by a offical source")}
+                            </>
+                          )}
+                        </Typography>
                         <Box sx={{ mt: 1, display: 'flex', gap: 1 }}>
                           <CanAccess
                             resource="alerts"
                             action="edit"
                             params={{ id: alert.id }}
                           >
-                            <EditButton 
-                              resource="alerts"
-                              onClick={() => handleEditClick(alert)}
+                            {UserID === alert.uid &&
+                              <EditButton 
+                                resource="alerts"
+                                onClick={() => handleEditClick(alert)}
                               />
+                            }
                           </CanAccess>
                           <CanAccess
                             resource="alerts"
                             action="delete"
                             params={{ id: alert.id }}
                           >
-                            <DeleteButton
-                            resource="alerts"
-                            recordItemId={alert.id}
-                            />
+                            {alert.verified == false &&(
+                            <Button variant='outlined' onClick={() => handleVerified(alert)}>
+                              Verify
+                            </Button>
+                            )}
                           </CanAccess>
                         </Box>
                       </Box>

@@ -153,6 +153,7 @@ export interface AlertItem {
   start_time: string; // ISO string
   end_time?: string; // ISO string
   is_active: boolean;
+  verified: boolean;
   created_at: string;
   updated_at: string;
 }

@@ -1,25 +1,34 @@
 import React from 'react';
-import { Modal, Box, Grid, TextField, Button, Select, MenuItem, FormControl, InputLabel, Switch, FormControlLabel, Typography } from '@mui/material';
-import { SelectChangeEvent } from '@mui/material/Select';
-import { useUpdate } from '@refinedev/core';
+import { Modal, Box, Grid, TextField, Button, Select, MenuItem, FormControl, InputLabel, Switch, FormControlLabel, Typography, SelectChangeEvent } from '@mui/material';
+import { useCreate } from '@refinedev/core';
 import dayjs from 'dayjs';
 import { AlertItem } from '@/types';
 
-const AlertEditModal = ({ 
+const AlertCreateModal = ({ 
   open, 
   onClose, 
-  alert,
   onSuccess
 }: { 
   open: boolean; 
   onClose: () => void; 
-  alert: AlertItem;
   onSuccess: () => void;
 }) => {
-  const [formState, setFormState] = React.useState(alert);
-  const { mutate: updateAlert } = useUpdate();
+  // Initial state for new alert
+  const [formState, setFormState] = React.useState<Omit<AlertItem, 'id'>>({
+    title: '',
+    description: '',
+    alert_type: 'info',
+    severity: 'medium',
+    start_time: dayjs().format('YYYY-MM-DDTHH:mm'),
+    is_active: true,
+    verified: false,
+    created_at: dayjs().toISOString(),
+    updated_at: dayjs().toISOString(),
+  });
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const { mutate: createAlert } = useCreate();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     setFormState(prev => ({
       ...prev,
@@ -28,9 +37,8 @@ const AlertEditModal = ({
   };
 
   const handleSubmit = () => {
-    updateAlert({
+    createAlert({
       resource: "alerts",
-      id: alert.id,
       values: formState,
     }, {
       onSuccess: () => {
@@ -41,13 +49,12 @@ const AlertEditModal = ({
   };
 
   const handleSelectChange = (e: SelectChangeEvent) => {
-    const { name, value } = e.target;
-    setFormState(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
+      const { name, value } = e.target;
+      setFormState(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    };
 
   return (
     <Modal open={open} onClose={onClose}>
@@ -62,7 +69,7 @@ const AlertEditModal = ({
         p: 4,
         borderRadius: 2
       }}>
-        <Typography variant="h6" mb={3}>Edit Alert</Typography>
+        <Typography variant="h6" mb={3}>Create New Alert</Typography>
         
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -72,6 +79,7 @@ const AlertEditModal = ({
               name="title"
               value={formState.title}
               onChange={handleChange}
+              required
             />
           </Grid>
           
@@ -127,7 +135,7 @@ const AlertEditModal = ({
               label="Start Time"
               type="datetime-local"
               name="start_time"
-              value={dayjs(formState.start_time).format('YYYY-MM-DDTHH:mm')}
+              value={formState.start_time}
               onChange={handleChange}
               InputLabelProps={{ shrink: true }}
             />
@@ -136,43 +144,24 @@ const AlertEditModal = ({
           <Grid item xs={6}>
             <TextField
               fullWidth
-              label="End Time"
+              label="End Time (Optional)"
               type="datetime-local"
               name="end_time"
-              value={formState.end_time ? dayjs(formState.end_time).format('YYYY-MM-DDTHH:mm') : ''}
+              value={formState.end_time}
               onChange={handleChange}
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
           
-          <Grid item xs={12} sm={6}>
-            <FormControlLabel
-              control={
-                <Switch
-                  name="is_active"
-                  checked={formState.is_active}
-                  onChange={handleChange}
-                />
-              }
-              label="Active Alert"
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <FormControlLabel
-              control={
-                <Switch
-                  name="verified"
-                  checked={formState.verified}
-                  onChange={handleChange}
-                />
-              }
-              label="Verified Alert"
-            />
-          </Grid>
-          
           <Grid item xs={12} sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
             <Button variant="outlined" onClick={onClose}>Cancel</Button>
-            <Button variant="contained" onClick={handleSubmit}>Save Changes</Button>
+            <Button 
+              variant="contained" 
+              onClick={handleSubmit}
+              disabled={!formState.title.trim()} // Require title
+            >
+              Create Alert
+            </Button>
           </Grid>
         </Grid>
       </Box>
@@ -180,4 +169,4 @@ const AlertEditModal = ({
   );
 };
 
-export default AlertEditModal;
+export default AlertCreateModal;

@@ -9,10 +9,10 @@ import {
 } from "@mui/material";
 import { 
   Warning, Error, Info, Schedule, Refresh, 
-  Add, Visibility, Edit, Delete, NotificationsActive,
-  CheckCircle, Cancel, EmergencyRecording, History
+  Add, Visibility, Edit, NotificationsActive,
+  CheckCircle, EmergencyRecording, History, People
 } from "@mui/icons-material";
-import { useList, useDelete, useUpdate } from "@refinedev/core";
+import { useList } from "@refinedev/core";
 import dayjs from "dayjs";
 import { useTheme } from "@hooks/useTheme";
 import { AlertItem } from '@types';
@@ -40,11 +40,20 @@ const AlertAdminDashboard = () => {
   });
 
   // Fetch alert history (resolved alerts)
-  const { data: historyData } = useList<AlertItem>({ 
+  const { data: resolvedHistoryData } = useList<AlertItem>({ 
     resource: "alerts",
     filters: [{ field: "is_active", operator: "eq", value: false }],
     pagination: { pageSize: 5 }
   });
+
+  // Fetch alert history (unverified alerts)
+  const { data: verifiedHistoryData } = useList<AlertItem>({ 
+    resource: "alerts",
+    filters: [{ field: "is_active", operator: "eq", value: false }],
+    pagination: { pageSize: 5 }
+  });
+
+  
 
   // Calculate statistics
   const alertStats = useMemo(() => {
@@ -55,9 +64,10 @@ const AlertAdminDashboard = () => {
       total: alertsData?.total || 0,
       active: activeAlerts.length,
       critical: criticalAlerts.length,
-      resolved: historyData?.total || 0
+      resolved: resolvedHistoryData?.total || 0,
+      verified: verifiedHistoryData?.total || 0
     };
-  }, [alertsData, historyData]);
+  }, [alertsData, resolvedHistoryData]);
 
   // Get color based on severity
   const getSeverityColor = (severity: string) => {
@@ -98,8 +108,8 @@ const AlertAdminDashboard = () => {
       </Box>
 
       {/* Summary Cards */}
-      <Grid container spacing={3} sx={{ mb: 4 }}>
-        <Grid item xs={12} md={3}>
+      <Grid container spacing={2} sx={{ mb: 4 }}>
+        <Grid item xs={12} md={2.4}>
           <Card sx={{ borderRadius: 3 }}>
             <CardContent>
               <Box display="flex" alignItems="center" gap={2}>
@@ -107,7 +117,7 @@ const AlertAdminDashboard = () => {
                   <NotificationsActive />
                 </Avatar>
                 <Box>
-                  <Typography variant="h6">Total Alerts</Typography>
+                  <Typography variant="h6">Total</Typography>
                   <Typography variant="h4">
                     {alertStats.total}
                   </Typography>
@@ -117,7 +127,7 @@ const AlertAdminDashboard = () => {
           </Card>
         </Grid>
 
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} md={2.4}>
           <Card sx={{ borderRadius: 3 }}>
             <CardContent>
               <Box display="flex" alignItems="center" gap={2}>
@@ -125,7 +135,7 @@ const AlertAdminDashboard = () => {
                   <Warning />
                 </Avatar>
                 <Box>
-                  <Typography variant="h6">Active Alerts</Typography>
+                  <Typography variant="h6">Active</Typography>
                   <Typography variant="h4">
                     {alertStats.active}
                   </Typography>
@@ -135,7 +145,7 @@ const AlertAdminDashboard = () => {
           </Card>
         </Grid>
 
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} md={2.4}>
           <Card sx={{ borderRadius: 3 }}>
             <CardContent>
               <Box display="flex" alignItems="center" gap={2}>
@@ -143,7 +153,7 @@ const AlertAdminDashboard = () => {
                   <Error />
                 </Avatar>
                 <Box>
-                  <Typography variant="h6">Critical Alerts</Typography>
+                  <Typography variant="h6">Critical</Typography>
                   <Typography variant="h4">
                     {alertStats.critical}
                   </Typography>
@@ -153,7 +163,7 @@ const AlertAdminDashboard = () => {
           </Card>
         </Grid>
 
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} md={2.4}>
           <Card sx={{ borderRadius: 3 }}>
             <CardContent>
               <Box display="flex" alignItems="center" gap={2}>
@@ -161,7 +171,25 @@ const AlertAdminDashboard = () => {
                   <CheckCircle />
                 </Avatar>
                 <Box>
-                  <Typography variant="h6">Resolved Alerts</Typography>
+                  <Typography variant="h6">Resolved</Typography>
+                  <Typography variant="h4">
+                    {alertStats.resolved}
+                  </Typography>
+                </Box>
+              </Box>
+            </CardContent>
+          </Card>
+        </Grid>
+
+        <Grid item xs={12} md={2.4}>
+          <Card sx={{ borderRadius: 3 }}>
+            <CardContent>
+              <Box display="flex" alignItems="center" gap={2}>
+                <Avatar sx={{ bgcolor: theme.palette.secondary.main }}>
+                  <People />
+                </Avatar>
+                <Box>
+                  <Typography variant="h6">Unverified</Typography>
                   <Typography variant="h4">
                     {alertStats.resolved}
                   </Typography>
@@ -291,7 +319,7 @@ const AlertAdminDashboard = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {historyData?.data?.map((alert) => (
+                {resolvedHistoryData?.data?.map((alert) => (
                   <TableRow key={alert.id}>
                     <TableCell>
                       <Typography fontWeight={500}>{alert.title}</Typography>
@@ -350,11 +378,11 @@ const AlertAdminDashboard = () => {
                   <TableCell colSpan={8} sx={{ py: 2 }}>
                     <Box display="flex" justifyContent="space-between" alignItems="center">
                       <Typography variant="body2" color="text.secondary">
-                        Showing {historyData?.data?.length} of {historyData?.total} resolved alerts
+                        Showing {resolvedHistoryData?.data?.length} of {resolvedHistoryData?.total} resolved alerts
                       </Typography>
                       
                       <Pagination
-                        count={Math.ceil((historyData?.total || 0) / 5)}
+                        count={Math.ceil((resolvedHistoryData?.total || 0) / 5)}
                         color="primary"
                         size="small"
                       />

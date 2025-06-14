@@ -62,6 +62,7 @@
 
   "Home": {
     "title": "Welcome to the EFNU",
+    "Not Offical, Check AIP GEN": "Not Offical, Check AIP GEN2.7",
     "hours": "Operational hours",
     "LocalTime": "Your Local Time",
     "UTCTime": "UTC Time",
@@ -185,7 +186,8 @@
     "No active alerts at this time": "No active alerts at this time",
     "Ongoing": "Ongoing",
     "Ends: ": "Ends: ",
-    "Close": "Close"
+    "Close": "Close",
+    "Not verified by a offical source": "Not verified by a offical source."
   },
   "Contact": {
     "title": "Contact Us(NOT IN USE)",

@@ -21,6 +21,7 @@ const AlertCreateModal = ({
     severity: 'medium',
     start_time: dayjs().format('YYYY-MM-DDTHH:mm'),
     is_active: true,
+    verified: true,
     created_at: dayjs().toISOString(),
     updated_at: dayjs().toISOString(),
   });
@@ -152,7 +153,7 @@ const AlertCreateModal = ({
             />
           </Grid>
           
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6}>
             <FormControlLabel
               control={
                 <Switch
@@ -162,6 +163,18 @@ const AlertCreateModal = ({
                 />
               }
               label="Active Alert"
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <FormControlLabel
+              control={
+                <Switch
+                  name="verified"
+                  checked={formState.verified}
+                  onChange={handleChange}
+                />
+              }
+              label="Verified Alert"
             />
           </Grid>
           
