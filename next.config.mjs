@@ -17,30 +17,12 @@ const nextConfig = {
       {
         source: '/(.*)',
         headers: [
-          {
-            key: 'X-DNS-Prefetch-Control',
-            value: 'on',
-          },
-          {
-            key: 'Strict-Transport-Security',
-            value: 'max-age=63072000; includeSubDomains; preload',
-          },
-          {
-            key: 'X-XSS-Protection',
-            value: '1; mode=block',
-          },
-          {
-            key: 'X-Frame-Options',
-            value: 'SAMEORIGIN',
-          },
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
-          },
-          {
-            key: 'Referrer-Policy',
-            value: 'origin-when-cross-origin',
-          },
+          { key: 'X-DNS-Prefetch-Control', value: 'on' },
+          { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
+          { key: 'X-XSS-Protection', value: '1; mode=block' },
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Referrer-Policy', value: 'origin-when-cross-origin' },
         ],
       },
     ];
@@ -51,49 +33,36 @@ const pwaConfig = withPWA({
   dest: 'public',
   register: true,
   skipWaiting: true,
+  cleanupOutdatedCaches: true,
   runtimeCaching: [
+    // HTML, JS, CSS
     {
       urlPattern: /\.(?:html|js|css)$/,
-      handler: 'NetworkFirst',
+      handler: 'CacheFirst',
       options: {
         cacheName: 'static-assets',
         expiration: {
           maxEntries: 200,
-          maxAgeSeconds: 30 * 24 * 60 * 60,
+          maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
         },
       },
     },
+    // Images and fonts
     {
-      urlPattern: /\/api\/.*$/,
-      handler: 'StaleWhileRevalidate',
-      options: {
-        cacheName: 'api-cache',
-        expiration: {
-          maxEntries: 50,
-          maxAgeSeconds: 24 * 60 * 60,
-        },
-        backgroundSync: {
-          name: 'api-queue',
-          options: {
-            maxRetentionTime: 24 * 60,
-          },
-        },
-      },
-    },
-    {
-      urlPattern: /\.(?:png|jpg|jpeg|svg|pdf|gif|webp|woff|woff2|ttf|eot)$/,
+      urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp|woff|woff2|ttf|eot)$/,
       handler: 'CacheFirst',
       options: {
-        cacheName: 'image-cache',
+        cacheName: 'asset-cache',
         expiration: {
           maxEntries: 100,
-          maxAgeSeconds: 30 * 24 * 60 * 60,
+          maxAgeSeconds: 60 * 60 * 24 * 30,
         },
         cacheableResponse: {
           statuses: [0, 200],
         },
       },
     },
+    // Next.js static files
     {
       urlPattern: /\/_next\/static\/.*/,
       handler: 'CacheFirst',
@@ -101,41 +70,29 @@ const pwaConfig = withPWA({
         cacheName: 'next-static',
         expiration: {
           maxEntries: 100,
-          maxAgeSeconds: 365 * 24 * 60 * 60,
+          maxAgeSeconds: 60 * 60 * 24 * 365,
         },
       },
     },
+    // Dynamic page data (fallbacks disabled)
     {
       urlPattern: /\/_next\/data\/.*\.json$/,
-      handler: 'NetworkFirst',
+      handler: 'StaleWhileRevalidate',
       options: {
         cacheName: 'next-data',
         expiration: {
           maxEntries: 50,
-          maxAgeSeconds: 24 * 60 * 60,
+          maxAgeSeconds: 60 * 60 * 24,
         },
       },
     },
   ],
-  buildExcludes: [
-    /middleware-manifest\.json$/,
-    /_middleware\.js$/,
-    /_buildManifest\.js$/,
-    /_ssgManifest\.js$/,
-    /\/middleware-runtime\.js$/,
-  ],
   workboxOptions: {
-    cleanupOutdatedCaches: true,
     clientsClaim: true,
     skipWaiting: true,
-    navigateFallback: '/offline',
-    navigateFallbackDenylist: [
-      /\/api\/.*/,
-      /\/_next\/.*/,
-    ],
+    navigateFallback: undefined, // No offline fallback
+    navigateFallbackDenylist: [/\/api\/.*/, /\/_next\/.*/],
   },
 });
 
-export default nextIntl(
-  pwaConfig(nextConfig)
-);
+export default nextIntl(pwaConfig(nextConfig));
