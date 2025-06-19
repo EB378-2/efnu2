@@ -8,10 +8,11 @@ export interface ProfileData {
   avatar_url?: string;
   ratings: string[];
   licence?: string;
-  role: "admin" | "pilot" | "staff";
+  role: "admin" | "pilot" | "staff" | "organisation";
   status: "active" | "pending" | "suspended";
   updated_at: string;
   created_at: string;
+  profile_type: string;
 }
 
 
@@ -42,6 +43,7 @@ export interface FuelingValues {
   uid: string;
   created_at: string;
   price: number;
+  billed_to: string;
 }
 export interface FuelItem extends FuelingValues {
   id: string;

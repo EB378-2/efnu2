@@ -22,8 +22,13 @@ import {
   TableContainer,
   LinearProgress,
   Chip,
-  Stack
+  Stack,
+  InputLabel,
+  Select,
+  MenuItem,
+  FormControl
 } from "@mui/material";
+import { Controller } from "react-hook-form";
 import { 
   Person as UserIcon, 
   LocalGasStation as FuelIcon, 
@@ -53,8 +58,8 @@ import {
   Info
 } from "@mui/icons-material";
 import { motion } from "framer-motion";
-import { FuelOption, FuelingValues, FuelItem } from '@/types/index';
-import { FuelName } from "@/components/functions/FetchFunctions";
+import { FuelOption, FuelingValues, FuelItem, ProfileData } from '@/types/index';
+import { FuelName, ProfileName } from "@/components/functions/FetchFunctions";
 
 // Styled components
 const GradientCard = styled(Card)(({ theme }) => ({
@@ -139,6 +144,18 @@ const FuelPage = () => {
     },
   });
 
+  const { data: organisationData } = useList<ProfileData>({
+    resource: "profiles",
+    filters: [
+      {
+        field: "profile_type",
+        operator: "eq",
+        value: "organisation",
+      }
+    ]
+
+  })
+
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -147,6 +164,7 @@ const FuelPage = () => {
       aircraft: formData.get("aircraft") as string,
       amount: Number(formData.get("amount")),
       fuel: selectedFuel,
+      billed_to: formData.get("billed_to") as string,
     });
   };
 
@@ -197,6 +215,24 @@ const FuelPage = () => {
                   label={t("Create.AircraftRegistration")}
                   placeholder={t("Create.egOHABC")}
                 />
+              </Grid>
+
+              <Grid item xs={12}>
+                <FormControl fullWidth required>
+                  <InputLabel>Billed To</InputLabel>
+                  <Select 
+                    label="Billed To"
+                    defaultValue=""
+                    name="billed_to"
+                  >
+                    <MenuItem value={identityData?.id}>Self</MenuItem>
+                    {organisationData?.data?.map((option: ProfileData) => (
+                      <MenuItem key={option.id} value={option.id}>
+                        {option.fullname?.charAt(0).toUpperCase() + option.fullname?.slice(1)}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
               </Grid>
               
             </Grid>
@@ -270,6 +306,9 @@ const FuelPage = () => {
                           color="primary"
                           sx={{ borderRadius: 2, mt: 0.5 }}
                         />
+                        <Typography variant="body2">
+                          {t("Billed_to")}: <ProfileName profileId={item.billed_to}/>
+                        </Typography>
                       </Box>
                       <Box textAlign="right">
                         <Typography variant="body2" color="text.secondary">

@@ -103,6 +103,7 @@
       "egOHABC": "esim. OHABC"
     },
     "FuelingHistory": "Tankkaushistoria",
+    "Billed_to": "Laskutetaan",
     "Contact": {
       "ContactUs": "Ota yhteyttä",
       "Subtitle": "Olemme saatavilla polttoaineen tarpeitasi varten. Ota yhteyttä",
@@ -144,7 +145,8 @@
     "MonthlyAverage": "Kuukausittainen keskiarvo",
     "ViewDetailedHistory": "Näytä yksityiskohtainen historia",
     "FuelTypeUsage": "Polttoainetyypin käyttö",
-    "TotalConsumptionByFuelType": "Kokonaiskulutus polttoainetyypin mukaan"
+    "TotalConsumptionByFuelType": "Kokonaiskulutus polttoainetyypin mukaan",
+    "edit": "Muokkaa"
   },
   "PN": {
     "UpcomingFlights": "Tulevat lennot",

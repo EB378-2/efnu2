@@ -164,6 +164,7 @@ export default function CreateUserModalWithButton() {
                         <MenuItem value="admin">Admin</MenuItem>
                         <MenuItem value="pilot">Pilot</MenuItem>
                         <MenuItem value="staff">Staff</MenuItem>
+                        <MenuItem value="organisation">Organisation</MenuItem>
                       </Select>
                     )}
                   />

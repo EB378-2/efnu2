@@ -214,20 +214,20 @@ const resources = [
     }
   },
   {
-    name: "flights",                          
-    list: "/admin/flights",
+    name: "alerts",                          
+    list: "/admin/alert",
     meta: {
-      label: "flights",
+      label: "alerts",
       icon: <ListAlt />,
       hide: true,
       parent: "admin"
     }
   },
   {
-    name: "alerts",                          
-    list: "/admin/alerts",
+    name: "flights",                          
+    list: "/admin/flights",
     meta: {
-      label: "alerts",
+      label: "flights",
       icon: <ListAlt />,
       hide: true,
       parent: "admin"

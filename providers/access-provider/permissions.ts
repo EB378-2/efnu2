@@ -22,8 +22,8 @@ export const adapter = new StringAdapter(`
 //Roles
 
 g, pilot, guest
-g, staff, pilot
-g, admin, staff
+g, organisation, pilot
+g, admin, organisation
 
 //Policies  
 
@@ -31,15 +31,14 @@ p, guest, home, (list)|(show)
 p, guest, atis, (list)|(show)
 p, guest, notams, (list)|(show)
 p, guest, info, (list)|(show)
-p, guest, alerts, (show)
 p, guest, blog, (list)|(show)
 p, guest, handbook, (list)|(show)
 p, guest, rules, (list)|(show)
 p, guest, lights, (list)|(show)
 p, guest, contact, (list)|(show)
 
-p, pilot, alerts, (show)|(create)
-p, pilot, alerts/*, (edit)|
+p, pilot, alerts, (create)
+p, pilot, alerts/*, (edit)|(show)
 p, pilot, priornotice, (list)|(show)|(create)
 p, pilot, priornotice/*, (edit)|(delete) 
 p, pilot, fuel, (list)|(show)|(create)
@@ -50,8 +49,6 @@ p, pilot, profile, (list)|(show)
 p, pilot, profile/*, edit
 p, pilot, sms, (list)|(show)|(create)
 p, pilot, calendar, (list)|(show)
-
-
 
 p, admin, users/*, (edit)|(delete)
 p, admin, users, (create)
@@ -67,8 +64,6 @@ p, admin, admin, (list)|(show)
 p, admin, calendar, (create)
 p, admin, calendar/*, (edit)|(delete)
 p, admin, fees, (list)|(show)
-
-
 `);
 
 

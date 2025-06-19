@@ -22,10 +22,11 @@ const statusColors: Record<ProfileData['status'], 'success' | 'warning' | 'error
   suspended: 'error'
 };
 
-const roleColors: Record<ProfileData['role'], 'primary' | 'info' | 'secondary'> = {
+const roleColors: Record<ProfileData['role'], 'primary' | 'info' | 'secondary' | 'warning'> = {
   admin: 'primary',
   pilot: 'info',
-  staff: 'secondary'
+  staff: 'secondary',
+  organisation: 'warning'
 };
 
 export default function MembersList() {
@@ -183,9 +184,10 @@ export default function MembersList() {
           <TableHead sx={{ bgcolor: 'action.hover' }}>
             <TableRow>
               <TableCell>Member</TableCell>
-              <TableCell>License</TableCell>
-              <TableCell>Status</TableCell>
+              <TableCell>Type</TableCell>
               <TableCell>Role</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell>License</TableCell>
               <TableCell>Joined at</TableCell>
               <TableCell align="right">Actions</TableCell>
             </TableRow>
@@ -205,7 +207,17 @@ export default function MembersList() {
                   </Box>
                 </TableCell>
                 <TableCell>
-                  <Typography variant="body2">{member.licence || 'N/A'}</Typography>
+                  <Typography variant="body2">
+                    {member.profile_type.charAt(0).toUpperCase() + member.profile_type.slice(1)}
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Chip 
+                    label={member.role} 
+                    color={roleColors[member.role]} 
+                    size="small"
+                    sx={{ textTransform: 'capitalize' }}
+                  />
                 </TableCell>
                 <TableCell>
                   <Chip 
@@ -216,12 +228,7 @@ export default function MembersList() {
                   />
                 </TableCell>
                 <TableCell>
-                  <Chip 
-                    label={member.role} 
-                    color={roleColors[member.role]} 
-                    size="small"
-                    sx={{ textTransform: 'capitalize' }}
-                  />
+                  <Typography variant="body2">{member.licence || 'N/A'}</Typography>
                 </TableCell>
                 <TableCell>
                   <Typography variant="body2">

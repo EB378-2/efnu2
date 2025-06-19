@@ -98,6 +98,7 @@
       "egOHABC": "eg. OHABC"
     },
     "FuelingHistory": "Fueling History",
+    "Billed_to": "Billed to",
     "Contact": {
       "ContactUs": "Contact Us",
       "Subtitle": "We're available for your fueling needs. Reach out for",
@@ -139,7 +140,8 @@
     "MonthlyAverage": "Monthly Average",
     "ViewDetailedHistory": "View Detailed History",
     "FuelTypeUsage": "Fuel Type Usage",
-    "TotalConsumptionByFuelType": "Total Consumption by Fuel Type"
+    "TotalConsumptionByFuelType": "Total Consumption by Fuel Type",
+    "edit": "Edit"
   },
   "PN": {
     "UpcomingFlights": "Upcoming Flights",

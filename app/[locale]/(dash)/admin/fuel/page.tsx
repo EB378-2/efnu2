@@ -135,9 +135,6 @@ const FuelAdminDashboard = () => {
         <CardContent>
           <Box display="flex" justifyContent="space-between" mb={3}>
             <Typography variant="h6">Fuel Tank Status</Typography>
-            <Tooltip title="Refresh data">
-              <IconButton><Refresh /></IconButton>
-            </Tooltip>
           </Box>
 
           <Grid container spacing={3}>
@@ -222,6 +219,7 @@ const FuelAdminDashboard = () => {
                   <TableCell align="right">Total</TableCell>
                   <TableCell>Aircraft</TableCell>
                   <TableCell>User</TableCell>
+                  <TableCell>Billed To</TableCell>
                   <TableCell>Actions</TableCell>
                 </TableRow>
               </TableHead>
@@ -245,6 +243,9 @@ const FuelAdminDashboard = () => {
                     <TableCell>
                       <ProfileName profileId={transaction.uid} />
                     </TableCell>
+                    <TableCell>
+                      <ProfileName profileId={transaction.billed_to} />
+                    </TableCell>
                     <TableCell sx={{ display: 'flex', gap: 1 }}>
                       <IconButton size="small"><Edit /></IconButton>
                       <DeleteButton
@@ -257,8 +258,8 @@ const FuelAdminDashboard = () => {
                   </TableRow>
                 ))}
               </TableBody>
-               <TableFooter>
-                <TableRow>
+                <TableFooter>
+                  <TableRow>
                     <TableCell colSpan={8} sx={{ py: 2 }}>
                         <Box display="flex" justifyContent="space-between" alignItems="center" sx={{ mb: "5vh" }}>
                             <Typography variant="body2" color="text.secondary">
@@ -289,7 +290,7 @@ const FuelAdminDashboard = () => {
                             </Box>
                         </Box>
                     </TableCell>
-                </TableRow>
+                  </TableRow>
                 </TableFooter>
             </Table>
           </TableContainer>
